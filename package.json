@@ -1,12 +1,12 @@
 {
   "name": "swagen-dotnet-httpclient",
-  "version": "0.0.6",
+  "version": "0.0.8",
   "description": "Swagen generators for .NET HttpClient",
   "main": "index.js",
   "scripts": {
     "bump": "npm version patch --no-git-tag-version",
     "bumppub": "npm run bump && npm publish",
-    "update-core": "npm un --save swagen-core && npm i --save swagen-core"
+    "update": "npm un --save swagen-core && npm i --save swagen-core"
   },
   "repository": {
     "type": "git",
@@ -23,6 +23,6 @@
   "homepage": "https://github.com/angular-template/swagen-dotnet-httpclient#readme",
   "dependencies": {
     "lodash": "^4.17.2",
-    "swagen-core": "0.0.12"
+    "swagen-core": "0.0.13"
   }
 }
