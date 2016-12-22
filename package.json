@@ -23,6 +23,6 @@
   "homepage": "https://github.com/angular-template/swagen-dotnet-httpclient#readme",
   "dependencies": {
     "lodash": "^4.17.2",
-    "swagen-core": "0.0.13"
+    "swagen-core": "0.0.14"
   }
 }
