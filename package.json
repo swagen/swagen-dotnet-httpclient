@@ -1,6 +1,6 @@
 {
   "name": "swagen-dotnet-httpclient",
-  "version": "0.0.12",
+  "version": "0.0.13",
   "description": "Swagen generators for .NET HttpClient",
   "main": "index.js",
   "scripts": {
