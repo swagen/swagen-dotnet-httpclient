@@ -6,14 +6,6 @@ const modeMappings = {
     'cs': 'csharp'
 };
 
-const supportedModes = [
-    {
-        name: 'csharp',
-        description: 'Generates C# code',
-        language: 'c#'
-    }
-];
-
 function generate(definition, profile) {
     let mode = modeMappings[profile.mode || 'csharp'];
     let Generator = require(`./lib/${mode}`);
@@ -35,7 +27,7 @@ function validate(profile) {
 }
 
 module.exports = {
-    supportedModes: supportedModes,
+    modes: require('./lib/metadata'),
     generate: generate,
     validateProfile: validate
 };
