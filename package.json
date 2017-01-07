@@ -1,6 +1,6 @@
 {
   "name": "swagen-dotnet-httpclient",
-  "version": "0.0.13",
+  "version": "0.0.14",
   "description": "Swagen generators for .NET HttpClient",
   "main": "index.js",
   "scripts": {
@@ -10,20 +10,20 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/angular-template/swagen-dotnet-httpclient.git"
+    "url": "git+https://github.com/swagen/swagen-dotnet-httpclient.git"
   },
   "keywords": [
     "swagen"
   ],
-  "author": "Angular Template",
+  "author": "Swagen <swagen@jeevanjames.com>",
   "license": "Apache-2.0",
   "bugs": {
-    "url": "https://github.com/angular-template/swagen-dotnet-httpclient/issues"
+    "url": "https://github.com/swagen/swagen-dotnet-httpclient/issues"
   },
-  "homepage": "https://github.com/angular-template/swagen-dotnet-httpclient#readme",
+  "homepage": "https://github.com/swagen/swagen-dotnet-httpclient#readme",
   "dependencies": {
     "lodash": "^4.17.2",
     "node-html-encoder": "0.0.2",
-    "swagen-core": "0.0.13"
+    "swagen-core": "0.0.16"
   }
 }
