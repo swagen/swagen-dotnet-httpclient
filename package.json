@@ -1,29 +1,30 @@
 {
-  "name": "swagen-dotnet-httpclient",
-  "version": "0.0.14",
-  "description": "Swagen generators for .NET HttpClient",
-  "main": "index.js",
-  "scripts": {
-    "bump": "npm version patch --no-git-tag-version",
-    "bumppub": "npm run bump && npm publish",
-    "update": "npm un --save swagen-core && npm i --save swagen-core"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/swagen/swagen-dotnet-httpclient.git"
-  },
-  "keywords": [
-    "swagen"
-  ],
-  "author": "Swagen <swagen@jeevanjames.com>",
-  "license": "Apache-2.0",
-  "bugs": {
-    "url": "https://github.com/swagen/swagen-dotnet-httpclient/issues"
-  },
-  "homepage": "https://github.com/swagen/swagen-dotnet-httpclient#readme",
-  "dependencies": {
-    "lodash": "^4.17.2",
-    "node-html-encoder": "0.0.2",
-    "swagen-core": "0.0.16"
-  }
+    "name": "swagen-dotnet-httpclient",
+    "version": "1.0.0-beta.2",
+    "description": "Swagen generators for .NET HttpClient",
+    "main": "index.js",
+    "scripts": {
+        "test": "node ./test-harness",
+        "bump": "npm version prerelease --no-git-tag-version",
+        "update": "npm un --save swagen-core && npm i --save swagen-core",
+        "postpublish": "npm run bump"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/swagen/swagen-dotnet-httpclient.git"
+    },
+    "keywords": [
+        "swagen"
+    ],
+    "author": "Swagen <swagen@jeevanjames.com>",
+    "license": "Apache-2.0",
+    "bugs": {
+        "url": "https://github.com/swagen/swagen-dotnet-httpclient/issues"
+    },
+    "homepage": "https://github.com/swagen/swagen-dotnet-httpclient#readme",
+    "dependencies": {
+        "lodash": "^4.17.2",
+        "node-html-encoder": "0.0.2",
+        "swagen-core": "^1.0.0-beta.2"
+    }
 }

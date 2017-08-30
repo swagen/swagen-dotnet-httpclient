@@ -1,0 +1,1148 @@
+{
+    "metadata": {
+        "description": "Tavant RPOS UI Services API",
+        "title": "Tavant.Rpos.Api",
+        "baseUrl": "http://rpos-dev.azurewebsites.net/"
+    },
+    "services": {
+        "AssetsLiabilities": {
+            "assetsLiabilitiesGetAssetsLiabilities": {
+                "path": "/api/assets-liabilities",
+                "verb": "get",
+                "parameters": [
+                    {
+                        "name": "applicationId",
+                        "type": "query",
+                        "required": false,
+                        "dataType": {
+                            "primitive": "string"
+                        }
+                    },
+                    {
+                        "name": "borrowerId",
+                        "type": "query",
+                        "required": false,
+                        "dataType": {
+                            "primitive": "string"
+                        }
+                    },
+                    {
+                        "name": "coBorrowerId",
+                        "type": "query",
+                        "required": false,
+                        "dataType": {
+                            "primitive": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "dataType": {
+                            "complex": "AssetsLiabilities"
+                        }
+                    },
+                    "500": {
+                        "dataType": {
+                            "complex": "Error"
+                        }
+                    }
+                }
+            },
+            "assetsLiabilitiesSaveAssetsLiabilities": {
+                "path": "/api/assets-liabilities",
+                "verb": "put",
+                "parameters": [
+                    {
+                        "name": "assetsLiabilities",
+                        "type": "body",
+                        "required": true,
+                        "dataType": {
+                            "complex": "AssetsLiabilities"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "dataType": {
+                            "complex": "AssetsLiabilities"
+                        }
+                    },
+                    "500": {
+                        "dataType": {
+                            "complex": "Error"
+                        }
+                    }
+                }
+            }
+        },
+        "Data": {
+            "branchSearchBranches": {
+                "description": "Retrieves all branches for the organization.",
+                "path": "/data/branches",
+                "verb": "get",
+                "parameters": [
+                    {
+                        "name": "startRecord",
+                        "type": "query",
+                        "required": false,
+                        "dataType": {
+                            "primitive": "integer",
+                            "subType": "int32"
+                        }
+                    },
+                    {
+                        "name": "recordCount",
+                        "type": "query",
+                        "required": false,
+                        "dataType": {
+                            "primitive": "integer",
+                            "subType": "int32"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "dataType": {
+                            "complex": "BranchSearchResult"
+                        }
+                    },
+                    "500": {
+                        "dataType": {
+                            "complex": "Error"
+                        }
+                    }
+                }
+            },
+            "branchUpsertBranches": {
+                "path": "/data/branches",
+                "verb": "post",
+                "parameters": [
+                    {
+                        "name": "branches",
+                        "type": "body",
+                        "required": true,
+                        "dataType": {
+                            "isArray": true,
+                            "complex": "Branch"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "dataType": {
+                            "complex": "Branch"
+                        }
+                    },
+                    "400": {},
+                    "500": {
+                        "dataType": {
+                            "complex": "Error"
+                        }
+                    }
+                }
+            },
+            "branchGetBranch": {
+                "path": "/data/branches/{id}",
+                "verb": "get",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "type": "path",
+                        "required": true,
+                        "dataType": {
+                            "primitive": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "dataType": {
+                            "complex": "Branch"
+                        }
+                    },
+                    "404": {},
+                    "500": {
+                        "dataType": {
+                            "complex": "Error"
+                        }
+                    }
+                }
+            },
+            "branchDeleteBranch": {
+                "path": "/data/branches/{id}",
+                "verb": "delete",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "type": "path",
+                        "required": true,
+                        "dataType": {
+                            "primitive": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "dataType": {
+                            "primitive": "object"
+                        }
+                    },
+                    "204": {},
+                    "500": {
+                        "dataType": {
+                            "complex": "Error"
+                        }
+                    }
+                }
+            }
+        },
+        "RateSheet": {
+            "rateSheetSearchRateSheets": {
+                "path": "/api/rate-sheets",
+                "verb": "get",
+                "parameters": [
+                    {
+                        "name": "startRecord",
+                        "type": "query",
+                        "required": false,
+                        "dataType": {
+                            "primitive": "integer",
+                            "subType": "int32"
+                        }
+                    },
+                    {
+                        "name": "recordCount",
+                        "type": "query",
+                        "required": false,
+                        "dataType": {
+                            "primitive": "integer",
+                            "subType": "int32"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "dataType": {
+                            "complex": "RateSheetSearchResults"
+                        }
+                    },
+                    "500": {
+                        "dataType": {
+                            "complex": "Error"
+                        }
+                    }
+                }
+            }
+        },
+        "UiRateSheet": {
+            "uiRateSheetGetDailyRateSheet": {
+                "path": "/ui/rate-sheets/daily",
+                "verb": "get",
+                "parameters": [],
+                "responses": {
+                    "200": {
+                        "dataType": {
+                            "complex": "DailyRateSheet"
+                        }
+                    }
+                }
+            },
+            "uiRateSheetGetArchiveRateSheets": {
+                "path": "/ui/rate-sheets/archive",
+                "verb": "get",
+                "parameters": [],
+                "responses": {
+                    "200": {}
+                }
+            }
+        }
+    },
+    "models": {
+        "AssetsLiabilitiesRequest": {
+            "applicationId": {
+                "primitive": "string",
+                "required": false
+            },
+            "borrowerId": {
+                "primitive": "string",
+                "required": false
+            },
+            "coBorrowerId": {
+                "primitive": "string",
+                "required": false
+            }
+        },
+        "AssetsLiabilities": {
+            "applicationId": {
+                "primitive": "string",
+                "required": false
+            },
+            "statementCompleted": {
+                "enum": "StatementCompletedAssetsLiabilities",
+                "required": false
+            },
+            "vacancyFactor": {
+                "primitive": "number",
+                "subType": "double",
+                "required": false
+            },
+            "subjectPropertyAddress": {
+                "complex": "Address",
+                "required": false
+            },
+            "borrowerAddress": {
+                "complex": "BorrowerAddress",
+                "required": false
+            },
+            "coBorrowerAddress": {
+                "complex": "BorrowerAddress",
+                "required": false
+            },
+            "assetHeader": {
+                "complex": "AssetHeader",
+                "required": false
+            },
+            "assets": {
+                "isArray": true,
+                "complex": "Asset",
+                "required": false
+            },
+            "liabilities": {
+                "isArray": true,
+                "complex": "Liability",
+                "required": false
+            },
+            "realEstateOwnedList": {
+                "isArray": true,
+                "complex": "RealEstateOwned",
+                "required": false
+            },
+            "id": {
+                "primitive": "string",
+                "required": false
+            }
+        },
+        "Address": {
+            "lines": {
+                "isArray": true,
+                "primitive": "string",
+                "required": false
+            },
+            "city": {
+                "primitive": "string",
+                "required": false
+            },
+            "state": {
+                "primitive": "string",
+                "required": false
+            },
+            "zip": {
+                "primitive": "string",
+                "required": false
+            },
+            "id": {
+                "primitive": "string",
+                "required": false
+            }
+        },
+        "BorrowerAddress": {
+            "borrowerId": {
+                "primitive": "string",
+                "required": false
+            },
+            "address": {
+                "complex": "Address",
+                "required": false
+            },
+            "id": {
+                "primitive": "string",
+                "required": false
+            }
+        },
+        "AssetHeader": {
+            "appDepositDesc": {
+                "primitive": "string",
+                "required": false
+            },
+            "appDepositAmt": {
+                "primitive": "number",
+                "subType": "double",
+                "required": false
+            },
+            "earnestDesc": {
+                "primitive": "string",
+                "required": false
+            },
+            "earnestAmt": {
+                "primitive": "number",
+                "subType": "double",
+                "required": false
+            },
+            "cashTowardsPurchaseIncludeInNetWorth": {
+                "primitive": "boolean",
+                "required": false
+            },
+            "id": {
+                "primitive": "string",
+                "required": false
+            }
+        },
+        "Asset": {
+            "assetType": {
+                "enum": "AssetTypeAsset",
+                "required": false
+            },
+            "borrowerId": {
+                "primitive": "string",
+                "required": false
+            },
+            "companyName": {
+                "primitive": "string",
+                "required": false
+            },
+            "addressLines": {
+                "isArray": true,
+                "primitive": "string",
+                "required": false
+            },
+            "city": {
+                "primitive": "string",
+                "required": false
+            },
+            "state": {
+                "primitive": "string",
+                "required": false
+            },
+            "zipCode": {
+                "primitive": "string",
+                "required": false
+            },
+            "remarks": {
+                "primitive": "string",
+                "required": false
+            },
+            "checkingSavings": {
+                "isArray": true,
+                "complex": "CheckingSavings",
+                "required": false
+            },
+            "stocksAndBonds": {
+                "isArray": true,
+                "complex": "StocksAndBonds",
+                "required": false
+            },
+            "autoOwned": {
+                "isArray": true,
+                "complex": "AutoOwned",
+                "required": false
+            },
+            "lifeInsurance": {
+                "complex": "LifeInsurance",
+                "required": false
+            },
+            "others": {
+                "isArray": true,
+                "complex": "Other",
+                "required": false
+            },
+            "retirementFundsBalance": {
+                "primitive": "number",
+                "subType": "double",
+                "required": false
+            },
+            "netWorthBusinessBalance": {
+                "primitive": "number",
+                "subType": "double",
+                "required": false
+            },
+            "totalBalance": {
+                "primitive": "number",
+                "subType": "double",
+                "required": false
+            },
+            "recordStatus": {
+                "enum": "RecordStatusAsset",
+                "required": false
+            },
+            "id": {
+                "primitive": "string",
+                "required": false
+            }
+        },
+        "Liability": {
+            "liabilityType": {
+                "enum": "LiabilityTypeLiability",
+                "required": false
+            },
+            "borrowerId": {
+                "primitive": "string",
+                "required": false
+            },
+            "accountType": {
+                "enum": "AccountTypeLiability",
+                "required": false
+            },
+            "companyName": {
+                "primitive": "string",
+                "required": false
+            },
+            "addressLines": {
+                "isArray": true,
+                "primitive": "string",
+                "required": false
+            },
+            "city": {
+                "primitive": "string",
+                "required": false
+            },
+            "state": {
+                "primitive": "string",
+                "required": false
+            },
+            "zipCode": {
+                "primitive": "string",
+                "required": false
+            },
+            "accountNumber": {
+                "primitive": "string",
+                "required": false
+            },
+            "unpaidBalance": {
+                "primitive": "number",
+                "subType": "double",
+                "required": false
+            },
+            "notCounted": {
+                "primitive": "boolean",
+                "required": false
+            },
+            "toBePaidOff": {
+                "primitive": "boolean",
+                "required": false
+            },
+            "omitted": {
+                "primitive": "boolean",
+                "required": false
+            },
+            "listedOnCreditReport": {
+                "primitive": "boolean",
+                "required": false
+            },
+            "resubordinated": {
+                "primitive": "boolean",
+                "required": false
+            },
+            "defaultPaymentLeft": {
+                "primitive": "integer",
+                "subType": "int32",
+                "required": false
+            },
+            "overrideDefault": {
+                "primitive": "boolean",
+                "required": false
+            },
+            "overridePaymentLeft": {
+                "primitive": "string",
+                "required": false
+            },
+            "monthlyPayment": {
+                "primitive": "number",
+                "subType": "double",
+                "required": false
+            },
+            "atrNotes": {
+                "primitive": "string",
+                "required": false
+            },
+            "otherNotes": {
+                "primitive": "string",
+                "required": false
+            },
+            "isLinkedToReo": {
+                "primitive": "boolean",
+                "required": false
+            },
+            "reoId": {
+                "primitive": "string",
+                "required": false
+            },
+            "lienPosition": {
+                "primitive": "integer",
+                "subType": "int32",
+                "required": false
+            },
+            "mortgagePayments": {
+                "primitive": "number",
+                "subType": "double",
+                "required": false
+            },
+            "otherExpenceType": {
+                "enum": "OtherExpenceTypeLiability",
+                "required": false
+            },
+            "otherExpenseOwedTo": {
+                "primitive": "string",
+                "required": false
+            },
+            "otherExpenseAmount": {
+                "primitive": "number",
+                "subType": "double",
+                "required": false
+            },
+            "otherExpenseQmatrNotes": {
+                "primitive": "string",
+                "required": false
+            },
+            "jobExpenseDesc1": {
+                "primitive": "string",
+                "required": false
+            },
+            "jobExpenseAmount1": {
+                "primitive": "number",
+                "subType": "double",
+                "required": false
+            },
+            "jobExpenseDesc2": {
+                "primitive": "string",
+                "required": false
+            },
+            "jobExpenseAmount2": {
+                "primitive": "number",
+                "subType": "double",
+                "required": false
+            },
+            "jobExpense1QmatrNotes": {
+                "primitive": "string",
+                "required": false
+            },
+            "jobExpense2QmatrNotes": {
+                "primitive": "string",
+                "required": false
+            },
+            "recordStatus": {
+                "enum": "RecordStatusAsset",
+                "required": false
+            },
+            "id": {
+                "primitive": "string",
+                "required": false
+            }
+        },
+        "RealEstateOwned": {
+            "borrowerId": {
+                "primitive": "string",
+                "required": false
+            },
+            "isCurrentResidence": {
+                "primitive": "boolean",
+                "required": false
+            },
+            "isSubjectProperty": {
+                "primitive": "boolean",
+                "required": false
+            },
+            "propertyAddresses": {
+                "isArray": true,
+                "primitive": "string",
+                "required": false
+            },
+            "city": {
+                "primitive": "string",
+                "required": false
+            },
+            "state": {
+                "primitive": "string",
+                "required": false
+            },
+            "zipCode": {
+                "primitive": "string",
+                "required": false
+            },
+            "propertyStatus": {
+                "enum": "PropertyStatusRealEstateOwned",
+                "required": false
+            },
+            "typeOfProperty": {
+                "enum": "TypeOfPropertyRealEstateOwned",
+                "required": false
+            },
+            "presentMarketValue": {
+                "primitive": "number",
+                "subType": "double",
+                "required": false
+            },
+            "amountOfMortgages": {
+                "primitive": "number",
+                "subType": "double",
+                "required": false
+            },
+            "grossRentalIncome": {
+                "primitive": "number",
+                "subType": "double",
+                "required": false
+            },
+            "vacancyFactor": {
+                "primitive": "number",
+                "subType": "double",
+                "required": false
+            },
+            "overrideVacancyFactor": {
+                "primitive": "boolean",
+                "required": false
+            },
+            "overrideVacancyFactorValue": {
+                "primitive": "number",
+                "subType": "double",
+                "required": false
+            },
+            "incomeLessVacancy": {
+                "primitive": "number",
+                "subType": "double",
+                "required": false
+            },
+            "mortgagePayments": {
+                "primitive": "number",
+                "subType": "double",
+                "required": false
+            },
+            "includeTandI": {
+                "primitive": "boolean",
+                "required": false
+            },
+            "insMainTaxHoa": {
+                "primitive": "number",
+                "subType": "double",
+                "required": false
+            },
+            "netRentalIncome": {
+                "primitive": "number",
+                "subType": "double",
+                "required": false
+            },
+            "overrideDefaultNri": {
+                "primitive": "boolean",
+                "required": false
+            },
+            "overrideNriValue": {
+                "primitive": "number",
+                "subType": "double",
+                "required": false
+            },
+            "piti": {
+                "primitive": "number",
+                "subType": "double",
+                "required": false
+            },
+            "overrideDefaultPiti": {
+                "primitive": "boolean",
+                "required": false
+            },
+            "overridePitiValue": {
+                "primitive": "number",
+                "subType": "double",
+                "required": false
+            },
+            "linkedToLiability": {
+                "primitive": "boolean",
+                "required": false
+            },
+            "linkedLiabilities": {
+                "isArray": true,
+                "complex": "Liability",
+                "required": false
+            },
+            "totalReoValue": {
+                "primitive": "number",
+                "subType": "double",
+                "required": false
+            },
+            "recordStatus": {
+                "enum": "RecordStatusAsset",
+                "required": false
+            },
+            "id": {
+                "primitive": "string",
+                "required": false
+            }
+        },
+        "CheckingSavings": {
+            "accountType": {
+                "enum": "AccountTypeCheckingSavings",
+                "required": false
+            },
+            "accountNumber": {
+                "primitive": "string",
+                "required": false
+            },
+            "balanceOrMarketValue": {
+                "primitive": "number",
+                "subType": "double",
+                "required": false
+            },
+            "recordStatus": {
+                "enum": "RecordStatusAsset",
+                "required": false
+            },
+            "id": {
+                "primitive": "string",
+                "required": false
+            }
+        },
+        "StocksAndBonds": {
+            "bankName": {
+                "primitive": "string",
+                "required": false
+            },
+            "balanceOrMarketValue": {
+                "primitive": "number",
+                "subType": "double",
+                "required": false
+            },
+            "id": {
+                "primitive": "string",
+                "required": false
+            }
+        },
+        "AutoOwned": {
+            "autosOwned": {
+                "primitive": "string",
+                "required": false
+            },
+            "balanceOrMarketValue": {
+                "primitive": "number",
+                "subType": "double",
+                "required": false
+            },
+            "id": {
+                "primitive": "string",
+                "required": false
+            }
+        },
+        "LifeInsurance": {
+            "faceAmountName": {
+                "primitive": "number",
+                "subType": "double",
+                "required": false
+            },
+            "balanceOrMarketValue": {
+                "primitive": "number",
+                "subType": "double",
+                "required": false
+            },
+            "id": {
+                "primitive": "string",
+                "required": false
+            }
+        },
+        "Other": {
+            "assetName": {
+                "primitive": "string",
+                "required": false
+            },
+            "balanceOrMarketValue": {
+                "primitive": "number",
+                "subType": "double",
+                "required": false
+            },
+            "id": {
+                "primitive": "string",
+                "required": false
+            }
+        },
+        "Error": {
+            "errorCode": {
+                "primitive": "string",
+                "subType": "uuid",
+                "required": false
+            },
+            "correlationId": {
+                "primitive": "string",
+                "subType": "uuid",
+                "required": false
+            },
+            "debug": {
+                "primitive": "string",
+                "required": false
+            }
+        },
+        "BranchSearchCriteria": {
+            "filters": {
+                "isArray": true,
+                "complex": "BranchFilterCriteria",
+                "required": false
+            },
+            "sortSpecs": {
+                "isArray": true,
+                "complex": "BranchSortSpec",
+                "required": false
+            },
+            "startRecord": {
+                "primitive": "integer",
+                "subType": "int32",
+                "required": false
+            },
+            "recordCount": {
+                "primitive": "integer",
+                "subType": "int32",
+                "required": false
+            }
+        },
+        "BranchFilterCriteria": {
+            "field": {
+                "enum": "FieldBranchFilterCriteria",
+                "required": false
+            },
+            "operation": {
+                "enum": "OperationBranchFilterCriteria",
+                "required": false
+            },
+            "value": {
+                "primitive": "object",
+                "required": false
+            }
+        },
+        "BranchSortSpec": {
+            "field": {
+                "enum": "FieldBranchFilterCriteria",
+                "required": false
+            },
+            "order": {
+                "enum": "OrderBranchSortSpec",
+                "required": false
+            }
+        },
+        "BranchSearchResult": {
+            "data": {
+                "isArray": true,
+                "complex": "Branch",
+                "required": false
+            },
+            "totalCount": {
+                "primitive": "integer",
+                "subType": "int32",
+                "required": false
+            }
+        },
+        "Branch": {
+            "name": {
+                "primitive": "string",
+                "required": false
+            },
+            "id": {
+                "primitive": "string",
+                "required": false
+            }
+        },
+        "RateSheetSearchCriteria": {
+            "filters": {
+                "isArray": true,
+                "complex": "RateSheetFilterCriteria",
+                "required": false
+            },
+            "sortSpecs": {
+                "isArray": true,
+                "complex": "RateSheetSortSpec",
+                "required": false
+            },
+            "startRecord": {
+                "primitive": "integer",
+                "subType": "int32",
+                "required": false
+            },
+            "recordCount": {
+                "primitive": "integer",
+                "subType": "int32",
+                "required": false
+            }
+        },
+        "RateSheetFilterCriteria": {
+            "field": {
+                "enum": "FieldRateSheetFilterCriteria",
+                "required": false
+            },
+            "operation": {
+                "enum": "OperationBranchFilterCriteria",
+                "required": false
+            },
+            "value": {
+                "primitive": "object",
+                "required": false
+            }
+        },
+        "RateSheetSortSpec": {
+            "field": {
+                "enum": "FieldRateSheetFilterCriteria",
+                "required": false
+            },
+            "order": {
+                "enum": "OrderBranchSortSpec",
+                "required": false
+            }
+        },
+        "RateSheetSearchResults": {
+            "data": {
+                "isArray": true,
+                "complex": "RateSheet",
+                "required": false
+            },
+            "totalCount": {
+                "primitive": "integer",
+                "subType": "int32",
+                "required": false
+            }
+        },
+        "RateSheet": {
+            "name": {
+                "primitive": "string",
+                "required": false
+            },
+            "fileType": {
+                "primitive": "string",
+                "required": false
+            },
+            "branchId": {
+                "primitive": "string",
+                "required": false
+            },
+            "fromDate": {
+                "primitive": "string",
+                "subType": "date-time",
+                "required": false
+            },
+            "toDate": {
+                "primitive": "string",
+                "subType": "date-time",
+                "required": false
+            },
+            "id": {
+                "primitive": "string",
+                "required": false
+            }
+        },
+        "DailyRateSheet": {
+            "branches": {
+                "complex": "BranchSearchResult",
+                "required": false
+            },
+            "rateSheets": {
+                "complex": "RateSheetSearchResults",
+                "required": false
+            }
+        }
+    },
+    "enums": {
+        "StatementCompletedAssetsLiabilities": [
+            "NotAssigned",
+            "Jointly",
+            "NotJointly"
+        ],
+        "AssetTypeAsset": [
+            "NotAssigned",
+            "CheckingAndSaving",
+            "StocksAndBonds",
+            "AutoOwned",
+            "OtherAssets",
+            "LifeInsurance",
+            "RetirementFunds",
+            "NetWorthBusiness"
+        ],
+        "RecordStatusAsset": [
+            "NotAssigned",
+            "New",
+            "Update",
+            "Delete"
+        ],
+        "LiabilityTypeLiability": [
+            "NotAssigned",
+            "Banking",
+            "Other"
+        ],
+        "AccountTypeLiability": [
+            "NotAssigned",
+            "Revolving",
+            "Installment",
+            "Mortgage",
+            "Heloc",
+            "Liens",
+            "LeasePayments",
+            "Open",
+            "Taxes",
+            "Other"
+        ],
+        "OtherExpenceTypeLiability": [
+            "NotAssigned",
+            "Alimony",
+            "ChildSupport",
+            "SeperateMaintance",
+            "OtherExpense"
+        ],
+        "PropertyStatusRealEstateOwned": [
+            "NotAssigned",
+            "Sold",
+            "PendingSale",
+            "Rental",
+            "Retained"
+        ],
+        "TypeOfPropertyRealEstateOwned": [
+            "NotAssigned",
+            "SingleFamily",
+            "Condominium",
+            "TownHouse",
+            "CoOperative",
+            "TwoToFourUnitProperty",
+            "MultiFamilyMoreThanFourUnits",
+            "ManufacturedMobileHome",
+            "CommercialNonResidential",
+            "MixedUseResidential",
+            "Farm",
+            "HomeAndBusinessCombined",
+            "Land"
+        ],
+        "AccountTypeCheckingSavings": [
+            "NotAssigned",
+            "Savings",
+            "Checkings",
+            "CashDepositOnSaleContract",
+            "GiftNotDeposited",
+            "CertificateOfDeposit",
+            "MoneyMarketFund",
+            "MutualFunds",
+            "Stocks",
+            "Bonds",
+            "SecuredBorrowedFundsNotDeposited",
+            "BridgeLoanNotDeposited",
+            "RetairementFunds",
+            "NetWorthOfBusinessOwned",
+            "TrustFunds",
+            "OtherNonLiquidAsset",
+            "OtherLiquidAsset",
+            "NetProceedsFromSaleOfRealEstate",
+            "NetEquity",
+            "CashOnHand",
+            "GiftOfEquity"
+        ],
+        "FieldBranchFilterCriteria": [
+            "Name"
+        ],
+        "OperationBranchFilterCriteria": [
+            "Equals",
+            "DoesNotEqual",
+            "GreaterThan",
+            "GreaterThanOrEqual",
+            "LessThan",
+            "LessThanOrEqual",
+            "Like"
+        ],
+        "OrderBranchSortSpec": [
+            "Ascending",
+            "Descending"
+        ],
+        "FieldRateSheetFilterCriteria": [
+            "Name",
+            "FileType",
+            "BranchId",
+            "FromDate",
+            "ToDate"
+        ]
+    }
+}

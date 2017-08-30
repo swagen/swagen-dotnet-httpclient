@@ -1,0 +1,19 @@
+{
+    "output": "./output.cs",
+    "generator": "dotnet-httpclient",
+    "mode": "csharp",
+    "transforms": {
+        "serviceName": "pascalCase",
+        "operationName": "pascalCase",
+        "modelName": "pascalCase",
+        "propertyName": "pascalCase"
+    },
+    "url": "http://rpos-dev.azurewebsites.net/swagger/docs/v1",
+    "options": {
+        "namespaces": {
+            "services": "MyNamespace.Services",
+            "models": "MyNamespace.Services"
+        },
+        "serviceSuffix": "Client"
+    }
+}
