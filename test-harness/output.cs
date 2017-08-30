@@ -25,13 +25,13 @@ using __models = MyNamespace.Services;
 namespace MyNamespace.Services
 {
 
-    public sealed partial class AssetsLiabilitiesClient
+    internal sealed partial class AssetsLiabilitiesClient
     {
         private readonly HttpClient _client;
         private readonly JsonSerializerSettings _serializerSettings;
-        private Uri _baseUri = new Uri("http://rpos-dev.azurewebsites.net/", UriKind.Absolute);
+        private Uri _baseUrl = new Uri("http://rpos-dev.azurewebsites.net/", UriKind.Absolute);
 
-        public AssetsLiabilitiesClient()
+        internal AssetsLiabilitiesClient()
         {
             _client = new HttpClient();
             InitializeClient(_client);
@@ -42,13 +42,13 @@ namespace MyNamespace.Services
         partial void InitializeClient(HttpClient client);
         partial void InitializeJsonSerializer(JsonSerializerSettings settings);
 
-        public Uri BaseUri
+        internal Uri BaseUrl
         {
             get => _baseUrl;
             set => _baseUrl = value ?? throw new ArgumentNullException(nameof(value));
         }
 
-        public async Task<__models.AssetsLiabilities> assetsLiabilitiesGetAssetsLiabilities(string applicationId = default(string), string borrowerId = default(string), string coBorrowerId = default(string))
+        internal async Task<__models.AssetsLiabilities> assetsLiabilitiesGetAssetsLiabilities(string applicationId = default(string), string borrowerId = default(string), string coBorrowerId = default(string))
         {
             string resourceUrl = "/api/assets-liabilities";
 
@@ -78,12 +78,12 @@ namespace MyNamespace.Services
                         var result500 = JsonConvert.DeserializeObject<__models.Error>(responseContent);
                         throw new WebApiClientException<__models.Error>("A server side error occurred.", statusCode, result500);
                     default:
-                        throw new WebApiClientException($"Unexpected status code was returned from {serviceUrl}", statusCode, responseContent);
+                        throw new WebApiClientException($"Unexpected status code {statusCode} was returned from {serviceUrl}", statusCode, responseContent);
                 }
             }
         }
 
-        public async Task<__models.AssetsLiabilities> assetsLiabilitiesSaveAssetsLiabilities(__models.AssetsLiabilities assetsLiabilities)
+        internal async Task<__models.AssetsLiabilities> assetsLiabilitiesSaveAssetsLiabilities(__models.AssetsLiabilities assetsLiabilities)
         {
             if (assetsLiabilities == null)
                 throw new ArgumentNullException(nameof(assetsLiabilities));
@@ -112,7 +112,7 @@ namespace MyNamespace.Services
                         var result500 = JsonConvert.DeserializeObject<__models.Error>(responseContent);
                         throw new WebApiClientException<__models.Error>("A server side error occurred.", statusCode, result500);
                     default:
-                        throw new WebApiClientException($"Unexpected status code was returned from {serviceUrl}", statusCode, responseContent);
+                        throw new WebApiClientException($"Unexpected status code {statusCode} was returned from {serviceUrl}", statusCode, responseContent);
                 }
             }
         }
@@ -138,13 +138,13 @@ namespace MyNamespace.Services
         }
     }
 
-    public sealed partial class DataClient
+    internal sealed partial class DataClient
     {
         private readonly HttpClient _client;
         private readonly JsonSerializerSettings _serializerSettings;
-        private Uri _baseUri = new Uri("http://rpos-dev.azurewebsites.net/", UriKind.Absolute);
+        private Uri _baseUrl = new Uri("http://rpos-dev.azurewebsites.net/", UriKind.Absolute);
 
-        public DataClient()
+        internal DataClient()
         {
             _client = new HttpClient();
             InitializeClient(_client);
@@ -155,13 +155,13 @@ namespace MyNamespace.Services
         partial void InitializeClient(HttpClient client);
         partial void InitializeJsonSerializer(JsonSerializerSettings settings);
 
-        public Uri BaseUri
+        internal Uri BaseUrl
         {
             get => _baseUrl;
             set => _baseUrl = value ?? throw new ArgumentNullException(nameof(value));
         }
 
-        public async Task<__models.BranchSearchResult> branchSearchBranches(int startRecord = default(int), int recordCount = default(int))
+        internal async Task<__models.BranchSearchResult> branchSearchBranches(int startRecord = default(int), int recordCount = default(int))
         {
             string resourceUrl = "/data/branches";
 
@@ -190,12 +190,12 @@ namespace MyNamespace.Services
                         var result500 = JsonConvert.DeserializeObject<__models.Error>(responseContent);
                         throw new WebApiClientException<__models.Error>("A server side error occurred.", statusCode, result500);
                     default:
-                        throw new WebApiClientException($"Unexpected status code was returned from {serviceUrl}", statusCode, responseContent);
+                        throw new WebApiClientException($"Unexpected status code {statusCode} was returned from {serviceUrl}", statusCode, responseContent);
                 }
             }
         }
 
-        public async Task<__models.Branch> branchUpsertBranches(IReadOnlyList<__models.Branch> branches)
+        internal async Task<__models.Branch> branchUpsertBranches(IReadOnlyList<__models.Branch> branches)
         {
             if (branches == null)
                 throw new ArgumentNullException(nameof(branches));
@@ -226,12 +226,12 @@ namespace MyNamespace.Services
                         var result500 = JsonConvert.DeserializeObject<__models.Error>(responseContent);
                         throw new WebApiClientException<__models.Error>("A server side error occurred.", statusCode, result500);
                     default:
-                        throw new WebApiClientException($"Unexpected status code was returned from {serviceUrl}", statusCode, responseContent);
+                        throw new WebApiClientException($"Unexpected status code {statusCode} was returned from {serviceUrl}", statusCode, responseContent);
                 }
             }
         }
 
-        public async Task<__models.Branch> branchGetBranch(string id)
+        internal async Task<__models.Branch> branchGetBranch(string id)
         {
             if (id == null)
                 throw new ArgumentNullException(nameof(id));
@@ -260,12 +260,12 @@ namespace MyNamespace.Services
                         var result500 = JsonConvert.DeserializeObject<__models.Error>(responseContent);
                         throw new WebApiClientException<__models.Error>("A server side error occurred.", statusCode, result500);
                     default:
-                        throw new WebApiClientException($"Unexpected status code was returned from {serviceUrl}", statusCode, responseContent);
+                        throw new WebApiClientException($"Unexpected status code {statusCode} was returned from {serviceUrl}", statusCode, responseContent);
                 }
             }
         }
 
-        public async Task<object> branchDeleteBranch(string id)
+        internal async Task<object> branchDeleteBranch(string id)
         {
             if (id == null)
                 throw new ArgumentNullException(nameof(id));
@@ -294,7 +294,7 @@ namespace MyNamespace.Services
                         var result500 = JsonConvert.DeserializeObject<__models.Error>(responseContent);
                         throw new WebApiClientException<__models.Error>("A server side error occurred.", statusCode, result500);
                     default:
-                        throw new WebApiClientException($"Unexpected status code was returned from {serviceUrl}", statusCode, responseContent);
+                        throw new WebApiClientException($"Unexpected status code {statusCode} was returned from {serviceUrl}", statusCode, responseContent);
                 }
             }
         }
@@ -320,13 +320,13 @@ namespace MyNamespace.Services
         }
     }
 
-    public sealed partial class RateSheetClient
+    internal sealed partial class RateSheetClient
     {
         private readonly HttpClient _client;
         private readonly JsonSerializerSettings _serializerSettings;
-        private Uri _baseUri = new Uri("http://rpos-dev.azurewebsites.net/", UriKind.Absolute);
+        private Uri _baseUrl = new Uri("http://rpos-dev.azurewebsites.net/", UriKind.Absolute);
 
-        public RateSheetClient()
+        internal RateSheetClient()
         {
             _client = new HttpClient();
             InitializeClient(_client);
@@ -337,13 +337,13 @@ namespace MyNamespace.Services
         partial void InitializeClient(HttpClient client);
         partial void InitializeJsonSerializer(JsonSerializerSettings settings);
 
-        public Uri BaseUri
+        internal Uri BaseUrl
         {
             get => _baseUrl;
             set => _baseUrl = value ?? throw new ArgumentNullException(nameof(value));
         }
 
-        public async Task<__models.RateSheetSearchResults> rateSheetSearchRateSheets(int startRecord = default(int), int recordCount = default(int))
+        internal async Task<__models.RateSheetSearchResults> rateSheetSearchRateSheets(int startRecord = default(int), int recordCount = default(int))
         {
             string resourceUrl = "/api/rate-sheets";
 
@@ -372,7 +372,7 @@ namespace MyNamespace.Services
                         var result500 = JsonConvert.DeserializeObject<__models.Error>(responseContent);
                         throw new WebApiClientException<__models.Error>("A server side error occurred.", statusCode, result500);
                     default:
-                        throw new WebApiClientException($"Unexpected status code was returned from {serviceUrl}", statusCode, responseContent);
+                        throw new WebApiClientException($"Unexpected status code {statusCode} was returned from {serviceUrl}", statusCode, responseContent);
                 }
             }
         }
@@ -398,13 +398,13 @@ namespace MyNamespace.Services
         }
     }
 
-    public sealed partial class UiRateSheetClient
+    internal sealed partial class UiRateSheetClient
     {
         private readonly HttpClient _client;
         private readonly JsonSerializerSettings _serializerSettings;
-        private Uri _baseUri = new Uri("http://rpos-dev.azurewebsites.net/", UriKind.Absolute);
+        private Uri _baseUrl = new Uri("http://rpos-dev.azurewebsites.net/", UriKind.Absolute);
 
-        public UiRateSheetClient()
+        internal UiRateSheetClient()
         {
             _client = new HttpClient();
             InitializeClient(_client);
@@ -415,13 +415,13 @@ namespace MyNamespace.Services
         partial void InitializeClient(HttpClient client);
         partial void InitializeJsonSerializer(JsonSerializerSettings settings);
 
-        public Uri BaseUri
+        internal Uri BaseUrl
         {
             get => _baseUrl;
             set => _baseUrl = value ?? throw new ArgumentNullException(nameof(value));
         }
 
-        public async Task<__models.DailyRateSheet> uiRateSheetGetDailyRateSheet()
+        internal async Task<__models.DailyRateSheet> uiRateSheetGetDailyRateSheet()
         {
             string resourceUrl = "/ui/rate-sheets/daily";
 
@@ -441,12 +441,12 @@ namespace MyNamespace.Services
                         var result200 = JsonConvert.DeserializeObject<__models.DailyRateSheet>(responseContent);
                         return result200;
                     default:
-                        throw new WebApiClientException($"Unexpected status code was returned from {serviceUrl}", statusCode, responseContent);
+                        throw new WebApiClientException($"Unexpected status code {statusCode} was returned from {serviceUrl}", statusCode, responseContent);
                 }
             }
         }
 
-        public async Task uiRateSheetGetArchiveRateSheets()
+        internal async Task uiRateSheetGetArchiveRateSheets()
         {
             string resourceUrl = "/ui/rate-sheets/archive";
 
@@ -465,7 +465,7 @@ namespace MyNamespace.Services
                     case 200:
                         throw new WebApiClientException("A server side error occurred.", statusCode, responseContent);
                     default:
-                        throw new WebApiClientException($"Unexpected status code was returned from {serviceUrl}", statusCode, responseContent);
+                        throw new WebApiClientException($"Unexpected status code {statusCode} was returned from {serviceUrl}", statusCode, responseContent);
                 }
             }
         }
@@ -518,7 +518,7 @@ namespace MyNamespace.Services
 namespace MyNamespace.Services
 {
     [JsonObject(MemberSerialization.OptIn)]
-    public sealed partial class Address
+    internal sealed partial class Address
     {
         [JsonProperty("lines", Required = Required.Default, NullValueHandling = NullValueHandling.Ignore)]
         public IReadOnlyList<string> lines;
@@ -537,7 +537,7 @@ namespace MyNamespace.Services
 
     }
     [JsonObject(MemberSerialization.OptIn)]
-    public sealed partial class Asset
+    internal sealed partial class Asset
     {
         [JsonProperty("assetType", Required = Required.Default, NullValueHandling = NullValueHandling.Ignore)]
         public undefined assetType;
@@ -595,7 +595,7 @@ namespace MyNamespace.Services
 
     }
     [JsonObject(MemberSerialization.OptIn)]
-    public sealed partial class AssetHeader
+    internal sealed partial class AssetHeader
     {
         [JsonProperty("appDepositDesc", Required = Required.Default, NullValueHandling = NullValueHandling.Ignore)]
         public string appDepositDesc;
@@ -617,7 +617,7 @@ namespace MyNamespace.Services
 
     }
     [JsonObject(MemberSerialization.OptIn)]
-    public sealed partial class AssetsLiabilities
+    internal sealed partial class AssetsLiabilities
     {
         [JsonProperty("applicationId", Required = Required.Default, NullValueHandling = NullValueHandling.Ignore)]
         public string applicationId;
@@ -654,7 +654,7 @@ namespace MyNamespace.Services
 
     }
     [JsonObject(MemberSerialization.OptIn)]
-    public sealed partial class AssetsLiabilitiesRequest
+    internal sealed partial class AssetsLiabilitiesRequest
     {
         [JsonProperty("applicationId", Required = Required.Default, NullValueHandling = NullValueHandling.Ignore)]
         public string applicationId;
@@ -667,7 +667,7 @@ namespace MyNamespace.Services
 
     }
     [JsonObject(MemberSerialization.OptIn)]
-    public sealed partial class AutoOwned
+    internal sealed partial class AutoOwned
     {
         [JsonProperty("autosOwned", Required = Required.Default, NullValueHandling = NullValueHandling.Ignore)]
         public string autosOwned;
@@ -680,7 +680,7 @@ namespace MyNamespace.Services
 
     }
     [JsonObject(MemberSerialization.OptIn)]
-    public sealed partial class BorrowerAddress
+    internal sealed partial class BorrowerAddress
     {
         [JsonProperty("borrowerId", Required = Required.Default, NullValueHandling = NullValueHandling.Ignore)]
         public string borrowerId;
@@ -693,7 +693,7 @@ namespace MyNamespace.Services
 
     }
     [JsonObject(MemberSerialization.OptIn)]
-    public sealed partial class Branch
+    internal sealed partial class Branch
     {
         [JsonProperty("name", Required = Required.Default, NullValueHandling = NullValueHandling.Ignore)]
         public string name;
@@ -703,7 +703,7 @@ namespace MyNamespace.Services
 
     }
     [JsonObject(MemberSerialization.OptIn)]
-    public sealed partial class BranchFilterCriteria
+    internal sealed partial class BranchFilterCriteria
     {
         [JsonProperty("field", Required = Required.Default, NullValueHandling = NullValueHandling.Ignore)]
         public undefined field;
@@ -716,7 +716,7 @@ namespace MyNamespace.Services
 
     }
     [JsonObject(MemberSerialization.OptIn)]
-    public sealed partial class BranchSearchCriteria
+    internal sealed partial class BranchSearchCriteria
     {
         [JsonProperty("filters", Required = Required.Default, NullValueHandling = NullValueHandling.Ignore)]
         public IReadOnlyList<BranchFilterCriteria> filters;
@@ -732,7 +732,7 @@ namespace MyNamespace.Services
 
     }
     [JsonObject(MemberSerialization.OptIn)]
-    public sealed partial class BranchSearchResult
+    internal sealed partial class BranchSearchResult
     {
         [JsonProperty("data", Required = Required.Default, NullValueHandling = NullValueHandling.Ignore)]
         public IReadOnlyList<Branch> data;
@@ -742,7 +742,7 @@ namespace MyNamespace.Services
 
     }
     [JsonObject(MemberSerialization.OptIn)]
-    public sealed partial class BranchSortSpec
+    internal sealed partial class BranchSortSpec
     {
         [JsonProperty("field", Required = Required.Default, NullValueHandling = NullValueHandling.Ignore)]
         public undefined field;
@@ -752,7 +752,7 @@ namespace MyNamespace.Services
 
     }
     [JsonObject(MemberSerialization.OptIn)]
-    public sealed partial class CheckingSavings
+    internal sealed partial class CheckingSavings
     {
         [JsonProperty("accountType", Required = Required.Default, NullValueHandling = NullValueHandling.Ignore)]
         public undefined accountType;
@@ -771,7 +771,7 @@ namespace MyNamespace.Services
 
     }
     [JsonObject(MemberSerialization.OptIn)]
-    public sealed partial class DailyRateSheet
+    internal sealed partial class DailyRateSheet
     {
         [JsonProperty("branches", Required = Required.Default, NullValueHandling = NullValueHandling.Ignore)]
         public BranchSearchResult branches;
@@ -781,7 +781,7 @@ namespace MyNamespace.Services
 
     }
     [JsonObject(MemberSerialization.OptIn)]
-    public sealed partial class Error
+    internal sealed partial class Error
     {
         [JsonProperty("errorCode", Required = Required.Default, NullValueHandling = NullValueHandling.Ignore)]
         public string errorCode;
@@ -794,7 +794,7 @@ namespace MyNamespace.Services
 
     }
     [JsonObject(MemberSerialization.OptIn)]
-    public sealed partial class Liability
+    internal sealed partial class Liability
     {
         [JsonProperty("liabilityType", Required = Required.Default, NullValueHandling = NullValueHandling.Ignore)]
         public undefined liabilityType;
@@ -909,7 +909,7 @@ namespace MyNamespace.Services
 
     }
     [JsonObject(MemberSerialization.OptIn)]
-    public sealed partial class LifeInsurance
+    internal sealed partial class LifeInsurance
     {
         [JsonProperty("faceAmountName", Required = Required.Default, NullValueHandling = NullValueHandling.Ignore)]
         public double faceAmountName;
@@ -922,7 +922,7 @@ namespace MyNamespace.Services
 
     }
     [JsonObject(MemberSerialization.OptIn)]
-    public sealed partial class Other
+    internal sealed partial class Other
     {
         [JsonProperty("assetName", Required = Required.Default, NullValueHandling = NullValueHandling.Ignore)]
         public string assetName;
@@ -935,7 +935,7 @@ namespace MyNamespace.Services
 
     }
     [JsonObject(MemberSerialization.OptIn)]
-    public sealed partial class RateSheet
+    internal sealed partial class RateSheet
     {
         [JsonProperty("name", Required = Required.Default, NullValueHandling = NullValueHandling.Ignore)]
         public string name;
@@ -957,7 +957,7 @@ namespace MyNamespace.Services
 
     }
     [JsonObject(MemberSerialization.OptIn)]
-    public sealed partial class RateSheetFilterCriteria
+    internal sealed partial class RateSheetFilterCriteria
     {
         [JsonProperty("field", Required = Required.Default, NullValueHandling = NullValueHandling.Ignore)]
         public undefined field;
@@ -970,7 +970,7 @@ namespace MyNamespace.Services
 
     }
     [JsonObject(MemberSerialization.OptIn)]
-    public sealed partial class RateSheetSearchCriteria
+    internal sealed partial class RateSheetSearchCriteria
     {
         [JsonProperty("filters", Required = Required.Default, NullValueHandling = NullValueHandling.Ignore)]
         public IReadOnlyList<RateSheetFilterCriteria> filters;
@@ -986,7 +986,7 @@ namespace MyNamespace.Services
 
     }
     [JsonObject(MemberSerialization.OptIn)]
-    public sealed partial class RateSheetSearchResults
+    internal sealed partial class RateSheetSearchResults
     {
         [JsonProperty("data", Required = Required.Default, NullValueHandling = NullValueHandling.Ignore)]
         public IReadOnlyList<RateSheet> data;
@@ -996,7 +996,7 @@ namespace MyNamespace.Services
 
     }
     [JsonObject(MemberSerialization.OptIn)]
-    public sealed partial class RateSheetSortSpec
+    internal sealed partial class RateSheetSortSpec
     {
         [JsonProperty("field", Required = Required.Default, NullValueHandling = NullValueHandling.Ignore)]
         public undefined field;
@@ -1006,7 +1006,7 @@ namespace MyNamespace.Services
 
     }
     [JsonObject(MemberSerialization.OptIn)]
-    public sealed partial class RealEstateOwned
+    internal sealed partial class RealEstateOwned
     {
         [JsonProperty("borrowerId", Required = Required.Default, NullValueHandling = NullValueHandling.Ignore)]
         public string borrowerId;
@@ -1100,7 +1100,7 @@ namespace MyNamespace.Services
 
     }
     [JsonObject(MemberSerialization.OptIn)]
-    public sealed partial class StocksAndBonds
+    internal sealed partial class StocksAndBonds
     {
         [JsonProperty("bankName", Required = Required.Default, NullValueHandling = NullValueHandling.Ignore)]
         public string bankName;
@@ -1113,7 +1113,7 @@ namespace MyNamespace.Services
 
     }
 
-    public enum AccountTypeCheckingSavings
+    internal enum AccountTypeCheckingSavings
     {
         NotAssigned,
         Savings,
@@ -1137,7 +1137,7 @@ namespace MyNamespace.Services
         CashOnHand,
         GiftOfEquity,
     }
-    public enum AccountTypeLiability
+    internal enum AccountTypeLiability
     {
         NotAssigned,
         Revolving,
@@ -1150,7 +1150,7 @@ namespace MyNamespace.Services
         Taxes,
         Other,
     }
-    public enum AssetTypeAsset
+    internal enum AssetTypeAsset
     {
         NotAssigned,
         CheckingAndSaving,
@@ -1161,11 +1161,11 @@ namespace MyNamespace.Services
         RetirementFunds,
         NetWorthBusiness,
     }
-    public enum FieldBranchFilterCriteria
+    internal enum FieldBranchFilterCriteria
     {
         Name,
     }
-    public enum FieldRateSheetFilterCriteria
+    internal enum FieldRateSheetFilterCriteria
     {
         Name,
         FileType,
@@ -1173,13 +1173,13 @@ namespace MyNamespace.Services
         FromDate,
         ToDate,
     }
-    public enum LiabilityTypeLiability
+    internal enum LiabilityTypeLiability
     {
         NotAssigned,
         Banking,
         Other,
     }
-    public enum OperationBranchFilterCriteria
+    internal enum OperationBranchFilterCriteria
     {
         Equals,
         DoesNotEqual,
@@ -1189,12 +1189,12 @@ namespace MyNamespace.Services
         LessThanOrEqual,
         Like,
     }
-    public enum OrderBranchSortSpec
+    internal enum OrderBranchSortSpec
     {
         Ascending,
         Descending,
     }
-    public enum OtherExpenceTypeLiability
+    internal enum OtherExpenceTypeLiability
     {
         NotAssigned,
         Alimony,
@@ -1202,7 +1202,7 @@ namespace MyNamespace.Services
         SeperateMaintance,
         OtherExpense,
     }
-    public enum PropertyStatusRealEstateOwned
+    internal enum PropertyStatusRealEstateOwned
     {
         NotAssigned,
         Sold,
@@ -1210,20 +1210,20 @@ namespace MyNamespace.Services
         Rental,
         Retained,
     }
-    public enum RecordStatusAsset
+    internal enum RecordStatusAsset
     {
         NotAssigned,
         New,
         Update,
         Delete,
     }
-    public enum StatementCompletedAssetsLiabilities
+    internal enum StatementCompletedAssetsLiabilities
     {
         NotAssigned,
         Jointly,
         NotJointly,
     }
-    public enum TypeOfPropertyRealEstateOwned
+    internal enum TypeOfPropertyRealEstateOwned
     {
         NotAssigned,
         SingleFamily,
