@@ -1,1148 +1,667 @@
 {
     "metadata": {
-        "description": "Tavant RPOS UI Services API",
-        "title": "Tavant.Rpos.Api",
-        "baseUrl": "http://rpos-dev.azurewebsites.net/"
+        "description": "This is a sample server Petstore server.  You can find out more about Swagger at [http://swagger.io](http://swagger.io) or on [irc.freenode.net, #swagger](http://swagger.io/irc/).  For this sample, you can use the api key `special-key` to test the authorization filters.",
+        "title": "Swagger Petstore",
+        "baseUrl": "https://petstore.swagger.io/v2/"
     },
     "services": {
-        "AssetsLiabilities": {
-            "assetsLiabilitiesGetAssetsLiabilities": {
-                "path": "/api/assets-liabilities",
-                "verb": "get",
+        "pet": {
+            "addPet": {
+                "description": "Add a new pet to the store",
+                "description2": "",
+                "path": "/pet",
+                "verb": "post",
                 "parameters": [
                     {
-                        "name": "applicationId",
-                        "type": "query",
-                        "required": false,
+                        "name": "body",
+                        "type": "body",
+                        "description": "Pet object that needs to be added to the store",
+                        "required": true,
                         "dataType": {
-                            "primitive": "string"
-                        }
-                    },
-                    {
-                        "name": "borrowerId",
-                        "type": "query",
-                        "required": false,
-                        "dataType": {
-                            "primitive": "string"
-                        }
-                    },
-                    {
-                        "name": "coBorrowerId",
-                        "type": "query",
-                        "required": false,
-                        "dataType": {
-                            "primitive": "string"
+                            "complex": "Pet"
                         }
                     }
                 ],
                 "responses": {
-                    "200": {
-                        "dataType": {
-                            "complex": "AssetsLiabilities"
-                        }
-                    },
-                    "500": {
-                        "dataType": {
-                            "complex": "Error"
-                        }
-                    }
+                    "405": {}
                 }
             },
-            "assetsLiabilitiesSaveAssetsLiabilities": {
-                "path": "/api/assets-liabilities",
+            "updatePet": {
+                "description": "Update an existing pet",
+                "description2": "",
+                "path": "/pet",
                 "verb": "put",
                 "parameters": [
                     {
-                        "name": "assetsLiabilities",
+                        "name": "body",
                         "type": "body",
+                        "description": "Pet object that needs to be added to the store",
                         "required": true,
                         "dataType": {
-                            "complex": "AssetsLiabilities"
+                            "complex": "Pet"
+                        }
+                    }
+                ],
+                "responses": {
+                    "400": {},
+                    "404": {},
+                    "405": {}
+                }
+            },
+            "findPetsByStatus": {
+                "description": "Finds Pets by status",
+                "description2": "Multiple status values can be provided with comma separated strings",
+                "path": "/pet/findByStatus",
+                "verb": "get",
+                "parameters": [
+                    {
+                        "name": "status",
+                        "type": "query",
+                        "description": "Status values that need to be considered for filter",
+                        "required": true,
+                        "dataType": {
+                            "isArray": true,
+                            "enum": "status_Pet"
                         }
                     }
                 ],
                 "responses": {
                     "200": {
                         "dataType": {
-                            "complex": "AssetsLiabilities"
+                            "isArray": true,
+                            "complex": "Pet"
                         }
                     },
-                    "500": {
+                    "400": {}
+                }
+            },
+            "findPetsByTags": {
+                "description": "Finds Pets by tags",
+                "description2": "Muliple tags can be provided with comma separated strings. Use tag1, tag2, tag3 for testing.",
+                "path": "/pet/findByTags",
+                "verb": "get",
+                "parameters": [
+                    {
+                        "name": "tags",
+                        "type": "query",
+                        "description": "Tags to filter by",
+                        "required": true,
                         "dataType": {
-                            "complex": "Error"
+                            "isArray": true,
+                            "primitive": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "dataType": {
+                            "isArray": true,
+                            "complex": "Pet"
+                        }
+                    },
+                    "400": {}
+                }
+            },
+            "getPetById": {
+                "description": "Find pet by ID",
+                "description2": "Returns a single pet",
+                "path": "/pet/{petId}",
+                "verb": "get",
+                "parameters": [
+                    {
+                        "name": "petId",
+                        "type": "path",
+                        "description": "ID of pet to return",
+                        "required": true,
+                        "dataType": {
+                            "primitive": "integer",
+                            "subType": "int64"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "dataType": {
+                            "complex": "Pet"
+                        }
+                    },
+                    "400": {},
+                    "404": {}
+                }
+            },
+            "updatePetWithForm": {
+                "description": "Updates a pet in the store with form data",
+                "description2": "",
+                "path": "/pet/{petId}",
+                "verb": "post",
+                "parameters": [
+                    {
+                        "name": "petId",
+                        "type": "path",
+                        "description": "ID of pet that needs to be updated",
+                        "required": true,
+                        "dataType": {
+                            "primitive": "integer",
+                            "subType": "int64"
+                        }
+                    },
+                    {
+                        "name": "name",
+                        "type": "formData",
+                        "description": "Updated name of the pet",
+                        "required": false,
+                        "dataType": {
+                            "primitive": "string"
+                        }
+                    },
+                    {
+                        "name": "status",
+                        "type": "formData",
+                        "description": "Updated status of the pet",
+                        "required": false,
+                        "dataType": {
+                            "primitive": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "405": {}
+                }
+            },
+            "deletePet": {
+                "description": "Deletes a pet",
+                "description2": "",
+                "path": "/pet/{petId}",
+                "verb": "delete",
+                "parameters": [
+                    {
+                        "name": "api_key",
+                        "type": "header",
+                        "required": false,
+                        "dataType": {
+                            "primitive": "string"
+                        }
+                    },
+                    {
+                        "name": "petId",
+                        "type": "path",
+                        "description": "Pet id to delete",
+                        "required": true,
+                        "dataType": {
+                            "primitive": "integer",
+                            "subType": "int64"
+                        }
+                    }
+                ],
+                "responses": {
+                    "400": {},
+                    "404": {}
+                }
+            },
+            "uploadFile": {
+                "description": "uploads an image",
+                "description2": "",
+                "path": "/pet/{petId}/uploadImage",
+                "verb": "post",
+                "parameters": [
+                    {
+                        "name": "petId",
+                        "type": "path",
+                        "description": "ID of pet to update",
+                        "required": true,
+                        "dataType": {
+                            "primitive": "integer",
+                            "subType": "int64"
+                        }
+                    },
+                    {
+                        "name": "additionalMetadata",
+                        "type": "formData",
+                        "description": "Additional data to pass to server",
+                        "required": false,
+                        "dataType": {
+                            "primitive": "string"
+                        }
+                    },
+                    {
+                        "name": "file",
+                        "type": "formData",
+                        "description": "file to upload",
+                        "required": false,
+                        "dataType": {
+                            "primitive": "file"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "dataType": {
+                            "complex": "ApiResponse"
                         }
                     }
                 }
             }
         },
-        "Data": {
-            "branchSearchBranches": {
-                "description": "Retrieves all branches for the organization.",
-                "path": "/data/branches",
+        "store": {
+            "getInventory": {
+                "description": "Returns pet inventories by status",
+                "description2": "Returns a map of status codes to quantities",
+                "path": "/store/inventory",
                 "verb": "get",
-                "parameters": [
-                    {
-                        "name": "startRecord",
-                        "type": "query",
-                        "required": false,
-                        "dataType": {
-                            "primitive": "integer",
-                            "subType": "int32"
-                        }
-                    },
-                    {
-                        "name": "recordCount",
-                        "type": "query",
-                        "required": false,
-                        "dataType": {
-                            "primitive": "integer",
-                            "subType": "int32"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "dataType": {
-                            "complex": "BranchSearchResult"
-                        }
-                    },
-                    "500": {
-                        "dataType": {
-                            "complex": "Error"
-                        }
-                    }
-                }
-            },
-            "branchUpsertBranches": {
-                "path": "/data/branches",
-                "verb": "post",
-                "parameters": [
-                    {
-                        "name": "branches",
-                        "type": "body",
-                        "required": true,
-                        "dataType": {
-                            "isArray": true,
-                            "complex": "Branch"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "dataType": {
-                            "complex": "Branch"
-                        }
-                    },
-                    "400": {},
-                    "500": {
-                        "dataType": {
-                            "complex": "Error"
-                        }
-                    }
-                }
-            },
-            "branchGetBranch": {
-                "path": "/data/branches/{id}",
-                "verb": "get",
-                "parameters": [
-                    {
-                        "name": "id",
-                        "type": "path",
-                        "required": true,
-                        "dataType": {
-                            "primitive": "string"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "dataType": {
-                            "complex": "Branch"
-                        }
-                    },
-                    "404": {},
-                    "500": {
-                        "dataType": {
-                            "complex": "Error"
-                        }
-                    }
-                }
-            },
-            "branchDeleteBranch": {
-                "path": "/data/branches/{id}",
-                "verb": "delete",
-                "parameters": [
-                    {
-                        "name": "id",
-                        "type": "path",
-                        "required": true,
-                        "dataType": {
-                            "primitive": "string"
-                        }
-                    }
-                ],
+                "parameters": [],
                 "responses": {
                     "200": {
                         "dataType": {
                             "primitive": "object"
                         }
-                    },
-                    "204": {},
-                    "500": {
-                        "dataType": {
-                            "complex": "Error"
-                        }
                     }
                 }
-            }
-        },
-        "RateSheet": {
-            "rateSheetSearchRateSheets": {
-                "path": "/api/rate-sheets",
-                "verb": "get",
+            },
+            "placeOrder": {
+                "description": "Place an order for a pet",
+                "description2": "",
+                "path": "/store/order",
+                "verb": "post",
                 "parameters": [
                     {
-                        "name": "startRecord",
-                        "type": "query",
-                        "required": false,
+                        "name": "body",
+                        "type": "body",
+                        "description": "order placed for purchasing the pet",
+                        "required": true,
                         "dataType": {
-                            "primitive": "integer",
-                            "subType": "int32"
-                        }
-                    },
-                    {
-                        "name": "recordCount",
-                        "type": "query",
-                        "required": false,
-                        "dataType": {
-                            "primitive": "integer",
-                            "subType": "int32"
+                            "complex": "Order"
                         }
                     }
                 ],
                 "responses": {
                     "200": {
                         "dataType": {
-                            "complex": "RateSheetSearchResults"
+                            "complex": "Order"
                         }
                     },
-                    "500": {
+                    "400": {}
+                }
+            },
+            "getOrderById": {
+                "description": "Find purchase order by ID",
+                "description2": "For valid response try integer IDs with value >= 1 and <= 10. Other values will generated exceptions",
+                "path": "/store/order/{orderId}",
+                "verb": "get",
+                "parameters": [
+                    {
+                        "name": "orderId",
+                        "type": "path",
+                        "description": "ID of pet that needs to be fetched",
+                        "required": true,
                         "dataType": {
-                            "complex": "Error"
+                            "primitive": "integer",
+                            "subType": "int64"
                         }
                     }
-                }
-            }
-        },
-        "UiRateSheet": {
-            "uiRateSheetGetDailyRateSheet": {
-                "path": "/ui/rate-sheets/daily",
-                "verb": "get",
-                "parameters": [],
+                ],
                 "responses": {
                     "200": {
                         "dataType": {
-                            "complex": "DailyRateSheet"
+                            "complex": "Order"
                         }
-                    }
+                    },
+                    "400": {},
+                    "404": {}
                 }
             },
-            "uiRateSheetGetArchiveRateSheets": {
-                "path": "/ui/rate-sheets/archive",
+            "deleteOrder": {
+                "description": "Delete purchase order by ID",
+                "description2": "For valid response try integer IDs with positive integer value. Negative or non-integer values will generate API errors",
+                "path": "/store/order/{orderId}",
+                "verb": "delete",
+                "parameters": [
+                    {
+                        "name": "orderId",
+                        "type": "path",
+                        "description": "ID of the order that needs to be deleted",
+                        "required": true,
+                        "dataType": {
+                            "primitive": "integer",
+                            "subType": "int64"
+                        }
+                    }
+                ],
+                "responses": {
+                    "400": {},
+                    "404": {}
+                }
+            }
+        },
+        "user": {
+            "createUser": {
+                "description": "Create user",
+                "description2": "This can only be done by the logged in user.",
+                "path": "/user",
+                "verb": "post",
+                "parameters": [
+                    {
+                        "name": "body",
+                        "type": "body",
+                        "description": "Created user object",
+                        "required": true,
+                        "dataType": {
+                            "complex": "User"
+                        }
+                    }
+                ],
+                "responses": {
+                    "default": {}
+                }
+            },
+            "createUsersWithArrayInput": {
+                "description": "Creates list of users with given input array",
+                "description2": "",
+                "path": "/user/createWithArray",
+                "verb": "post",
+                "parameters": [
+                    {
+                        "name": "body",
+                        "type": "body",
+                        "description": "List of user object",
+                        "required": true,
+                        "dataType": {
+                            "isArray": true,
+                            "complex": "User"
+                        }
+                    }
+                ],
+                "responses": {
+                    "default": {}
+                }
+            },
+            "createUsersWithListInput": {
+                "description": "Creates list of users with given input array",
+                "description2": "",
+                "path": "/user/createWithList",
+                "verb": "post",
+                "parameters": [
+                    {
+                        "name": "body",
+                        "type": "body",
+                        "description": "List of user object",
+                        "required": true,
+                        "dataType": {
+                            "isArray": true,
+                            "complex": "User"
+                        }
+                    }
+                ],
+                "responses": {
+                    "default": {}
+                }
+            },
+            "loginUser": {
+                "description": "Logs user into the system",
+                "description2": "",
+                "path": "/user/login",
+                "verb": "get",
+                "parameters": [
+                    {
+                        "name": "username",
+                        "type": "query",
+                        "description": "The user name for login",
+                        "required": true,
+                        "dataType": {
+                            "primitive": "string"
+                        }
+                    },
+                    {
+                        "name": "password",
+                        "type": "query",
+                        "description": "The password for login in clear text",
+                        "required": true,
+                        "dataType": {
+                            "primitive": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "dataType": {
+                            "primitive": "string"
+                        }
+                    },
+                    "400": {}
+                }
+            },
+            "logoutUser": {
+                "description": "Logs out current logged in user session",
+                "description2": "",
+                "path": "/user/logout",
                 "verb": "get",
                 "parameters": [],
                 "responses": {
-                    "200": {}
+                    "default": {}
+                }
+            },
+            "getUserByName": {
+                "description": "Get user by user name",
+                "description2": "",
+                "path": "/user/{username}",
+                "verb": "get",
+                "parameters": [
+                    {
+                        "name": "username",
+                        "type": "path",
+                        "description": "The name that needs to be fetched. Use user1 for testing. ",
+                        "required": true,
+                        "dataType": {
+                            "primitive": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "dataType": {
+                            "complex": "User"
+                        }
+                    },
+                    "400": {},
+                    "404": {}
+                }
+            },
+            "updateUser": {
+                "description": "Updated user",
+                "description2": "This can only be done by the logged in user.",
+                "path": "/user/{username}",
+                "verb": "put",
+                "parameters": [
+                    {
+                        "name": "username",
+                        "type": "path",
+                        "description": "name that need to be updated",
+                        "required": true,
+                        "dataType": {
+                            "primitive": "string"
+                        }
+                    },
+                    {
+                        "name": "body",
+                        "type": "body",
+                        "description": "Updated user object",
+                        "required": true,
+                        "dataType": {
+                            "complex": "User"
+                        }
+                    }
+                ],
+                "responses": {
+                    "400": {},
+                    "404": {}
+                }
+            },
+            "deleteUser": {
+                "description": "Delete user",
+                "description2": "This can only be done by the logged in user.",
+                "path": "/user/{username}",
+                "verb": "delete",
+                "parameters": [
+                    {
+                        "name": "username",
+                        "type": "path",
+                        "description": "The name that needs to be deleted",
+                        "required": true,
+                        "dataType": {
+                            "primitive": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "400": {},
+                    "404": {}
                 }
             }
         }
     },
     "models": {
-        "AssetsLiabilitiesRequest": {
-            "applicationId": {
-                "primitive": "string",
-                "required": false
-            },
-            "borrowerId": {
-                "primitive": "string",
-                "required": false
-            },
-            "coBorrowerId": {
-                "primitive": "string",
-                "required": false
-            }
-        },
-        "AssetsLiabilities": {
-            "applicationId": {
-                "primitive": "string",
-                "required": false
-            },
-            "statementCompleted": {
-                "enum": "StatementCompletedAssetsLiabilities",
-                "required": false
-            },
-            "vacancyFactor": {
-                "primitive": "number",
-                "subType": "double",
-                "required": false
-            },
-            "subjectPropertyAddress": {
-                "complex": "Address",
-                "required": false
-            },
-            "borrowerAddress": {
-                "complex": "BorrowerAddress",
-                "required": false
-            },
-            "coBorrowerAddress": {
-                "complex": "BorrowerAddress",
-                "required": false
-            },
-            "assetHeader": {
-                "complex": "AssetHeader",
-                "required": false
-            },
-            "assets": {
-                "isArray": true,
-                "complex": "Asset",
-                "required": false
-            },
-            "liabilities": {
-                "isArray": true,
-                "complex": "Liability",
-                "required": false
-            },
-            "realEstateOwnedList": {
-                "isArray": true,
-                "complex": "RealEstateOwned",
-                "required": false
-            },
+        "Order": {
             "id": {
-                "primitive": "string",
-                "required": false
-            }
-        },
-        "Address": {
-            "lines": {
-                "isArray": true,
-                "primitive": "string",
+                "primitive": "integer",
+                "subType": "int64",
                 "required": false
             },
-            "city": {
-                "primitive": "string",
+            "petId": {
+                "primitive": "integer",
+                "subType": "int64",
                 "required": false
             },
-            "state": {
-                "primitive": "string",
-                "required": false
-            },
-            "zip": {
-                "primitive": "string",
-                "required": false
-            },
-            "id": {
-                "primitive": "string",
-                "required": false
-            }
-        },
-        "BorrowerAddress": {
-            "borrowerId": {
-                "primitive": "string",
-                "required": false
-            },
-            "address": {
-                "complex": "Address",
-                "required": false
-            },
-            "id": {
-                "primitive": "string",
-                "required": false
-            }
-        },
-        "AssetHeader": {
-            "appDepositDesc": {
-                "primitive": "string",
-                "required": false
-            },
-            "appDepositAmt": {
-                "primitive": "number",
-                "subType": "double",
-                "required": false
-            },
-            "earnestDesc": {
-                "primitive": "string",
-                "required": false
-            },
-            "earnestAmt": {
-                "primitive": "number",
-                "subType": "double",
-                "required": false
-            },
-            "cashTowardsPurchaseIncludeInNetWorth": {
-                "primitive": "boolean",
-                "required": false
-            },
-            "id": {
-                "primitive": "string",
-                "required": false
-            }
-        },
-        "Asset": {
-            "assetType": {
-                "enum": "AssetTypeAsset",
-                "required": false
-            },
-            "borrowerId": {
-                "primitive": "string",
-                "required": false
-            },
-            "companyName": {
-                "primitive": "string",
-                "required": false
-            },
-            "addressLines": {
-                "isArray": true,
-                "primitive": "string",
-                "required": false
-            },
-            "city": {
-                "primitive": "string",
-                "required": false
-            },
-            "state": {
-                "primitive": "string",
-                "required": false
-            },
-            "zipCode": {
-                "primitive": "string",
-                "required": false
-            },
-            "remarks": {
-                "primitive": "string",
-                "required": false
-            },
-            "checkingSavings": {
-                "isArray": true,
-                "complex": "CheckingSavings",
-                "required": false
-            },
-            "stocksAndBonds": {
-                "isArray": true,
-                "complex": "StocksAndBonds",
-                "required": false
-            },
-            "autoOwned": {
-                "isArray": true,
-                "complex": "AutoOwned",
-                "required": false
-            },
-            "lifeInsurance": {
-                "complex": "LifeInsurance",
-                "required": false
-            },
-            "others": {
-                "isArray": true,
-                "complex": "Other",
-                "required": false
-            },
-            "retirementFundsBalance": {
-                "primitive": "number",
-                "subType": "double",
-                "required": false
-            },
-            "netWorthBusinessBalance": {
-                "primitive": "number",
-                "subType": "double",
-                "required": false
-            },
-            "totalBalance": {
-                "primitive": "number",
-                "subType": "double",
-                "required": false
-            },
-            "recordStatus": {
-                "enum": "RecordStatusAsset",
-                "required": false
-            },
-            "id": {
-                "primitive": "string",
-                "required": false
-            }
-        },
-        "Liability": {
-            "liabilityType": {
-                "enum": "LiabilityTypeLiability",
-                "required": false
-            },
-            "borrowerId": {
-                "primitive": "string",
-                "required": false
-            },
-            "accountType": {
-                "enum": "AccountTypeLiability",
-                "required": false
-            },
-            "companyName": {
-                "primitive": "string",
-                "required": false
-            },
-            "addressLines": {
-                "isArray": true,
-                "primitive": "string",
-                "required": false
-            },
-            "city": {
-                "primitive": "string",
-                "required": false
-            },
-            "state": {
-                "primitive": "string",
-                "required": false
-            },
-            "zipCode": {
-                "primitive": "string",
-                "required": false
-            },
-            "accountNumber": {
-                "primitive": "string",
-                "required": false
-            },
-            "unpaidBalance": {
-                "primitive": "number",
-                "subType": "double",
-                "required": false
-            },
-            "notCounted": {
-                "primitive": "boolean",
-                "required": false
-            },
-            "toBePaidOff": {
-                "primitive": "boolean",
-                "required": false
-            },
-            "omitted": {
-                "primitive": "boolean",
-                "required": false
-            },
-            "listedOnCreditReport": {
-                "primitive": "boolean",
-                "required": false
-            },
-            "resubordinated": {
-                "primitive": "boolean",
-                "required": false
-            },
-            "defaultPaymentLeft": {
+            "quantity": {
                 "primitive": "integer",
                 "subType": "int32",
                 "required": false
             },
-            "overrideDefault": {
-                "primitive": "boolean",
-                "required": false
-            },
-            "overridePaymentLeft": {
-                "primitive": "string",
-                "required": false
-            },
-            "monthlyPayment": {
-                "primitive": "number",
-                "subType": "double",
-                "required": false
-            },
-            "atrNotes": {
-                "primitive": "string",
-                "required": false
-            },
-            "otherNotes": {
-                "primitive": "string",
-                "required": false
-            },
-            "isLinkedToReo": {
-                "primitive": "boolean",
-                "required": false
-            },
-            "reoId": {
-                "primitive": "string",
-                "required": false
-            },
-            "lienPosition": {
-                "primitive": "integer",
-                "subType": "int32",
-                "required": false
-            },
-            "mortgagePayments": {
-                "primitive": "number",
-                "subType": "double",
-                "required": false
-            },
-            "otherExpenceType": {
-                "enum": "OtherExpenceTypeLiability",
-                "required": false
-            },
-            "otherExpenseOwedTo": {
-                "primitive": "string",
-                "required": false
-            },
-            "otherExpenseAmount": {
-                "primitive": "number",
-                "subType": "double",
-                "required": false
-            },
-            "otherExpenseQmatrNotes": {
-                "primitive": "string",
-                "required": false
-            },
-            "jobExpenseDesc1": {
-                "primitive": "string",
-                "required": false
-            },
-            "jobExpenseAmount1": {
-                "primitive": "number",
-                "subType": "double",
-                "required": false
-            },
-            "jobExpenseDesc2": {
-                "primitive": "string",
-                "required": false
-            },
-            "jobExpenseAmount2": {
-                "primitive": "number",
-                "subType": "double",
-                "required": false
-            },
-            "jobExpense1QmatrNotes": {
-                "primitive": "string",
-                "required": false
-            },
-            "jobExpense2QmatrNotes": {
-                "primitive": "string",
-                "required": false
-            },
-            "recordStatus": {
-                "enum": "RecordStatusAsset",
-                "required": false
-            },
-            "id": {
-                "primitive": "string",
-                "required": false
-            }
-        },
-        "RealEstateOwned": {
-            "borrowerId": {
-                "primitive": "string",
-                "required": false
-            },
-            "isCurrentResidence": {
-                "primitive": "boolean",
-                "required": false
-            },
-            "isSubjectProperty": {
-                "primitive": "boolean",
-                "required": false
-            },
-            "propertyAddresses": {
-                "isArray": true,
-                "primitive": "string",
-                "required": false
-            },
-            "city": {
-                "primitive": "string",
-                "required": false
-            },
-            "state": {
-                "primitive": "string",
-                "required": false
-            },
-            "zipCode": {
-                "primitive": "string",
-                "required": false
-            },
-            "propertyStatus": {
-                "enum": "PropertyStatusRealEstateOwned",
-                "required": false
-            },
-            "typeOfProperty": {
-                "enum": "TypeOfPropertyRealEstateOwned",
-                "required": false
-            },
-            "presentMarketValue": {
-                "primitive": "number",
-                "subType": "double",
-                "required": false
-            },
-            "amountOfMortgages": {
-                "primitive": "number",
-                "subType": "double",
-                "required": false
-            },
-            "grossRentalIncome": {
-                "primitive": "number",
-                "subType": "double",
-                "required": false
-            },
-            "vacancyFactor": {
-                "primitive": "number",
-                "subType": "double",
-                "required": false
-            },
-            "overrideVacancyFactor": {
-                "primitive": "boolean",
-                "required": false
-            },
-            "overrideVacancyFactorValue": {
-                "primitive": "number",
-                "subType": "double",
-                "required": false
-            },
-            "incomeLessVacancy": {
-                "primitive": "number",
-                "subType": "double",
-                "required": false
-            },
-            "mortgagePayments": {
-                "primitive": "number",
-                "subType": "double",
-                "required": false
-            },
-            "includeTandI": {
-                "primitive": "boolean",
-                "required": false
-            },
-            "insMainTaxHoa": {
-                "primitive": "number",
-                "subType": "double",
-                "required": false
-            },
-            "netRentalIncome": {
-                "primitive": "number",
-                "subType": "double",
-                "required": false
-            },
-            "overrideDefaultNri": {
-                "primitive": "boolean",
-                "required": false
-            },
-            "overrideNriValue": {
-                "primitive": "number",
-                "subType": "double",
-                "required": false
-            },
-            "piti": {
-                "primitive": "number",
-                "subType": "double",
-                "required": false
-            },
-            "overrideDefaultPiti": {
-                "primitive": "boolean",
-                "required": false
-            },
-            "overridePitiValue": {
-                "primitive": "number",
-                "subType": "double",
-                "required": false
-            },
-            "linkedToLiability": {
-                "primitive": "boolean",
-                "required": false
-            },
-            "linkedLiabilities": {
-                "isArray": true,
-                "complex": "Liability",
-                "required": false
-            },
-            "totalReoValue": {
-                "primitive": "number",
-                "subType": "double",
-                "required": false
-            },
-            "recordStatus": {
-                "enum": "RecordStatusAsset",
-                "required": false
-            },
-            "id": {
-                "primitive": "string",
-                "required": false
-            }
-        },
-        "CheckingSavings": {
-            "accountType": {
-                "enum": "AccountTypeCheckingSavings",
-                "required": false
-            },
-            "accountNumber": {
-                "primitive": "string",
-                "required": false
-            },
-            "balanceOrMarketValue": {
-                "primitive": "number",
-                "subType": "double",
-                "required": false
-            },
-            "recordStatus": {
-                "enum": "RecordStatusAsset",
-                "required": false
-            },
-            "id": {
-                "primitive": "string",
-                "required": false
-            }
-        },
-        "StocksAndBonds": {
-            "bankName": {
-                "primitive": "string",
-                "required": false
-            },
-            "balanceOrMarketValue": {
-                "primitive": "number",
-                "subType": "double",
-                "required": false
-            },
-            "id": {
-                "primitive": "string",
-                "required": false
-            }
-        },
-        "AutoOwned": {
-            "autosOwned": {
-                "primitive": "string",
-                "required": false
-            },
-            "balanceOrMarketValue": {
-                "primitive": "number",
-                "subType": "double",
-                "required": false
-            },
-            "id": {
-                "primitive": "string",
-                "required": false
-            }
-        },
-        "LifeInsurance": {
-            "faceAmountName": {
-                "primitive": "number",
-                "subType": "double",
-                "required": false
-            },
-            "balanceOrMarketValue": {
-                "primitive": "number",
-                "subType": "double",
-                "required": false
-            },
-            "id": {
-                "primitive": "string",
-                "required": false
-            }
-        },
-        "Other": {
-            "assetName": {
-                "primitive": "string",
-                "required": false
-            },
-            "balanceOrMarketValue": {
-                "primitive": "number",
-                "subType": "double",
-                "required": false
-            },
-            "id": {
-                "primitive": "string",
-                "required": false
-            }
-        },
-        "Error": {
-            "errorCode": {
-                "primitive": "string",
-                "subType": "uuid",
-                "required": false
-            },
-            "correlationId": {
-                "primitive": "string",
-                "subType": "uuid",
-                "required": false
-            },
-            "debug": {
-                "primitive": "string",
-                "required": false
-            }
-        },
-        "BranchSearchCriteria": {
-            "filters": {
-                "isArray": true,
-                "complex": "BranchFilterCriteria",
-                "required": false
-            },
-            "sortSpecs": {
-                "isArray": true,
-                "complex": "BranchSortSpec",
-                "required": false
-            },
-            "startRecord": {
-                "primitive": "integer",
-                "subType": "int32",
-                "required": false
-            },
-            "recordCount": {
-                "primitive": "integer",
-                "subType": "int32",
-                "required": false
-            }
-        },
-        "BranchFilterCriteria": {
-            "field": {
-                "enum": "FieldBranchFilterCriteria",
-                "required": false
-            },
-            "operation": {
-                "enum": "OperationBranchFilterCriteria",
-                "required": false
-            },
-            "value": {
-                "primitive": "object",
-                "required": false
-            }
-        },
-        "BranchSortSpec": {
-            "field": {
-                "enum": "FieldBranchFilterCriteria",
-                "required": false
-            },
-            "order": {
-                "enum": "OrderBranchSortSpec",
-                "required": false
-            }
-        },
-        "BranchSearchResult": {
-            "data": {
-                "isArray": true,
-                "complex": "Branch",
-                "required": false
-            },
-            "totalCount": {
-                "primitive": "integer",
-                "subType": "int32",
-                "required": false
-            }
-        },
-        "Branch": {
-            "name": {
-                "primitive": "string",
-                "required": false
-            },
-            "id": {
-                "primitive": "string",
-                "required": false
-            }
-        },
-        "RateSheetSearchCriteria": {
-            "filters": {
-                "isArray": true,
-                "complex": "RateSheetFilterCriteria",
-                "required": false
-            },
-            "sortSpecs": {
-                "isArray": true,
-                "complex": "RateSheetSortSpec",
-                "required": false
-            },
-            "startRecord": {
-                "primitive": "integer",
-                "subType": "int32",
-                "required": false
-            },
-            "recordCount": {
-                "primitive": "integer",
-                "subType": "int32",
-                "required": false
-            }
-        },
-        "RateSheetFilterCriteria": {
-            "field": {
-                "enum": "FieldRateSheetFilterCriteria",
-                "required": false
-            },
-            "operation": {
-                "enum": "OperationBranchFilterCriteria",
-                "required": false
-            },
-            "value": {
-                "primitive": "object",
-                "required": false
-            }
-        },
-        "RateSheetSortSpec": {
-            "field": {
-                "enum": "FieldRateSheetFilterCriteria",
-                "required": false
-            },
-            "order": {
-                "enum": "OrderBranchSortSpec",
-                "required": false
-            }
-        },
-        "RateSheetSearchResults": {
-            "data": {
-                "isArray": true,
-                "complex": "RateSheet",
-                "required": false
-            },
-            "totalCount": {
-                "primitive": "integer",
-                "subType": "int32",
-                "required": false
-            }
-        },
-        "RateSheet": {
-            "name": {
-                "primitive": "string",
-                "required": false
-            },
-            "fileType": {
-                "primitive": "string",
-                "required": false
-            },
-            "branchId": {
-                "primitive": "string",
-                "required": false
-            },
-            "fromDate": {
+            "shipDate": {
                 "primitive": "string",
                 "subType": "date-time",
                 "required": false
             },
-            "toDate": {
-                "primitive": "string",
-                "subType": "date-time",
+            "status": {
+                "enum": "status_Order",
                 "required": false
             },
+            "complete": {
+                "primitive": "boolean",
+                "required": false
+            }
+        },
+        "User": {
             "id": {
+                "primitive": "integer",
+                "subType": "int64",
+                "required": false
+            },
+            "username": {
+                "primitive": "string",
+                "required": false
+            },
+            "firstName": {
+                "primitive": "string",
+                "required": false
+            },
+            "lastName": {
+                "primitive": "string",
+                "required": false
+            },
+            "email": {
+                "primitive": "string",
+                "required": false
+            },
+            "password": {
+                "primitive": "string",
+                "required": false
+            },
+            "phone": {
+                "primitive": "string",
+                "required": false
+            },
+            "userStatus": {
+                "primitive": "integer",
+                "subType": "int32",
+                "required": false
+            }
+        },
+        "Category": {
+            "id": {
+                "primitive": "integer",
+                "subType": "int64",
+                "required": false
+            },
+            "name": {
                 "primitive": "string",
                 "required": false
             }
         },
-        "DailyRateSheet": {
-            "branches": {
-                "complex": "BranchSearchResult",
+        "Tag": {
+            "id": {
+                "primitive": "integer",
+                "subType": "int64",
                 "required": false
             },
-            "rateSheets": {
-                "complex": "RateSheetSearchResults",
+            "name": {
+                "primitive": "string",
+                "required": false
+            }
+        },
+        "Pet": {
+            "id": {
+                "primitive": "integer",
+                "subType": "int64",
+                "required": false
+            },
+            "category": {
+                "complex": "Category",
+                "required": false
+            },
+            "name": {
+                "primitive": "string",
+                "required": true
+            },
+            "photoUrls": {
+                "isArray": true,
+                "primitive": "string",
+                "required": true
+            },
+            "tags": {
+                "isArray": true,
+                "complex": "Tag",
+                "required": false
+            },
+            "status": {
+                "enum": "status_Pet",
+                "required": false
+            }
+        },
+        "ApiResponse": {
+            "code": {
+                "primitive": "integer",
+                "subType": "int32",
+                "required": false
+            },
+            "type": {
+                "primitive": "string",
+                "required": false
+            },
+            "message": {
+                "primitive": "string",
                 "required": false
             }
         }
     },
     "enums": {
-        "StatementCompletedAssetsLiabilities": [
-            "NotAssigned",
-            "Jointly",
-            "NotJointly"
+        "status_Order": [
+            "placed",
+            "approved",
+            "delivered"
         ],
-        "AssetTypeAsset": [
-            "NotAssigned",
-            "CheckingAndSaving",
-            "StocksAndBonds",
-            "AutoOwned",
-            "OtherAssets",
-            "LifeInsurance",
-            "RetirementFunds",
-            "NetWorthBusiness"
-        ],
-        "RecordStatusAsset": [
-            "NotAssigned",
-            "New",
-            "Update",
-            "Delete"
-        ],
-        "LiabilityTypeLiability": [
-            "NotAssigned",
-            "Banking",
-            "Other"
-        ],
-        "AccountTypeLiability": [
-            "NotAssigned",
-            "Revolving",
-            "Installment",
-            "Mortgage",
-            "Heloc",
-            "Liens",
-            "LeasePayments",
-            "Open",
-            "Taxes",
-            "Other"
-        ],
-        "OtherExpenceTypeLiability": [
-            "NotAssigned",
-            "Alimony",
-            "ChildSupport",
-            "SeperateMaintance",
-            "OtherExpense"
-        ],
-        "PropertyStatusRealEstateOwned": [
-            "NotAssigned",
-            "Sold",
-            "PendingSale",
-            "Rental",
-            "Retained"
-        ],
-        "TypeOfPropertyRealEstateOwned": [
-            "NotAssigned",
-            "SingleFamily",
-            "Condominium",
-            "TownHouse",
-            "CoOperative",
-            "TwoToFourUnitProperty",
-            "MultiFamilyMoreThanFourUnits",
-            "ManufacturedMobileHome",
-            "CommercialNonResidential",
-            "MixedUseResidential",
-            "Farm",
-            "HomeAndBusinessCombined",
-            "Land"
-        ],
-        "AccountTypeCheckingSavings": [
-            "NotAssigned",
-            "Savings",
-            "Checkings",
-            "CashDepositOnSaleContract",
-            "GiftNotDeposited",
-            "CertificateOfDeposit",
-            "MoneyMarketFund",
-            "MutualFunds",
-            "Stocks",
-            "Bonds",
-            "SecuredBorrowedFundsNotDeposited",
-            "BridgeLoanNotDeposited",
-            "RetairementFunds",
-            "NetWorthOfBusinessOwned",
-            "TrustFunds",
-            "OtherNonLiquidAsset",
-            "OtherLiquidAsset",
-            "NetProceedsFromSaleOfRealEstate",
-            "NetEquity",
-            "CashOnHand",
-            "GiftOfEquity"
-        ],
-        "FieldBranchFilterCriteria": [
-            "Name"
-        ],
-        "OperationBranchFilterCriteria": [
-            "Equals",
-            "DoesNotEqual",
-            "GreaterThan",
-            "GreaterThanOrEqual",
-            "LessThan",
-            "LessThanOrEqual",
-            "Like"
-        ],
-        "OrderBranchSortSpec": [
-            "Ascending",
-            "Descending"
-        ],
-        "FieldRateSheetFilterCriteria": [
-            "Name",
-            "FileType",
-            "BranchId",
-            "FromDate",
-            "ToDate"
+        "status_Pet": [
+            "available",
+            "pending",
+            "sold"
         ]
     }
 }

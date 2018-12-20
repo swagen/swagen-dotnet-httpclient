@@ -5,9 +5,9 @@
 //     Mode: csharp
 // </auto-generated>
 // ------------------------------
-// Tavant.Rpos.Api
-// Tavant RPOS UI Services API
-// Base URL: http://rpos-dev.azurewebsites.net/
+// Swagger Petstore
+// This is a sample server Petstore server.  You can find out more about Swagger at [http://swagger.io](http://swagger.io) or on [irc.freenode.net, #swagger](http://swagger.io/irc/).  For this sample, you can use the api key `special-key` to test the authorization filters.
+// Base URL: https://petstore.swagger.io/v2/
 
 using System;
 using System.Collections.Generic;
@@ -25,188 +25,43 @@ using __models = MyNamespace.Services;
 namespace MyNamespace.Services
 {
 
-    internal sealed partial class AssetsLiabilitiesClient
+    public sealed partial class petClient
     {
         private readonly HttpClient _client;
         private readonly JsonSerializerSettings _serializerSettings;
-        private Uri _baseUrl = new Uri("http://rpos-dev.azurewebsites.net/", UriKind.Absolute);
+        private Uri _baseUrl = new Uri("https://petstore.swagger.io/v2/", UriKind.Absolute);
 
-        internal AssetsLiabilitiesClient()
+        public petClient()
         {
             _client = new HttpClient();
-            InitializeClient(_client);
+            __GlobalInitializer.InitializeClient(_client);
+            __InitializeClient(_client);
             _serializerSettings = new JsonSerializerSettings();
-            InitializeJsonSerializer(_serializerSettings);
+            __GlobalInitializer.InitializeJsonSerializer(_serializerSettings);
+            __InitializeJsonSerializer(_serializerSettings);
         }
 
-        partial void InitializeClient(HttpClient client);
-        partial void InitializeJsonSerializer(JsonSerializerSettings settings);
+        partial void __InitializeClient(HttpClient client);
+        partial void __InitializeJsonSerializer(JsonSerializerSettings settings);
 
-        internal Uri BaseUrl
+        public Uri BaseUrl
         {
             get => _baseUrl;
             set => _baseUrl = value ?? throw new ArgumentNullException(nameof(value));
         }
 
-        internal async Task<__models.AssetsLiabilities> assetsLiabilitiesGetAssetsLiabilities(string applicationId = default(string), string borrowerId = default(string), string coBorrowerId = default(string))
+        public async Task addPet(__models.Pet body)
         {
-            string resourceUrl = "/api/assets-liabilities";
+            if (body == null)
+                throw new ArgumentNullException(nameof(body));
 
-            var queryParams = new Dictionary<string, object>
-            {
-                ["applicationId"] = applicationId,
-                ["borrowerId"] = borrowerId,
-                ["coBorrowerId"] = coBorrowerId,
-            };
-
-            Uri serviceUrl = BuildServiceUrl(resourceUrl, queryParams);
-
-            using (var request = new HttpRequestMessage(HttpMethod.Get, serviceUrl))
-            {
-                request.Headers.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-
-                HttpResponseMessage response = await _client.SendAsync(request).ConfigureAwait(false);
-
-                int statusCode = (int)response.StatusCode;
-                string responseContent = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
-                switch (statusCode)
-                {
-                    case 200:
-                        var result200 = JsonConvert.DeserializeObject<__models.AssetsLiabilities>(responseContent);
-                        return result200;
-                    case 500:
-                        var result500 = JsonConvert.DeserializeObject<__models.Error>(responseContent);
-                        throw new WebApiClientException<__models.Error>("A server side error occurred.", statusCode, result500);
-                    default:
-                        throw new WebApiClientException($"Unexpected status code {statusCode} was returned from {serviceUrl}", statusCode, responseContent);
-                }
-            }
-        }
-
-        internal async Task<__models.AssetsLiabilities> assetsLiabilitiesSaveAssetsLiabilities(__models.AssetsLiabilities assetsLiabilities)
-        {
-            if (assetsLiabilities == null)
-                throw new ArgumentNullException(nameof(assetsLiabilities));
-
-            string resourceUrl = "/api/assets-liabilities";
-
-            Uri serviceUrl = BuildServiceUrl(resourceUrl);
-
-            using (var request = new HttpRequestMessage(HttpMethod.Put, serviceUrl))
-            {
-                var content = new StringContent(JsonConvert.SerializeObject(assetsLiabilities, _serializerSettings));
-                content.Headers.ContentType.MediaType = "application/json";
-                request.Content = content;
-                request.Headers.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-
-                HttpResponseMessage response = await _client.SendAsync(request).ConfigureAwait(false);
-
-                int statusCode = (int)response.StatusCode;
-                string responseContent = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
-                switch (statusCode)
-                {
-                    case 200:
-                        var result200 = JsonConvert.DeserializeObject<__models.AssetsLiabilities>(responseContent);
-                        return result200;
-                    case 500:
-                        var result500 = JsonConvert.DeserializeObject<__models.Error>(responseContent);
-                        throw new WebApiClientException<__models.Error>("A server side error occurred.", statusCode, result500);
-                    default:
-                        throw new WebApiClientException($"Unexpected status code {statusCode} was returned from {serviceUrl}", statusCode, responseContent);
-                }
-            }
-        }
-
-        private Uri BuildServiceUrl(string relativeUrl, IDictionary<string, object> queryParams = null)
-        {
-            relativeUrl = relativeUrl ?? "";
-            if (queryParams?.Count > 0)
-            {
-                string queryString = queryParams.Aggregate(new StringBuilder(), (aggregate, kvp) =>
-                {
-                    aggregate.Append(aggregate.Length == 0 ? "?" : "&")
-                        .Append(Uri.EscapeUriString(kvp.Key));
-                    if (kvp.Value != null)
-                        aggregate.Append("=").Append(Uri.EscapeUriString(kvp.Value.ToString()));
-                    return aggregate;
-                }).ToString();
-                relativeUrl += queryString;
-            }
-            if (!Uri.TryCreate(BaseUrl, relativeUrl, out Uri serviceUrl))
-                throw new UriFormatException($"Could not create an absolute URL from base URL '{BaseUrl}' and relative URL '{relativeUrl}'.");
-            return serviceUrl;
-        }
-    }
-
-    internal sealed partial class DataClient
-    {
-        private readonly HttpClient _client;
-        private readonly JsonSerializerSettings _serializerSettings;
-        private Uri _baseUrl = new Uri("http://rpos-dev.azurewebsites.net/", UriKind.Absolute);
-
-        internal DataClient()
-        {
-            _client = new HttpClient();
-            InitializeClient(_client);
-            _serializerSettings = new JsonSerializerSettings();
-            InitializeJsonSerializer(_serializerSettings);
-        }
-
-        partial void InitializeClient(HttpClient client);
-        partial void InitializeJsonSerializer(JsonSerializerSettings settings);
-
-        internal Uri BaseUrl
-        {
-            get => _baseUrl;
-            set => _baseUrl = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
-        internal async Task<__models.BranchSearchResult> branchSearchBranches(int startRecord = default(int), int recordCount = default(int))
-        {
-            string resourceUrl = "/data/branches";
-
-            var queryParams = new Dictionary<string, object>
-            {
-                ["startRecord"] = startRecord,
-                ["recordCount"] = recordCount,
-            };
-
-            Uri serviceUrl = BuildServiceUrl(resourceUrl, queryParams);
-
-            using (var request = new HttpRequestMessage(HttpMethod.Get, serviceUrl))
-            {
-                request.Headers.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-
-                HttpResponseMessage response = await _client.SendAsync(request).ConfigureAwait(false);
-
-                int statusCode = (int)response.StatusCode;
-                string responseContent = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
-                switch (statusCode)
-                {
-                    case 200:
-                        var result200 = JsonConvert.DeserializeObject<__models.BranchSearchResult>(responseContent);
-                        return result200;
-                    case 500:
-                        var result500 = JsonConvert.DeserializeObject<__models.Error>(responseContent);
-                        throw new WebApiClientException<__models.Error>("A server side error occurred.", statusCode, result500);
-                    default:
-                        throw new WebApiClientException($"Unexpected status code {statusCode} was returned from {serviceUrl}", statusCode, responseContent);
-                }
-            }
-        }
-
-        internal async Task<__models.Branch> branchUpsertBranches(IReadOnlyList<__models.Branch> branches)
-        {
-            if (branches == null)
-                throw new ArgumentNullException(nameof(branches));
-
-            string resourceUrl = "/data/branches";
+            string resourceUrl = "/pet";
 
             Uri serviceUrl = BuildServiceUrl(resourceUrl);
 
             using (var request = new HttpRequestMessage(HttpMethod.Post, serviceUrl))
             {
-                var content = new StringContent(JsonConvert.SerializeObject(branches, _serializerSettings));
+                var content = new StringContent(JsonConvert.SerializeObject(body, _serializerSettings));
                 content.Headers.ContentType.MediaType = "application/json";
                 request.Content = content;
                 request.Headers.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
@@ -217,27 +72,125 @@ namespace MyNamespace.Services
                 string responseContent = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
                 switch (statusCode)
                 {
-                    case 200:
-                        var result200 = JsonConvert.DeserializeObject<__models.Branch>(responseContent);
-                        return result200;
-                    case 400:
+                    case 405:
                         throw new WebApiClientException("A server side error occurred.", statusCode, responseContent);
-                    case 500:
-                        var result500 = JsonConvert.DeserializeObject<__models.Error>(responseContent);
-                        throw new WebApiClientException<__models.Error>("A server side error occurred.", statusCode, result500);
                     default:
                         throw new WebApiClientException($"Unexpected status code {statusCode} was returned from {serviceUrl}", statusCode, responseContent);
                 }
             }
         }
 
-        internal async Task<__models.Branch> branchGetBranch(string id)
+        public async Task updatePet(__models.Pet body)
         {
-            if (id == null)
-                throw new ArgumentNullException(nameof(id));
+            if (body == null)
+                throw new ArgumentNullException(nameof(body));
 
-            string resourceUrl = "/data/branches/{id}"
-                .Replace("{id}", Uri.EscapeUriString(id?.ToString()));
+            string resourceUrl = "/pet";
+
+            Uri serviceUrl = BuildServiceUrl(resourceUrl);
+
+            using (var request = new HttpRequestMessage(HttpMethod.Put, serviceUrl))
+            {
+                var content = new StringContent(JsonConvert.SerializeObject(body, _serializerSettings));
+                content.Headers.ContentType.MediaType = "application/json";
+                request.Content = content;
+                request.Headers.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+
+                HttpResponseMessage response = await _client.SendAsync(request).ConfigureAwait(false);
+
+                int statusCode = (int)response.StatusCode;
+                string responseContent = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
+                switch (statusCode)
+                {
+                    case 400:
+                        throw new WebApiClientException("A server side error occurred.", statusCode, responseContent);
+                    case 404:
+                        throw new WebApiClientException("A server side error occurred.", statusCode, responseContent);
+                    case 405:
+                        throw new WebApiClientException("A server side error occurred.", statusCode, responseContent);
+                    default:
+                        throw new WebApiClientException($"Unexpected status code {statusCode} was returned from {serviceUrl}", statusCode, responseContent);
+                }
+            }
+        }
+
+        public async Task<IReadOnlyList<__models.Pet>> findPetsByStatus(IReadOnlyList<__models.undefined> status)
+        {
+            if (status == null)
+                throw new ArgumentNullException(nameof(status));
+
+            string resourceUrl = "/pet/findByStatus";
+
+            var queryParams = new Dictionary<string, object>
+            {
+                ["status"] = status,
+            };
+
+            Uri serviceUrl = BuildServiceUrl(resourceUrl, queryParams);
+
+            using (var request = new HttpRequestMessage(HttpMethod.Get, serviceUrl))
+            {
+                request.Headers.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+
+                HttpResponseMessage response = await _client.SendAsync(request).ConfigureAwait(false);
+
+                int statusCode = (int)response.StatusCode;
+                string responseContent = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
+                switch (statusCode)
+                {
+                    case 200:
+                        var result200 = JsonConvert.DeserializeObject<IReadOnlyList<__models.Pet>>(responseContent);
+                        return result200;
+                    case 400:
+                        throw new WebApiClientException("A server side error occurred.", statusCode, responseContent);
+                    default:
+                        throw new WebApiClientException($"Unexpected status code {statusCode} was returned from {serviceUrl}", statusCode, responseContent);
+                }
+            }
+        }
+
+        public async Task<IReadOnlyList<__models.Pet>> findPetsByTags(IReadOnlyList<string> tags)
+        {
+            if (tags == null)
+                throw new ArgumentNullException(nameof(tags));
+
+            string resourceUrl = "/pet/findByTags";
+
+            var queryParams = new Dictionary<string, object>
+            {
+                ["tags"] = tags,
+            };
+
+            Uri serviceUrl = BuildServiceUrl(resourceUrl, queryParams);
+
+            using (var request = new HttpRequestMessage(HttpMethod.Get, serviceUrl))
+            {
+                request.Headers.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+
+                HttpResponseMessage response = await _client.SendAsync(request).ConfigureAwait(false);
+
+                int statusCode = (int)response.StatusCode;
+                string responseContent = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
+                switch (statusCode)
+                {
+                    case 200:
+                        var result200 = JsonConvert.DeserializeObject<IReadOnlyList<__models.Pet>>(responseContent);
+                        return result200;
+                    case 400:
+                        throw new WebApiClientException("A server side error occurred.", statusCode, responseContent);
+                    default:
+                        throw new WebApiClientException($"Unexpected status code {statusCode} was returned from {serviceUrl}", statusCode, responseContent);
+                }
+            }
+        }
+
+        public async Task<__models.Pet> getPetById(long petId)
+        {
+            if (petId == null)
+                throw new ArgumentNullException(nameof(petId));
+
+            string resourceUrl = "/pet/{petId}"
+                .Replace("{petId}", Uri.EscapeUriString(petId?.ToString()));
 
             Uri serviceUrl = BuildServiceUrl(resourceUrl);
 
@@ -252,26 +205,53 @@ namespace MyNamespace.Services
                 switch (statusCode)
                 {
                     case 200:
-                        var result200 = JsonConvert.DeserializeObject<__models.Branch>(responseContent);
+                        var result200 = JsonConvert.DeserializeObject<__models.Pet>(responseContent);
                         return result200;
+                    case 400:
+                        throw new WebApiClientException("A server side error occurred.", statusCode, responseContent);
                     case 404:
                         throw new WebApiClientException("A server side error occurred.", statusCode, responseContent);
-                    case 500:
-                        var result500 = JsonConvert.DeserializeObject<__models.Error>(responseContent);
-                        throw new WebApiClientException<__models.Error>("A server side error occurred.", statusCode, result500);
                     default:
                         throw new WebApiClientException($"Unexpected status code {statusCode} was returned from {serviceUrl}", statusCode, responseContent);
                 }
             }
         }
 
-        internal async Task<object> branchDeleteBranch(string id)
+        public async Task updatePetWithForm(long petId, string name = default(string), string status = default(string))
         {
-            if (id == null)
-                throw new ArgumentNullException(nameof(id));
+            if (petId == null)
+                throw new ArgumentNullException(nameof(petId));
 
-            string resourceUrl = "/data/branches/{id}"
-                .Replace("{id}", Uri.EscapeUriString(id?.ToString()));
+            string resourceUrl = "/pet/{petId}"
+                .Replace("{petId}", Uri.EscapeUriString(petId?.ToString()));
+
+            Uri serviceUrl = BuildServiceUrl(resourceUrl);
+
+            using (var request = new HttpRequestMessage(HttpMethod.Post, serviceUrl))
+            {
+                request.Headers.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+
+                HttpResponseMessage response = await _client.SendAsync(request).ConfigureAwait(false);
+
+                int statusCode = (int)response.StatusCode;
+                string responseContent = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
+                switch (statusCode)
+                {
+                    case 405:
+                        throw new WebApiClientException("A server side error occurred.", statusCode, responseContent);
+                    default:
+                        throw new WebApiClientException($"Unexpected status code {statusCode} was returned from {serviceUrl}", statusCode, responseContent);
+                }
+            }
+        }
+
+        public async Task deletePet(long petId, string api_key = default(string))
+        {
+            if (petId == null)
+                throw new ArgumentNullException(nameof(petId));
+
+            string resourceUrl = "/pet/{petId}"
+                .Replace("{petId}", Uri.EscapeUriString(petId?.ToString()));
 
             Uri serviceUrl = BuildServiceUrl(resourceUrl);
 
@@ -285,14 +265,39 @@ namespace MyNamespace.Services
                 string responseContent = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
                 switch (statusCode)
                 {
-                    case 200:
-                        var result200 = JsonConvert.DeserializeObject<object>(responseContent);
-                        return result200;
-                    case 204:
+                    case 400:
                         throw new WebApiClientException("A server side error occurred.", statusCode, responseContent);
-                    case 500:
-                        var result500 = JsonConvert.DeserializeObject<__models.Error>(responseContent);
-                        throw new WebApiClientException<__models.Error>("A server side error occurred.", statusCode, result500);
+                    case 404:
+                        throw new WebApiClientException("A server side error occurred.", statusCode, responseContent);
+                    default:
+                        throw new WebApiClientException($"Unexpected status code {statusCode} was returned from {serviceUrl}", statusCode, responseContent);
+                }
+            }
+        }
+
+        public async Task<__models.ApiResponse> uploadFile(long petId, string additionalMetadata = default(string), object file = default(object))
+        {
+            if (petId == null)
+                throw new ArgumentNullException(nameof(petId));
+
+            string resourceUrl = "/pet/{petId}/uploadImage"
+                .Replace("{petId}", Uri.EscapeUriString(petId?.ToString()));
+
+            Uri serviceUrl = BuildServiceUrl(resourceUrl);
+
+            using (var request = new HttpRequestMessage(HttpMethod.Post, serviceUrl))
+            {
+                request.Headers.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+
+                HttpResponseMessage response = await _client.SendAsync(request).ConfigureAwait(false);
+
+                int statusCode = (int)response.StatusCode;
+                string responseContent = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
+                switch (statusCode)
+                {
+                    case 200:
+                        var result200 = JsonConvert.DeserializeObject<__models.ApiResponse>(responseContent);
+                        return result200;
                     default:
                         throw new WebApiClientException($"Unexpected status code {statusCode} was returned from {serviceUrl}", statusCode, responseContent);
                 }
@@ -320,37 +325,301 @@ namespace MyNamespace.Services
         }
     }
 
-    internal sealed partial class RateSheetClient
+    public sealed partial class storeClient
     {
         private readonly HttpClient _client;
         private readonly JsonSerializerSettings _serializerSettings;
-        private Uri _baseUrl = new Uri("http://rpos-dev.azurewebsites.net/", UriKind.Absolute);
+        private Uri _baseUrl = new Uri("https://petstore.swagger.io/v2/", UriKind.Absolute);
 
-        internal RateSheetClient()
+        public storeClient()
         {
             _client = new HttpClient();
-            InitializeClient(_client);
+            __GlobalInitializer.InitializeClient(_client);
+            __InitializeClient(_client);
             _serializerSettings = new JsonSerializerSettings();
-            InitializeJsonSerializer(_serializerSettings);
+            __GlobalInitializer.InitializeJsonSerializer(_serializerSettings);
+            __InitializeJsonSerializer(_serializerSettings);
         }
 
-        partial void InitializeClient(HttpClient client);
-        partial void InitializeJsonSerializer(JsonSerializerSettings settings);
+        partial void __InitializeClient(HttpClient client);
+        partial void __InitializeJsonSerializer(JsonSerializerSettings settings);
 
-        internal Uri BaseUrl
+        public Uri BaseUrl
         {
             get => _baseUrl;
             set => _baseUrl = value ?? throw new ArgumentNullException(nameof(value));
         }
 
-        internal async Task<__models.RateSheetSearchResults> rateSheetSearchRateSheets(int startRecord = default(int), int recordCount = default(int))
+        public async Task<object> getInventory()
         {
-            string resourceUrl = "/api/rate-sheets";
+            string resourceUrl = "/store/inventory";
+
+            Uri serviceUrl = BuildServiceUrl(resourceUrl);
+
+            using (var request = new HttpRequestMessage(HttpMethod.Get, serviceUrl))
+            {
+                request.Headers.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+
+                HttpResponseMessage response = await _client.SendAsync(request).ConfigureAwait(false);
+
+                int statusCode = (int)response.StatusCode;
+                string responseContent = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
+                switch (statusCode)
+                {
+                    case 200:
+                        var result200 = JsonConvert.DeserializeObject<object>(responseContent);
+                        return result200;
+                    default:
+                        throw new WebApiClientException($"Unexpected status code {statusCode} was returned from {serviceUrl}", statusCode, responseContent);
+                }
+            }
+        }
+
+        public async Task<__models.Order> placeOrder(__models.Order body)
+        {
+            if (body == null)
+                throw new ArgumentNullException(nameof(body));
+
+            string resourceUrl = "/store/order";
+
+            Uri serviceUrl = BuildServiceUrl(resourceUrl);
+
+            using (var request = new HttpRequestMessage(HttpMethod.Post, serviceUrl))
+            {
+                var content = new StringContent(JsonConvert.SerializeObject(body, _serializerSettings));
+                content.Headers.ContentType.MediaType = "application/json";
+                request.Content = content;
+                request.Headers.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+
+                HttpResponseMessage response = await _client.SendAsync(request).ConfigureAwait(false);
+
+                int statusCode = (int)response.StatusCode;
+                string responseContent = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
+                switch (statusCode)
+                {
+                    case 200:
+                        var result200 = JsonConvert.DeserializeObject<__models.Order>(responseContent);
+                        return result200;
+                    case 400:
+                        throw new WebApiClientException("A server side error occurred.", statusCode, responseContent);
+                    default:
+                        throw new WebApiClientException($"Unexpected status code {statusCode} was returned from {serviceUrl}", statusCode, responseContent);
+                }
+            }
+        }
+
+        public async Task<__models.Order> getOrderById(long orderId)
+        {
+            if (orderId == null)
+                throw new ArgumentNullException(nameof(orderId));
+
+            string resourceUrl = "/store/order/{orderId}"
+                .Replace("{orderId}", Uri.EscapeUriString(orderId?.ToString()));
+
+            Uri serviceUrl = BuildServiceUrl(resourceUrl);
+
+            using (var request = new HttpRequestMessage(HttpMethod.Get, serviceUrl))
+            {
+                request.Headers.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+
+                HttpResponseMessage response = await _client.SendAsync(request).ConfigureAwait(false);
+
+                int statusCode = (int)response.StatusCode;
+                string responseContent = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
+                switch (statusCode)
+                {
+                    case 200:
+                        var result200 = JsonConvert.DeserializeObject<__models.Order>(responseContent);
+                        return result200;
+                    case 400:
+                        throw new WebApiClientException("A server side error occurred.", statusCode, responseContent);
+                    case 404:
+                        throw new WebApiClientException("A server side error occurred.", statusCode, responseContent);
+                    default:
+                        throw new WebApiClientException($"Unexpected status code {statusCode} was returned from {serviceUrl}", statusCode, responseContent);
+                }
+            }
+        }
+
+        public async Task deleteOrder(long orderId)
+        {
+            if (orderId == null)
+                throw new ArgumentNullException(nameof(orderId));
+
+            string resourceUrl = "/store/order/{orderId}"
+                .Replace("{orderId}", Uri.EscapeUriString(orderId?.ToString()));
+
+            Uri serviceUrl = BuildServiceUrl(resourceUrl);
+
+            using (var request = new HttpRequestMessage(HttpMethod.Delete, serviceUrl))
+            {
+                request.Headers.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+
+                HttpResponseMessage response = await _client.SendAsync(request).ConfigureAwait(false);
+
+                int statusCode = (int)response.StatusCode;
+                string responseContent = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
+                switch (statusCode)
+                {
+                    case 400:
+                        throw new WebApiClientException("A server side error occurred.", statusCode, responseContent);
+                    case 404:
+                        throw new WebApiClientException("A server side error occurred.", statusCode, responseContent);
+                    default:
+                        throw new WebApiClientException($"Unexpected status code {statusCode} was returned from {serviceUrl}", statusCode, responseContent);
+                }
+            }
+        }
+
+        private Uri BuildServiceUrl(string relativeUrl, IDictionary<string, object> queryParams = null)
+        {
+            relativeUrl = relativeUrl ?? "";
+            if (queryParams?.Count > 0)
+            {
+                string queryString = queryParams.Aggregate(new StringBuilder(), (aggregate, kvp) =>
+                {
+                    aggregate.Append(aggregate.Length == 0 ? "?" : "&")
+                        .Append(Uri.EscapeUriString(kvp.Key));
+                    if (kvp.Value != null)
+                        aggregate.Append("=").Append(Uri.EscapeUriString(kvp.Value.ToString()));
+                    return aggregate;
+                }).ToString();
+                relativeUrl += queryString;
+            }
+            if (!Uri.TryCreate(BaseUrl, relativeUrl, out Uri serviceUrl))
+                throw new UriFormatException($"Could not create an absolute URL from base URL '{BaseUrl}' and relative URL '{relativeUrl}'.");
+            return serviceUrl;
+        }
+    }
+
+    public sealed partial class userClient
+    {
+        private readonly HttpClient _client;
+        private readonly JsonSerializerSettings _serializerSettings;
+        private Uri _baseUrl = new Uri("https://petstore.swagger.io/v2/", UriKind.Absolute);
+
+        public userClient()
+        {
+            _client = new HttpClient();
+            __GlobalInitializer.InitializeClient(_client);
+            __InitializeClient(_client);
+            _serializerSettings = new JsonSerializerSettings();
+            __GlobalInitializer.InitializeJsonSerializer(_serializerSettings);
+            __InitializeJsonSerializer(_serializerSettings);
+        }
+
+        partial void __InitializeClient(HttpClient client);
+        partial void __InitializeJsonSerializer(JsonSerializerSettings settings);
+
+        public Uri BaseUrl
+        {
+            get => _baseUrl;
+            set => _baseUrl = value ?? throw new ArgumentNullException(nameof(value));
+        }
+
+        public async Task createUser(__models.User body)
+        {
+            if (body == null)
+                throw new ArgumentNullException(nameof(body));
+
+            string resourceUrl = "/user";
+
+            Uri serviceUrl = BuildServiceUrl(resourceUrl);
+
+            using (var request = new HttpRequestMessage(HttpMethod.Post, serviceUrl))
+            {
+                var content = new StringContent(JsonConvert.SerializeObject(body, _serializerSettings));
+                content.Headers.ContentType.MediaType = "application/json";
+                request.Content = content;
+                request.Headers.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+
+                HttpResponseMessage response = await _client.SendAsync(request).ConfigureAwait(false);
+
+                int statusCode = (int)response.StatusCode;
+                string responseContent = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
+                switch (statusCode)
+                {
+                    case default:
+                        throw new WebApiClientException("A server side error occurred.", statusCode, responseContent);
+                    default:
+                        throw new WebApiClientException($"Unexpected status code {statusCode} was returned from {serviceUrl}", statusCode, responseContent);
+                }
+            }
+        }
+
+        public async Task createUsersWithArrayInput(IReadOnlyList<__models.User> body)
+        {
+            if (body == null)
+                throw new ArgumentNullException(nameof(body));
+
+            string resourceUrl = "/user/createWithArray";
+
+            Uri serviceUrl = BuildServiceUrl(resourceUrl);
+
+            using (var request = new HttpRequestMessage(HttpMethod.Post, serviceUrl))
+            {
+                var content = new StringContent(JsonConvert.SerializeObject(body, _serializerSettings));
+                content.Headers.ContentType.MediaType = "application/json";
+                request.Content = content;
+                request.Headers.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+
+                HttpResponseMessage response = await _client.SendAsync(request).ConfigureAwait(false);
+
+                int statusCode = (int)response.StatusCode;
+                string responseContent = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
+                switch (statusCode)
+                {
+                    case default:
+                        throw new WebApiClientException("A server side error occurred.", statusCode, responseContent);
+                    default:
+                        throw new WebApiClientException($"Unexpected status code {statusCode} was returned from {serviceUrl}", statusCode, responseContent);
+                }
+            }
+        }
+
+        public async Task createUsersWithListInput(IReadOnlyList<__models.User> body)
+        {
+            if (body == null)
+                throw new ArgumentNullException(nameof(body));
+
+            string resourceUrl = "/user/createWithList";
+
+            Uri serviceUrl = BuildServiceUrl(resourceUrl);
+
+            using (var request = new HttpRequestMessage(HttpMethod.Post, serviceUrl))
+            {
+                var content = new StringContent(JsonConvert.SerializeObject(body, _serializerSettings));
+                content.Headers.ContentType.MediaType = "application/json";
+                request.Content = content;
+                request.Headers.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+
+                HttpResponseMessage response = await _client.SendAsync(request).ConfigureAwait(false);
+
+                int statusCode = (int)response.StatusCode;
+                string responseContent = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
+                switch (statusCode)
+                {
+                    case default:
+                        throw new WebApiClientException("A server side error occurred.", statusCode, responseContent);
+                    default:
+                        throw new WebApiClientException($"Unexpected status code {statusCode} was returned from {serviceUrl}", statusCode, responseContent);
+                }
+            }
+        }
+
+        public async Task<string> loginUser(string username, string password)
+        {
+            if (username == null)
+                throw new ArgumentNullException(nameof(username));
+            if (password == null)
+                throw new ArgumentNullException(nameof(password));
+
+            string resourceUrl = "/user/login";
 
             var queryParams = new Dictionary<string, object>
             {
-                ["startRecord"] = startRecord,
-                ["recordCount"] = recordCount,
+                ["username"] = username,
+                ["password"] = password,
             };
 
             Uri serviceUrl = BuildServiceUrl(resourceUrl, queryParams);
@@ -366,11 +635,132 @@ namespace MyNamespace.Services
                 switch (statusCode)
                 {
                     case 200:
-                        var result200 = JsonConvert.DeserializeObject<__models.RateSheetSearchResults>(responseContent);
+                        var result200 = JsonConvert.DeserializeObject<string>(responseContent);
                         return result200;
-                    case 500:
-                        var result500 = JsonConvert.DeserializeObject<__models.Error>(responseContent);
-                        throw new WebApiClientException<__models.Error>("A server side error occurred.", statusCode, result500);
+                    case 400:
+                        throw new WebApiClientException("A server side error occurred.", statusCode, responseContent);
+                    default:
+                        throw new WebApiClientException($"Unexpected status code {statusCode} was returned from {serviceUrl}", statusCode, responseContent);
+                }
+            }
+        }
+
+        public async Task logoutUser()
+        {
+            string resourceUrl = "/user/logout";
+
+            Uri serviceUrl = BuildServiceUrl(resourceUrl);
+
+            using (var request = new HttpRequestMessage(HttpMethod.Get, serviceUrl))
+            {
+                request.Headers.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+
+                HttpResponseMessage response = await _client.SendAsync(request).ConfigureAwait(false);
+
+                int statusCode = (int)response.StatusCode;
+                string responseContent = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
+                switch (statusCode)
+                {
+                    case default:
+                        throw new WebApiClientException("A server side error occurred.", statusCode, responseContent);
+                    default:
+                        throw new WebApiClientException($"Unexpected status code {statusCode} was returned from {serviceUrl}", statusCode, responseContent);
+                }
+            }
+        }
+
+        public async Task<__models.User> getUserByName(string username)
+        {
+            if (username == null)
+                throw new ArgumentNullException(nameof(username));
+
+            string resourceUrl = "/user/{username}"
+                .Replace("{username}", Uri.EscapeUriString(username?.ToString()));
+
+            Uri serviceUrl = BuildServiceUrl(resourceUrl);
+
+            using (var request = new HttpRequestMessage(HttpMethod.Get, serviceUrl))
+            {
+                request.Headers.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+
+                HttpResponseMessage response = await _client.SendAsync(request).ConfigureAwait(false);
+
+                int statusCode = (int)response.StatusCode;
+                string responseContent = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
+                switch (statusCode)
+                {
+                    case 200:
+                        var result200 = JsonConvert.DeserializeObject<__models.User>(responseContent);
+                        return result200;
+                    case 400:
+                        throw new WebApiClientException("A server side error occurred.", statusCode, responseContent);
+                    case 404:
+                        throw new WebApiClientException("A server side error occurred.", statusCode, responseContent);
+                    default:
+                        throw new WebApiClientException($"Unexpected status code {statusCode} was returned from {serviceUrl}", statusCode, responseContent);
+                }
+            }
+        }
+
+        public async Task updateUser(string username, __models.User body)
+        {
+            if (username == null)
+                throw new ArgumentNullException(nameof(username));
+            if (body == null)
+                throw new ArgumentNullException(nameof(body));
+
+            string resourceUrl = "/user/{username}"
+                .Replace("{username}", Uri.EscapeUriString(username?.ToString()));
+
+            Uri serviceUrl = BuildServiceUrl(resourceUrl);
+
+            using (var request = new HttpRequestMessage(HttpMethod.Put, serviceUrl))
+            {
+                var content = new StringContent(JsonConvert.SerializeObject(body, _serializerSettings));
+                content.Headers.ContentType.MediaType = "application/json";
+                request.Content = content;
+                request.Headers.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+
+                HttpResponseMessage response = await _client.SendAsync(request).ConfigureAwait(false);
+
+                int statusCode = (int)response.StatusCode;
+                string responseContent = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
+                switch (statusCode)
+                {
+                    case 400:
+                        throw new WebApiClientException("A server side error occurred.", statusCode, responseContent);
+                    case 404:
+                        throw new WebApiClientException("A server side error occurred.", statusCode, responseContent);
+                    default:
+                        throw new WebApiClientException($"Unexpected status code {statusCode} was returned from {serviceUrl}", statusCode, responseContent);
+                }
+            }
+        }
+
+        public async Task deleteUser(string username)
+        {
+            if (username == null)
+                throw new ArgumentNullException(nameof(username));
+
+            string resourceUrl = "/user/{username}"
+                .Replace("{username}", Uri.EscapeUriString(username?.ToString()));
+
+            Uri serviceUrl = BuildServiceUrl(resourceUrl);
+
+            using (var request = new HttpRequestMessage(HttpMethod.Delete, serviceUrl))
+            {
+                request.Headers.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+
+                HttpResponseMessage response = await _client.SendAsync(request).ConfigureAwait(false);
+
+                int statusCode = (int)response.StatusCode;
+                string responseContent = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
+                switch (statusCode)
+                {
+                    case 400:
+                        throw new WebApiClientException("A server side error occurred.", statusCode, responseContent);
+                    case 404:
+                        throw new WebApiClientException("A server side error occurred.", statusCode, responseContent);
                     default:
                         throw new WebApiClientException($"Unexpected status code {statusCode} was returned from {serviceUrl}", statusCode, responseContent);
                 }
@@ -398,97 +788,21 @@ namespace MyNamespace.Services
         }
     }
 
-    internal sealed partial class UiRateSheetClient
+    public static partial class __GlobalInitializer
     {
-        private readonly HttpClient _client;
-        private readonly JsonSerializerSettings _serializerSettings;
-        private Uri _baseUrl = new Uri("http://rpos-dev.azurewebsites.net/", UriKind.Absolute);
-
-        internal UiRateSheetClient()
+        public static void InitializeClient(HttpClient client)
         {
-            _client = new HttpClient();
-            InitializeClient(_client);
-            _serializerSettings = new JsonSerializerSettings();
-            InitializeJsonSerializer(_serializerSettings);
+            DoInitializeClient(client);
         }
 
-        partial void InitializeClient(HttpClient client);
-        partial void InitializeJsonSerializer(JsonSerializerSettings settings);
+        static partial void DoInitializeClient(HttpClient client);
 
-        internal Uri BaseUrl
+        public static void InitializeJsonSerializer(JsonSerializerSettings settings)
         {
-            get => _baseUrl;
-            set => _baseUrl = value ?? throw new ArgumentNullException(nameof(value));
+            DoInitializeJsonSerializer(settings);
         }
 
-        internal async Task<__models.DailyRateSheet> uiRateSheetGetDailyRateSheet()
-        {
-            string resourceUrl = "/ui/rate-sheets/daily";
-
-            Uri serviceUrl = BuildServiceUrl(resourceUrl);
-
-            using (var request = new HttpRequestMessage(HttpMethod.Get, serviceUrl))
-            {
-                request.Headers.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-
-                HttpResponseMessage response = await _client.SendAsync(request).ConfigureAwait(false);
-
-                int statusCode = (int)response.StatusCode;
-                string responseContent = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
-                switch (statusCode)
-                {
-                    case 200:
-                        var result200 = JsonConvert.DeserializeObject<__models.DailyRateSheet>(responseContent);
-                        return result200;
-                    default:
-                        throw new WebApiClientException($"Unexpected status code {statusCode} was returned from {serviceUrl}", statusCode, responseContent);
-                }
-            }
-        }
-
-        internal async Task uiRateSheetGetArchiveRateSheets()
-        {
-            string resourceUrl = "/ui/rate-sheets/archive";
-
-            Uri serviceUrl = BuildServiceUrl(resourceUrl);
-
-            using (var request = new HttpRequestMessage(HttpMethod.Get, serviceUrl))
-            {
-                request.Headers.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-
-                HttpResponseMessage response = await _client.SendAsync(request).ConfigureAwait(false);
-
-                int statusCode = (int)response.StatusCode;
-                string responseContent = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
-                switch (statusCode)
-                {
-                    case 200:
-                        throw new WebApiClientException("A server side error occurred.", statusCode, responseContent);
-                    default:
-                        throw new WebApiClientException($"Unexpected status code {statusCode} was returned from {serviceUrl}", statusCode, responseContent);
-                }
-            }
-        }
-
-        private Uri BuildServiceUrl(string relativeUrl, IDictionary<string, object> queryParams = null)
-        {
-            relativeUrl = relativeUrl ?? "";
-            if (queryParams?.Count > 0)
-            {
-                string queryString = queryParams.Aggregate(new StringBuilder(), (aggregate, kvp) =>
-                {
-                    aggregate.Append(aggregate.Length == 0 ? "?" : "&")
-                        .Append(Uri.EscapeUriString(kvp.Key));
-                    if (kvp.Value != null)
-                        aggregate.Append("=").Append(Uri.EscapeUriString(kvp.Value.ToString()));
-                    return aggregate;
-                }).ToString();
-                relativeUrl += queryString;
-            }
-            if (!Uri.TryCreate(BaseUrl, relativeUrl, out Uri serviceUrl))
-                throw new UriFormatException($"Could not create an absolute URL from base URL '{BaseUrl}' and relative URL '{relativeUrl}'.");
-            return serviceUrl;
-        }
+        static partial void DoInitializeJsonSerializer(JsonSerializerSettings settings);
     }
 
     public class WebApiClientException : Exception
@@ -518,725 +832,121 @@ namespace MyNamespace.Services
 namespace MyNamespace.Services
 {
     [JsonObject(MemberSerialization.OptIn)]
-    internal sealed partial class Address
+    public sealed partial class ApiResponse
     {
-        [JsonProperty("lines", Required = Required.Default, NullValueHandling = NullValueHandling.Ignore)]
-        public IReadOnlyList<string> lines;
+        [JsonProperty("code", Required = Required.Default, NullValueHandling = NullValueHandling.Ignore)]
+        public int code;
 
-        [JsonProperty("city", Required = Required.Default, NullValueHandling = NullValueHandling.Ignore)]
-        public string city;
+        [JsonProperty("type", Required = Required.Default, NullValueHandling = NullValueHandling.Ignore)]
+        public string type;
 
-        [JsonProperty("state", Required = Required.Default, NullValueHandling = NullValueHandling.Ignore)]
-        public string state;
+        [JsonProperty("message", Required = Required.Default, NullValueHandling = NullValueHandling.Ignore)]
+        public string message;
 
-        [JsonProperty("zip", Required = Required.Default, NullValueHandling = NullValueHandling.Ignore)]
-        public string zip;
-
+    }
+    [JsonObject(MemberSerialization.OptIn)]
+    public sealed partial class Category
+    {
         [JsonProperty("id", Required = Required.Default, NullValueHandling = NullValueHandling.Ignore)]
-        public string id;
+        public long id;
 
-    }
-    [JsonObject(MemberSerialization.OptIn)]
-    internal sealed partial class Asset
-    {
-        [JsonProperty("assetType", Required = Required.Default, NullValueHandling = NullValueHandling.Ignore)]
-        public undefined assetType;
-
-        [JsonProperty("borrowerId", Required = Required.Default, NullValueHandling = NullValueHandling.Ignore)]
-        public string borrowerId;
-
-        [JsonProperty("companyName", Required = Required.Default, NullValueHandling = NullValueHandling.Ignore)]
-        public string companyName;
-
-        [JsonProperty("addressLines", Required = Required.Default, NullValueHandling = NullValueHandling.Ignore)]
-        public IReadOnlyList<string> addressLines;
-
-        [JsonProperty("city", Required = Required.Default, NullValueHandling = NullValueHandling.Ignore)]
-        public string city;
-
-        [JsonProperty("state", Required = Required.Default, NullValueHandling = NullValueHandling.Ignore)]
-        public string state;
-
-        [JsonProperty("zipCode", Required = Required.Default, NullValueHandling = NullValueHandling.Ignore)]
-        public string zipCode;
-
-        [JsonProperty("remarks", Required = Required.Default, NullValueHandling = NullValueHandling.Ignore)]
-        public string remarks;
-
-        [JsonProperty("checkingSavings", Required = Required.Default, NullValueHandling = NullValueHandling.Ignore)]
-        public IReadOnlyList<CheckingSavings> checkingSavings;
-
-        [JsonProperty("stocksAndBonds", Required = Required.Default, NullValueHandling = NullValueHandling.Ignore)]
-        public IReadOnlyList<StocksAndBonds> stocksAndBonds;
-
-        [JsonProperty("autoOwned", Required = Required.Default, NullValueHandling = NullValueHandling.Ignore)]
-        public IReadOnlyList<AutoOwned> autoOwned;
-
-        [JsonProperty("lifeInsurance", Required = Required.Default, NullValueHandling = NullValueHandling.Ignore)]
-        public LifeInsurance lifeInsurance;
-
-        [JsonProperty("others", Required = Required.Default, NullValueHandling = NullValueHandling.Ignore)]
-        public IReadOnlyList<Other> others;
-
-        [JsonProperty("retirementFundsBalance", Required = Required.Default, NullValueHandling = NullValueHandling.Ignore)]
-        public double retirementFundsBalance;
-
-        [JsonProperty("netWorthBusinessBalance", Required = Required.Default, NullValueHandling = NullValueHandling.Ignore)]
-        public double netWorthBusinessBalance;
-
-        [JsonProperty("totalBalance", Required = Required.Default, NullValueHandling = NullValueHandling.Ignore)]
-        public double totalBalance;
-
-        [JsonProperty("recordStatus", Required = Required.Default, NullValueHandling = NullValueHandling.Ignore)]
-        public undefined recordStatus;
-
-        [JsonProperty("id", Required = Required.Default, NullValueHandling = NullValueHandling.Ignore)]
-        public string id;
-
-    }
-    [JsonObject(MemberSerialization.OptIn)]
-    internal sealed partial class AssetHeader
-    {
-        [JsonProperty("appDepositDesc", Required = Required.Default, NullValueHandling = NullValueHandling.Ignore)]
-        public string appDepositDesc;
-
-        [JsonProperty("appDepositAmt", Required = Required.Default, NullValueHandling = NullValueHandling.Ignore)]
-        public double appDepositAmt;
-
-        [JsonProperty("earnestDesc", Required = Required.Default, NullValueHandling = NullValueHandling.Ignore)]
-        public string earnestDesc;
-
-        [JsonProperty("earnestAmt", Required = Required.Default, NullValueHandling = NullValueHandling.Ignore)]
-        public double earnestAmt;
-
-        [JsonProperty("cashTowardsPurchaseIncludeInNetWorth", Required = Required.Default, NullValueHandling = NullValueHandling.Ignore)]
-        public bool cashTowardsPurchaseIncludeInNetWorth;
-
-        [JsonProperty("id", Required = Required.Default, NullValueHandling = NullValueHandling.Ignore)]
-        public string id;
-
-    }
-    [JsonObject(MemberSerialization.OptIn)]
-    internal sealed partial class AssetsLiabilities
-    {
-        [JsonProperty("applicationId", Required = Required.Default, NullValueHandling = NullValueHandling.Ignore)]
-        public string applicationId;
-
-        [JsonProperty("statementCompleted", Required = Required.Default, NullValueHandling = NullValueHandling.Ignore)]
-        public undefined statementCompleted;
-
-        [JsonProperty("vacancyFactor", Required = Required.Default, NullValueHandling = NullValueHandling.Ignore)]
-        public double vacancyFactor;
-
-        [JsonProperty("subjectPropertyAddress", Required = Required.Default, NullValueHandling = NullValueHandling.Ignore)]
-        public Address subjectPropertyAddress;
-
-        [JsonProperty("borrowerAddress", Required = Required.Default, NullValueHandling = NullValueHandling.Ignore)]
-        public BorrowerAddress borrowerAddress;
-
-        [JsonProperty("coBorrowerAddress", Required = Required.Default, NullValueHandling = NullValueHandling.Ignore)]
-        public BorrowerAddress coBorrowerAddress;
-
-        [JsonProperty("assetHeader", Required = Required.Default, NullValueHandling = NullValueHandling.Ignore)]
-        public AssetHeader assetHeader;
-
-        [JsonProperty("assets", Required = Required.Default, NullValueHandling = NullValueHandling.Ignore)]
-        public IReadOnlyList<Asset> assets;
-
-        [JsonProperty("liabilities", Required = Required.Default, NullValueHandling = NullValueHandling.Ignore)]
-        public IReadOnlyList<Liability> liabilities;
-
-        [JsonProperty("realEstateOwnedList", Required = Required.Default, NullValueHandling = NullValueHandling.Ignore)]
-        public IReadOnlyList<RealEstateOwned> realEstateOwnedList;
-
-        [JsonProperty("id", Required = Required.Default, NullValueHandling = NullValueHandling.Ignore)]
-        public string id;
-
-    }
-    [JsonObject(MemberSerialization.OptIn)]
-    internal sealed partial class AssetsLiabilitiesRequest
-    {
-        [JsonProperty("applicationId", Required = Required.Default, NullValueHandling = NullValueHandling.Ignore)]
-        public string applicationId;
-
-        [JsonProperty("borrowerId", Required = Required.Default, NullValueHandling = NullValueHandling.Ignore)]
-        public string borrowerId;
-
-        [JsonProperty("coBorrowerId", Required = Required.Default, NullValueHandling = NullValueHandling.Ignore)]
-        public string coBorrowerId;
-
-    }
-    [JsonObject(MemberSerialization.OptIn)]
-    internal sealed partial class AutoOwned
-    {
-        [JsonProperty("autosOwned", Required = Required.Default, NullValueHandling = NullValueHandling.Ignore)]
-        public string autosOwned;
-
-        [JsonProperty("balanceOrMarketValue", Required = Required.Default, NullValueHandling = NullValueHandling.Ignore)]
-        public double balanceOrMarketValue;
-
-        [JsonProperty("id", Required = Required.Default, NullValueHandling = NullValueHandling.Ignore)]
-        public string id;
-
-    }
-    [JsonObject(MemberSerialization.OptIn)]
-    internal sealed partial class BorrowerAddress
-    {
-        [JsonProperty("borrowerId", Required = Required.Default, NullValueHandling = NullValueHandling.Ignore)]
-        public string borrowerId;
-
-        [JsonProperty("address", Required = Required.Default, NullValueHandling = NullValueHandling.Ignore)]
-        public Address address;
-
-        [JsonProperty("id", Required = Required.Default, NullValueHandling = NullValueHandling.Ignore)]
-        public string id;
-
-    }
-    [JsonObject(MemberSerialization.OptIn)]
-    internal sealed partial class Branch
-    {
         [JsonProperty("name", Required = Required.Default, NullValueHandling = NullValueHandling.Ignore)]
         public string name;
 
+    }
+    [JsonObject(MemberSerialization.OptIn)]
+    public sealed partial class Order
+    {
         [JsonProperty("id", Required = Required.Default, NullValueHandling = NullValueHandling.Ignore)]
-        public string id;
+        public long id;
+
+        [JsonProperty("petId", Required = Required.Default, NullValueHandling = NullValueHandling.Ignore)]
+        public long petId;
+
+        [JsonProperty("quantity", Required = Required.Default, NullValueHandling = NullValueHandling.Ignore)]
+        public int quantity;
+
+        [JsonProperty("shipDate", Required = Required.Default, NullValueHandling = NullValueHandling.Ignore)]
+        public DateTime shipDate;
+
+        [JsonProperty("status", Required = Required.Default, NullValueHandling = NullValueHandling.Ignore)]
+        public undefined status;
+
+        [JsonProperty("complete", Required = Required.Default, NullValueHandling = NullValueHandling.Ignore)]
+        public bool complete;
 
     }
     [JsonObject(MemberSerialization.OptIn)]
-    internal sealed partial class BranchFilterCriteria
+    public sealed partial class Pet
     {
-        [JsonProperty("field", Required = Required.Default, NullValueHandling = NullValueHandling.Ignore)]
-        public undefined field;
-
-        [JsonProperty("operation", Required = Required.Default, NullValueHandling = NullValueHandling.Ignore)]
-        public undefined operation;
-
-        [JsonProperty("value", Required = Required.Default, NullValueHandling = NullValueHandling.Ignore)]
-        public object value;
-
-    }
-    [JsonObject(MemberSerialization.OptIn)]
-    internal sealed partial class BranchSearchCriteria
-    {
-        [JsonProperty("filters", Required = Required.Default, NullValueHandling = NullValueHandling.Ignore)]
-        public IReadOnlyList<BranchFilterCriteria> filters;
-
-        [JsonProperty("sortSpecs", Required = Required.Default, NullValueHandling = NullValueHandling.Ignore)]
-        public IReadOnlyList<BranchSortSpec> sortSpecs;
-
-        [JsonProperty("startRecord", Required = Required.Default, NullValueHandling = NullValueHandling.Ignore)]
-        public int startRecord;
-
-        [JsonProperty("recordCount", Required = Required.Default, NullValueHandling = NullValueHandling.Ignore)]
-        public int recordCount;
-
-    }
-    [JsonObject(MemberSerialization.OptIn)]
-    internal sealed partial class BranchSearchResult
-    {
-        [JsonProperty("data", Required = Required.Default, NullValueHandling = NullValueHandling.Ignore)]
-        public IReadOnlyList<Branch> data;
-
-        [JsonProperty("totalCount", Required = Required.Default, NullValueHandling = NullValueHandling.Ignore)]
-        public int totalCount;
-
-    }
-    [JsonObject(MemberSerialization.OptIn)]
-    internal sealed partial class BranchSortSpec
-    {
-        [JsonProperty("field", Required = Required.Default, NullValueHandling = NullValueHandling.Ignore)]
-        public undefined field;
-
-        [JsonProperty("order", Required = Required.Default, NullValueHandling = NullValueHandling.Ignore)]
-        public undefined order;
-
-    }
-    [JsonObject(MemberSerialization.OptIn)]
-    internal sealed partial class CheckingSavings
-    {
-        [JsonProperty("accountType", Required = Required.Default, NullValueHandling = NullValueHandling.Ignore)]
-        public undefined accountType;
-
-        [JsonProperty("accountNumber", Required = Required.Default, NullValueHandling = NullValueHandling.Ignore)]
-        public string accountNumber;
-
-        [JsonProperty("balanceOrMarketValue", Required = Required.Default, NullValueHandling = NullValueHandling.Ignore)]
-        public double balanceOrMarketValue;
-
-        [JsonProperty("recordStatus", Required = Required.Default, NullValueHandling = NullValueHandling.Ignore)]
-        public undefined recordStatus;
-
         [JsonProperty("id", Required = Required.Default, NullValueHandling = NullValueHandling.Ignore)]
-        public string id;
+        public long id;
 
-    }
-    [JsonObject(MemberSerialization.OptIn)]
-    internal sealed partial class DailyRateSheet
-    {
-        [JsonProperty("branches", Required = Required.Default, NullValueHandling = NullValueHandling.Ignore)]
-        public BranchSearchResult branches;
+        [JsonProperty("category", Required = Required.Default, NullValueHandling = NullValueHandling.Ignore)]
+        public Category category;
 
-        [JsonProperty("rateSheets", Required = Required.Default, NullValueHandling = NullValueHandling.Ignore)]
-        public RateSheetSearchResults rateSheets;
-
-    }
-    [JsonObject(MemberSerialization.OptIn)]
-    internal sealed partial class Error
-    {
-        [JsonProperty("errorCode", Required = Required.Default, NullValueHandling = NullValueHandling.Ignore)]
-        public string errorCode;
-
-        [JsonProperty("correlationId", Required = Required.Default, NullValueHandling = NullValueHandling.Ignore)]
-        public string correlationId;
-
-        [JsonProperty("debug", Required = Required.Default, NullValueHandling = NullValueHandling.Ignore)]
-        public string debug;
-
-    }
-    [JsonObject(MemberSerialization.OptIn)]
-    internal sealed partial class Liability
-    {
-        [JsonProperty("liabilityType", Required = Required.Default, NullValueHandling = NullValueHandling.Ignore)]
-        public undefined liabilityType;
-
-        [JsonProperty("borrowerId", Required = Required.Default, NullValueHandling = NullValueHandling.Ignore)]
-        public string borrowerId;
-
-        [JsonProperty("accountType", Required = Required.Default, NullValueHandling = NullValueHandling.Ignore)]
-        public undefined accountType;
-
-        [JsonProperty("companyName", Required = Required.Default, NullValueHandling = NullValueHandling.Ignore)]
-        public string companyName;
-
-        [JsonProperty("addressLines", Required = Required.Default, NullValueHandling = NullValueHandling.Ignore)]
-        public IReadOnlyList<string> addressLines;
-
-        [JsonProperty("city", Required = Required.Default, NullValueHandling = NullValueHandling.Ignore)]
-        public string city;
-
-        [JsonProperty("state", Required = Required.Default, NullValueHandling = NullValueHandling.Ignore)]
-        public string state;
-
-        [JsonProperty("zipCode", Required = Required.Default, NullValueHandling = NullValueHandling.Ignore)]
-        public string zipCode;
-
-        [JsonProperty("accountNumber", Required = Required.Default, NullValueHandling = NullValueHandling.Ignore)]
-        public string accountNumber;
-
-        [JsonProperty("unpaidBalance", Required = Required.Default, NullValueHandling = NullValueHandling.Ignore)]
-        public double unpaidBalance;
-
-        [JsonProperty("notCounted", Required = Required.Default, NullValueHandling = NullValueHandling.Ignore)]
-        public bool notCounted;
-
-        [JsonProperty("toBePaidOff", Required = Required.Default, NullValueHandling = NullValueHandling.Ignore)]
-        public bool toBePaidOff;
-
-        [JsonProperty("omitted", Required = Required.Default, NullValueHandling = NullValueHandling.Ignore)]
-        public bool omitted;
-
-        [JsonProperty("listedOnCreditReport", Required = Required.Default, NullValueHandling = NullValueHandling.Ignore)]
-        public bool listedOnCreditReport;
-
-        [JsonProperty("resubordinated", Required = Required.Default, NullValueHandling = NullValueHandling.Ignore)]
-        public bool resubordinated;
-
-        [JsonProperty("defaultPaymentLeft", Required = Required.Default, NullValueHandling = NullValueHandling.Ignore)]
-        public int defaultPaymentLeft;
-
-        [JsonProperty("overrideDefault", Required = Required.Default, NullValueHandling = NullValueHandling.Ignore)]
-        public bool overrideDefault;
-
-        [JsonProperty("overridePaymentLeft", Required = Required.Default, NullValueHandling = NullValueHandling.Ignore)]
-        public string overridePaymentLeft;
-
-        [JsonProperty("monthlyPayment", Required = Required.Default, NullValueHandling = NullValueHandling.Ignore)]
-        public double monthlyPayment;
-
-        [JsonProperty("atrNotes", Required = Required.Default, NullValueHandling = NullValueHandling.Ignore)]
-        public string atrNotes;
-
-        [JsonProperty("otherNotes", Required = Required.Default, NullValueHandling = NullValueHandling.Ignore)]
-        public string otherNotes;
-
-        [JsonProperty("isLinkedToReo", Required = Required.Default, NullValueHandling = NullValueHandling.Ignore)]
-        public bool isLinkedToReo;
-
-        [JsonProperty("reoId", Required = Required.Default, NullValueHandling = NullValueHandling.Ignore)]
-        public string reoId;
-
-        [JsonProperty("lienPosition", Required = Required.Default, NullValueHandling = NullValueHandling.Ignore)]
-        public int lienPosition;
-
-        [JsonProperty("mortgagePayments", Required = Required.Default, NullValueHandling = NullValueHandling.Ignore)]
-        public double mortgagePayments;
-
-        [JsonProperty("otherExpenceType", Required = Required.Default, NullValueHandling = NullValueHandling.Ignore)]
-        public undefined otherExpenceType;
-
-        [JsonProperty("otherExpenseOwedTo", Required = Required.Default, NullValueHandling = NullValueHandling.Ignore)]
-        public string otherExpenseOwedTo;
-
-        [JsonProperty("otherExpenseAmount", Required = Required.Default, NullValueHandling = NullValueHandling.Ignore)]
-        public double otherExpenseAmount;
-
-        [JsonProperty("otherExpenseQmatrNotes", Required = Required.Default, NullValueHandling = NullValueHandling.Ignore)]
-        public string otherExpenseQmatrNotes;
-
-        [JsonProperty("jobExpenseDesc1", Required = Required.Default, NullValueHandling = NullValueHandling.Ignore)]
-        public string jobExpenseDesc1;
-
-        [JsonProperty("jobExpenseAmount1", Required = Required.Default, NullValueHandling = NullValueHandling.Ignore)]
-        public double jobExpenseAmount1;
-
-        [JsonProperty("jobExpenseDesc2", Required = Required.Default, NullValueHandling = NullValueHandling.Ignore)]
-        public string jobExpenseDesc2;
-
-        [JsonProperty("jobExpenseAmount2", Required = Required.Default, NullValueHandling = NullValueHandling.Ignore)]
-        public double jobExpenseAmount2;
-
-        [JsonProperty("jobExpense1QmatrNotes", Required = Required.Default, NullValueHandling = NullValueHandling.Ignore)]
-        public string jobExpense1QmatrNotes;
-
-        [JsonProperty("jobExpense2QmatrNotes", Required = Required.Default, NullValueHandling = NullValueHandling.Ignore)]
-        public string jobExpense2QmatrNotes;
-
-        [JsonProperty("recordStatus", Required = Required.Default, NullValueHandling = NullValueHandling.Ignore)]
-        public undefined recordStatus;
-
-        [JsonProperty("id", Required = Required.Default, NullValueHandling = NullValueHandling.Ignore)]
-        public string id;
-
-    }
-    [JsonObject(MemberSerialization.OptIn)]
-    internal sealed partial class LifeInsurance
-    {
-        [JsonProperty("faceAmountName", Required = Required.Default, NullValueHandling = NullValueHandling.Ignore)]
-        public double faceAmountName;
-
-        [JsonProperty("balanceOrMarketValue", Required = Required.Default, NullValueHandling = NullValueHandling.Ignore)]
-        public double balanceOrMarketValue;
-
-        [JsonProperty("id", Required = Required.Default, NullValueHandling = NullValueHandling.Ignore)]
-        public string id;
-
-    }
-    [JsonObject(MemberSerialization.OptIn)]
-    internal sealed partial class Other
-    {
-        [JsonProperty("assetName", Required = Required.Default, NullValueHandling = NullValueHandling.Ignore)]
-        public string assetName;
-
-        [JsonProperty("balanceOrMarketValue", Required = Required.Default, NullValueHandling = NullValueHandling.Ignore)]
-        public double balanceOrMarketValue;
-
-        [JsonProperty("id", Required = Required.Default, NullValueHandling = NullValueHandling.Ignore)]
-        public string id;
-
-    }
-    [JsonObject(MemberSerialization.OptIn)]
-    internal sealed partial class RateSheet
-    {
         [JsonProperty("name", Required = Required.Default, NullValueHandling = NullValueHandling.Ignore)]
         public string name;
 
-        [JsonProperty("fileType", Required = Required.Default, NullValueHandling = NullValueHandling.Ignore)]
-        public string fileType;
+        [JsonProperty("photoUrls", Required = Required.Default, NullValueHandling = NullValueHandling.Ignore)]
+        public IReadOnlyList<string> photoUrls;
 
-        [JsonProperty("branchId", Required = Required.Default, NullValueHandling = NullValueHandling.Ignore)]
-        public string branchId;
+        [JsonProperty("tags", Required = Required.Default, NullValueHandling = NullValueHandling.Ignore)]
+        public IReadOnlyList<Tag> tags;
 
-        [JsonProperty("fromDate", Required = Required.Default, NullValueHandling = NullValueHandling.Ignore)]
-        public DateTime fromDate;
+        [JsonProperty("status", Required = Required.Default, NullValueHandling = NullValueHandling.Ignore)]
+        public undefined status;
 
-        [JsonProperty("toDate", Required = Required.Default, NullValueHandling = NullValueHandling.Ignore)]
-        public DateTime toDate;
-
+    }
+    [JsonObject(MemberSerialization.OptIn)]
+    public sealed partial class Tag
+    {
         [JsonProperty("id", Required = Required.Default, NullValueHandling = NullValueHandling.Ignore)]
-        public string id;
+        public long id;
+
+        [JsonProperty("name", Required = Required.Default, NullValueHandling = NullValueHandling.Ignore)]
+        public string name;
 
     }
     [JsonObject(MemberSerialization.OptIn)]
-    internal sealed partial class RateSheetFilterCriteria
+    public sealed partial class User
     {
-        [JsonProperty("field", Required = Required.Default, NullValueHandling = NullValueHandling.Ignore)]
-        public undefined field;
-
-        [JsonProperty("operation", Required = Required.Default, NullValueHandling = NullValueHandling.Ignore)]
-        public undefined operation;
-
-        [JsonProperty("value", Required = Required.Default, NullValueHandling = NullValueHandling.Ignore)]
-        public object value;
-
-    }
-    [JsonObject(MemberSerialization.OptIn)]
-    internal sealed partial class RateSheetSearchCriteria
-    {
-        [JsonProperty("filters", Required = Required.Default, NullValueHandling = NullValueHandling.Ignore)]
-        public IReadOnlyList<RateSheetFilterCriteria> filters;
-
-        [JsonProperty("sortSpecs", Required = Required.Default, NullValueHandling = NullValueHandling.Ignore)]
-        public IReadOnlyList<RateSheetSortSpec> sortSpecs;
-
-        [JsonProperty("startRecord", Required = Required.Default, NullValueHandling = NullValueHandling.Ignore)]
-        public int startRecord;
-
-        [JsonProperty("recordCount", Required = Required.Default, NullValueHandling = NullValueHandling.Ignore)]
-        public int recordCount;
-
-    }
-    [JsonObject(MemberSerialization.OptIn)]
-    internal sealed partial class RateSheetSearchResults
-    {
-        [JsonProperty("data", Required = Required.Default, NullValueHandling = NullValueHandling.Ignore)]
-        public IReadOnlyList<RateSheet> data;
-
-        [JsonProperty("totalCount", Required = Required.Default, NullValueHandling = NullValueHandling.Ignore)]
-        public int totalCount;
-
-    }
-    [JsonObject(MemberSerialization.OptIn)]
-    internal sealed partial class RateSheetSortSpec
-    {
-        [JsonProperty("field", Required = Required.Default, NullValueHandling = NullValueHandling.Ignore)]
-        public undefined field;
-
-        [JsonProperty("order", Required = Required.Default, NullValueHandling = NullValueHandling.Ignore)]
-        public undefined order;
-
-    }
-    [JsonObject(MemberSerialization.OptIn)]
-    internal sealed partial class RealEstateOwned
-    {
-        [JsonProperty("borrowerId", Required = Required.Default, NullValueHandling = NullValueHandling.Ignore)]
-        public string borrowerId;
-
-        [JsonProperty("isCurrentResidence", Required = Required.Default, NullValueHandling = NullValueHandling.Ignore)]
-        public bool isCurrentResidence;
-
-        [JsonProperty("isSubjectProperty", Required = Required.Default, NullValueHandling = NullValueHandling.Ignore)]
-        public bool isSubjectProperty;
-
-        [JsonProperty("propertyAddresses", Required = Required.Default, NullValueHandling = NullValueHandling.Ignore)]
-        public IReadOnlyList<string> propertyAddresses;
-
-        [JsonProperty("city", Required = Required.Default, NullValueHandling = NullValueHandling.Ignore)]
-        public string city;
-
-        [JsonProperty("state", Required = Required.Default, NullValueHandling = NullValueHandling.Ignore)]
-        public string state;
-
-        [JsonProperty("zipCode", Required = Required.Default, NullValueHandling = NullValueHandling.Ignore)]
-        public string zipCode;
-
-        [JsonProperty("propertyStatus", Required = Required.Default, NullValueHandling = NullValueHandling.Ignore)]
-        public undefined propertyStatus;
-
-        [JsonProperty("typeOfProperty", Required = Required.Default, NullValueHandling = NullValueHandling.Ignore)]
-        public undefined typeOfProperty;
-
-        [JsonProperty("presentMarketValue", Required = Required.Default, NullValueHandling = NullValueHandling.Ignore)]
-        public double presentMarketValue;
-
-        [JsonProperty("amountOfMortgages", Required = Required.Default, NullValueHandling = NullValueHandling.Ignore)]
-        public double amountOfMortgages;
-
-        [JsonProperty("grossRentalIncome", Required = Required.Default, NullValueHandling = NullValueHandling.Ignore)]
-        public double grossRentalIncome;
-
-        [JsonProperty("vacancyFactor", Required = Required.Default, NullValueHandling = NullValueHandling.Ignore)]
-        public double vacancyFactor;
-
-        [JsonProperty("overrideVacancyFactor", Required = Required.Default, NullValueHandling = NullValueHandling.Ignore)]
-        public bool overrideVacancyFactor;
-
-        [JsonProperty("overrideVacancyFactorValue", Required = Required.Default, NullValueHandling = NullValueHandling.Ignore)]
-        public double overrideVacancyFactorValue;
-
-        [JsonProperty("incomeLessVacancy", Required = Required.Default, NullValueHandling = NullValueHandling.Ignore)]
-        public double incomeLessVacancy;
-
-        [JsonProperty("mortgagePayments", Required = Required.Default, NullValueHandling = NullValueHandling.Ignore)]
-        public double mortgagePayments;
-
-        [JsonProperty("includeTandI", Required = Required.Default, NullValueHandling = NullValueHandling.Ignore)]
-        public bool includeTandI;
-
-        [JsonProperty("insMainTaxHoa", Required = Required.Default, NullValueHandling = NullValueHandling.Ignore)]
-        public double insMainTaxHoa;
-
-        [JsonProperty("netRentalIncome", Required = Required.Default, NullValueHandling = NullValueHandling.Ignore)]
-        public double netRentalIncome;
-
-        [JsonProperty("overrideDefaultNri", Required = Required.Default, NullValueHandling = NullValueHandling.Ignore)]
-        public bool overrideDefaultNri;
-
-        [JsonProperty("overrideNriValue", Required = Required.Default, NullValueHandling = NullValueHandling.Ignore)]
-        public double overrideNriValue;
-
-        [JsonProperty("piti", Required = Required.Default, NullValueHandling = NullValueHandling.Ignore)]
-        public double piti;
-
-        [JsonProperty("overrideDefaultPiti", Required = Required.Default, NullValueHandling = NullValueHandling.Ignore)]
-        public bool overrideDefaultPiti;
-
-        [JsonProperty("overridePitiValue", Required = Required.Default, NullValueHandling = NullValueHandling.Ignore)]
-        public double overridePitiValue;
-
-        [JsonProperty("linkedToLiability", Required = Required.Default, NullValueHandling = NullValueHandling.Ignore)]
-        public bool linkedToLiability;
-
-        [JsonProperty("linkedLiabilities", Required = Required.Default, NullValueHandling = NullValueHandling.Ignore)]
-        public IReadOnlyList<Liability> linkedLiabilities;
-
-        [JsonProperty("totalReoValue", Required = Required.Default, NullValueHandling = NullValueHandling.Ignore)]
-        public double totalReoValue;
-
-        [JsonProperty("recordStatus", Required = Required.Default, NullValueHandling = NullValueHandling.Ignore)]
-        public undefined recordStatus;
-
         [JsonProperty("id", Required = Required.Default, NullValueHandling = NullValueHandling.Ignore)]
-        public string id;
+        public long id;
+
+        [JsonProperty("username", Required = Required.Default, NullValueHandling = NullValueHandling.Ignore)]
+        public string username;
+
+        [JsonProperty("firstName", Required = Required.Default, NullValueHandling = NullValueHandling.Ignore)]
+        public string firstName;
+
+        [JsonProperty("lastName", Required = Required.Default, NullValueHandling = NullValueHandling.Ignore)]
+        public string lastName;
+
+        [JsonProperty("email", Required = Required.Default, NullValueHandling = NullValueHandling.Ignore)]
+        public string email;
+
+        [JsonProperty("password", Required = Required.Default, NullValueHandling = NullValueHandling.Ignore)]
+        public string password;
+
+        [JsonProperty("phone", Required = Required.Default, NullValueHandling = NullValueHandling.Ignore)]
+        public string phone;
+
+        [JsonProperty("userStatus", Required = Required.Default, NullValueHandling = NullValueHandling.Ignore)]
+        public int userStatus;
 
     }
-    [JsonObject(MemberSerialization.OptIn)]
-    internal sealed partial class StocksAndBonds
-    {
-        [JsonProperty("bankName", Required = Required.Default, NullValueHandling = NullValueHandling.Ignore)]
-        public string bankName;
 
-        [JsonProperty("balanceOrMarketValue", Required = Required.Default, NullValueHandling = NullValueHandling.Ignore)]
-        public double balanceOrMarketValue;
-
-        [JsonProperty("id", Required = Required.Default, NullValueHandling = NullValueHandling.Ignore)]
-        public string id;
-
-    }
-
-    internal enum AccountTypeCheckingSavings
+    public enum status_Order
     {
-        NotAssigned,
-        Savings,
-        Checkings,
-        CashDepositOnSaleContract,
-        GiftNotDeposited,
-        CertificateOfDeposit,
-        MoneyMarketFund,
-        MutualFunds,
-        Stocks,
-        Bonds,
-        SecuredBorrowedFundsNotDeposited,
-        BridgeLoanNotDeposited,
-        RetairementFunds,
-        NetWorthOfBusinessOwned,
-        TrustFunds,
-        OtherNonLiquidAsset,
-        OtherLiquidAsset,
-        NetProceedsFromSaleOfRealEstate,
-        NetEquity,
-        CashOnHand,
-        GiftOfEquity,
+        placed,
+        approved,
+        delivered,
     }
-    internal enum AccountTypeLiability
+    public enum status_Pet
     {
-        NotAssigned,
-        Revolving,
-        Installment,
-        Mortgage,
-        Heloc,
-        Liens,
-        LeasePayments,
-        Open,
-        Taxes,
-        Other,
-    }
-    internal enum AssetTypeAsset
-    {
-        NotAssigned,
-        CheckingAndSaving,
-        StocksAndBonds,
-        AutoOwned,
-        OtherAssets,
-        LifeInsurance,
-        RetirementFunds,
-        NetWorthBusiness,
-    }
-    internal enum FieldBranchFilterCriteria
-    {
-        Name,
-    }
-    internal enum FieldRateSheetFilterCriteria
-    {
-        Name,
-        FileType,
-        BranchId,
-        FromDate,
-        ToDate,
-    }
-    internal enum LiabilityTypeLiability
-    {
-        NotAssigned,
-        Banking,
-        Other,
-    }
-    internal enum OperationBranchFilterCriteria
-    {
-        Equals,
-        DoesNotEqual,
-        GreaterThan,
-        GreaterThanOrEqual,
-        LessThan,
-        LessThanOrEqual,
-        Like,
-    }
-    internal enum OrderBranchSortSpec
-    {
-        Ascending,
-        Descending,
-    }
-    internal enum OtherExpenceTypeLiability
-    {
-        NotAssigned,
-        Alimony,
-        ChildSupport,
-        SeperateMaintance,
-        OtherExpense,
-    }
-    internal enum PropertyStatusRealEstateOwned
-    {
-        NotAssigned,
-        Sold,
-        PendingSale,
-        Rental,
-        Retained,
-    }
-    internal enum RecordStatusAsset
-    {
-        NotAssigned,
-        New,
-        Update,
-        Delete,
-    }
-    internal enum StatementCompletedAssetsLiabilities
-    {
-        NotAssigned,
-        Jointly,
-        NotJointly,
-    }
-    internal enum TypeOfPropertyRealEstateOwned
-    {
-        NotAssigned,
-        SingleFamily,
-        Condominium,
-        TownHouse,
-        CoOperative,
-        TwoToFourUnitProperty,
-        MultiFamilyMoreThanFourUnits,
-        ManufacturedMobileHome,
-        CommercialNonResidential,
-        MixedUseResidential,
-        Farm,
-        HomeAndBusinessCombined,
-        Land,
+        available,
+        pending,
+        sold,
     }
 }

@@ -7,14 +7,14 @@ const modeMappings = {
 };
 
 function generate(definition, profile) {
-    let mode = modeMappings[profile.mode || 'csharp'];
-    let Generator = require(`./lib/${mode}`);
-    let generator = new Generator(definition, profile);
+    const mode = modeMappings[profile.mode || 'csharp'];
+    const Generator = require(`./lib/${mode}`);
+    const generator = new Generator(definition, profile);
     return generator.generate();
 }
 
 function validate(profile) {
-    let options = profile.options;
+    const options = profile.options;
     if (!options) {
         throw `Specify an 'options' section in your profile.`;
     }

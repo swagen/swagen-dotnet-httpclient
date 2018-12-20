@@ -2,11 +2,18 @@
 
 const fs = require('fs');
 
+const modeName = 'csharp';
+
 const definition = require('./definition.json');
 const profile = require('./profile.json');
-const Generator = require('../lib/csharp');
 
-const generator = new Generator(definition, profile);
+const selectedMode = require('../lib/' + modeName);
+
+if (typeof selectedMode.validateProfile === 'function') {
+    selectedMode.validateProfile(profile);
+}
+
+const generator = new selectedMode.generate(definition, profile);
 const code = generator.generate();
 
-fs.writeFileSync('./test-harness/output.cs', code, 'utf8');
+fs.writeFileSync(`./test-harness/output.${selectedMode.extension}`, code, 'utf8');

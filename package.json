@@ -1,20 +1,26 @@
 {
     "name": "swagen-dotnet-httpclient",
-    "version": "1.0.0-beta.10",
+    "version": "1.0.0-beta.11",
     "description": "Swagen generators for .NET HttpClient",
     "main": "index.js",
+    "typings": "index.d.ts",
     "scripts": {
-        "test": "node ./test-harness",
+        "lint": "eslint ./**/*.js",
         "bump": "npm version prerelease --no-git-tag-version",
-        "update": "npm un --save swagen-core && npm i --save swagen-core",
-        "postpublish": "npm run bump"
+        "prepublishOnly": "npm run lint",
+        "postpublish": "npm run bump",
+        "update": "npm un --save codewriter lodash node-html-encoder swagen-csharp-language && npm i --save codewriter lodash node-html-encoder swagen-csharp-language",
+        "test": "node ./test-harness"
     },
     "repository": {
         "type": "git",
         "url": "git+https://github.com/swagen/swagen-dotnet-httpclient.git"
     },
     "keywords": [
-        "swagen"
+        "swagen",
+        "dotnet",
+        "csharp",
+        "httpclient"
     ],
     "author": "Swagen <swagen@jeevanjames.com>",
     "license": "Apache-2.0",
@@ -23,8 +29,12 @@
     },
     "homepage": "https://github.com/swagen/swagen-dotnet-httpclient#readme",
     "dependencies": {
-        "lodash": "^4.17.2",
+        "codewriter": "^1.3.0",
+        "lodash": "^4.17.11",
         "node-html-encoder": "0.0.2",
-        "swagen-core": "^1.0.0-beta.2"
+        "swagen-csharp-language": "^1.0.0-beta.2"
+    },
+    "devDependencies": {
+        "eslint": "^5.10.0"
     }
 }
