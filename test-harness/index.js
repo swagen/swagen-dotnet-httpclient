@@ -13,7 +13,6 @@ if (typeof selectedMode.validateProfile === 'function') {
     selectedMode.validateProfile(profile);
 }
 
-const generator = new selectedMode.generate(definition, profile);
-const code = generator.generate();
+const code = selectedMode.generate(definition, profile);
 
 fs.writeFileSync(`./test-harness/output.${selectedMode.extension}`, code, 'utf8');

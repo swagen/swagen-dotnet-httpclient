@@ -9,13 +9,13 @@
         "propertyName": "pascalCase",
         "parameterName": "camelCase"
     },
-    "url": "http://rpos-dev.azurewebsites.net/swagger/docs/v1",
+    "url": "http://petstore.swagger.io/v2/swagger.json",
     "options": {
+        "generate": ["impl", "model", "shared"],
         "namespaces": {
             "services": "MyNamespace.Services",
             "models": "MyNamespace.Services"
         },
-        "serviceSuffix": "Client",
         "accessLevel": "public"
     }
 }
