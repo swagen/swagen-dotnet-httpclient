@@ -114,7 +114,7 @@ namespace MyNamespace.Services
             }
         }
 
-        public async Task<IReadOnlyList<__models.Pet>> findPetsByStatus(IReadOnlyList<__models.undefined> status)
+        public async Task<IReadOnlyList<__models.Pet>> findPetsByStatus(IReadOnlyList<__models.status_Pet> status)
         {
             if (status == null)
                 throw new ArgumentNullException(nameof(status));
