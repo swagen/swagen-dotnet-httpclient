@@ -139,7 +139,7 @@ namespace MyNamespace.Services
                 switch (_statusCode)
                 {
                     case 200:
-                        var _result200 = JsonConvert.DeserializeObject<IReadOnlyList<__models.Pet>>(_responseContent);
+                        var _result200 = JsonConvert.DeserializeObject<IReadOnlyList<__models.Pet>>(_responseContent, _serializerSettings);
                         return _result200;
                     case 400:
                         throw new WebApiClientException("A server side error occurred.", _statusCode, _responseContent);
@@ -174,7 +174,7 @@ namespace MyNamespace.Services
                 switch (_statusCode)
                 {
                     case 200:
-                        var _result200 = JsonConvert.DeserializeObject<IReadOnlyList<__models.Pet>>(_responseContent);
+                        var _result200 = JsonConvert.DeserializeObject<IReadOnlyList<__models.Pet>>(_responseContent, _serializerSettings);
                         return _result200;
                     case 400:
                         throw new WebApiClientException("A server side error occurred.", _statusCode, _responseContent);
@@ -205,7 +205,7 @@ namespace MyNamespace.Services
                 switch (_statusCode)
                 {
                     case 200:
-                        var _result200 = JsonConvert.DeserializeObject<__models.Pet>(_responseContent);
+                        var _result200 = JsonConvert.DeserializeObject<__models.Pet>(_responseContent, _serializerSettings);
                         return _result200;
                     case 400:
                         throw new WebApiClientException("A server side error occurred.", _statusCode, _responseContent);
@@ -296,7 +296,7 @@ namespace MyNamespace.Services
                 switch (_statusCode)
                 {
                     case 200:
-                        var _result200 = JsonConvert.DeserializeObject<__models.ApiResponse>(_responseContent);
+                        var _result200 = JsonConvert.DeserializeObject<__models.ApiResponse>(_responseContent, _serializerSettings);
                         return _result200;
                     default:
                         throw new WebApiClientException($"Unexpected status code {_statusCode} was returned from {_serviceUrl}", _statusCode, _responseContent);
@@ -367,7 +367,7 @@ namespace MyNamespace.Services
                 switch (_statusCode)
                 {
                     case 200:
-                        var _result200 = JsonConvert.DeserializeObject<object>(_responseContent);
+                        var _result200 = JsonConvert.DeserializeObject<object>(_responseContent, _serializerSettings);
                         return _result200;
                     default:
                         throw new WebApiClientException($"Unexpected status code {_statusCode} was returned from {_serviceUrl}", _statusCode, _responseContent);
@@ -398,7 +398,7 @@ namespace MyNamespace.Services
                 switch (_statusCode)
                 {
                     case 200:
-                        var _result200 = JsonConvert.DeserializeObject<__models.Order>(_responseContent);
+                        var _result200 = JsonConvert.DeserializeObject<__models.Order>(_responseContent, _serializerSettings);
                         return _result200;
                     case 400:
                         throw new WebApiClientException("A server side error occurred.", _statusCode, _responseContent);
@@ -429,7 +429,7 @@ namespace MyNamespace.Services
                 switch (_statusCode)
                 {
                     case 200:
-                        var _result200 = JsonConvert.DeserializeObject<__models.Order>(_responseContent);
+                        var _result200 = JsonConvert.DeserializeObject<__models.Order>(_responseContent, _serializerSettings);
                         return _result200;
                     case 400:
                         throw new WebApiClientException("A server side error occurred.", _statusCode, _responseContent);
@@ -635,7 +635,7 @@ namespace MyNamespace.Services
                 switch (_statusCode)
                 {
                     case 200:
-                        var _result200 = JsonConvert.DeserializeObject<string>(_responseContent);
+                        var _result200 = JsonConvert.DeserializeObject<string>(_responseContent, _serializerSettings);
                         return _result200;
                     case 400:
                         throw new WebApiClientException("A server side error occurred.", _statusCode, _responseContent);
@@ -690,7 +690,7 @@ namespace MyNamespace.Services
                 switch (_statusCode)
                 {
                     case 200:
-                        var _result200 = JsonConvert.DeserializeObject<__models.User>(_responseContent);
+                        var _result200 = JsonConvert.DeserializeObject<__models.User>(_responseContent, _serializerSettings);
                         return _result200;
                     case 400:
                         throw new WebApiClientException("A server side error occurred.", _statusCode, _responseContent);

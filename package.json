@@ -1,6 +1,6 @@
 {
     "name": "swagen-dotnet-httpclient",
-    "version": "1.0.0-beta.15",
+    "version": "1.0.0-beta.17",
     "description": "Swagen generators for .NET HttpClient",
     "main": "index.js",
     "typings": "index.d.ts",
