@@ -20,7 +20,7 @@ using System.Threading.Tasks;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
 
-using __models = MyNamespace.Services;
+using MyNamespace.Services;
 
 namespace MyNamespace.Services
 {
@@ -50,7 +50,7 @@ namespace MyNamespace.Services
             set => _baseUrl = value ?? throw new ArgumentNullException(nameof(value));
         }
 
-        public async Task addPet(__models.Pet body)
+        public async Task addPet(Pet body)
         {
             if (body == null)
                 throw new ArgumentNullException(nameof(body));
@@ -80,7 +80,7 @@ namespace MyNamespace.Services
             }
         }
 
-        public async Task updatePet(__models.Pet body)
+        public async Task updatePet(Pet body)
         {
             if (body == null)
                 throw new ArgumentNullException(nameof(body));
@@ -114,7 +114,7 @@ namespace MyNamespace.Services
             }
         }
 
-        public async Task<IReadOnlyList<__models.Pet>> findPetsByStatus(IReadOnlyList<__models.status_Pet> status)
+        public async Task<IReadOnlyList<Pet>> findPetsByStatus(IReadOnlyList<status_Pet> status)
         {
             if (status == null)
                 throw new ArgumentNullException(nameof(status));
@@ -139,7 +139,7 @@ namespace MyNamespace.Services
                 switch (_statusCode)
                 {
                     case 200:
-                        var _result200 = JsonConvert.DeserializeObject<IReadOnlyList<__models.Pet>>(_responseContent, _serializerSettings);
+                        var _result200 = JsonConvert.DeserializeObject<IReadOnlyList<Pet>>(_responseContent, _serializerSettings);
                         return _result200;
                     case 400:
                         throw new WebApiClientException("A server side error occurred.", _statusCode, _responseContent);
@@ -149,7 +149,7 @@ namespace MyNamespace.Services
             }
         }
 
-        public async Task<IReadOnlyList<__models.Pet>> findPetsByTags(IReadOnlyList<string> tags)
+        public async Task<IReadOnlyList<Pet>> findPetsByTags(IReadOnlyList<string> tags)
         {
             if (tags == null)
                 throw new ArgumentNullException(nameof(tags));
@@ -174,7 +174,7 @@ namespace MyNamespace.Services
                 switch (_statusCode)
                 {
                     case 200:
-                        var _result200 = JsonConvert.DeserializeObject<IReadOnlyList<__models.Pet>>(_responseContent, _serializerSettings);
+                        var _result200 = JsonConvert.DeserializeObject<IReadOnlyList<Pet>>(_responseContent, _serializerSettings);
                         return _result200;
                     case 400:
                         throw new WebApiClientException("A server side error occurred.", _statusCode, _responseContent);
@@ -184,7 +184,7 @@ namespace MyNamespace.Services
             }
         }
 
-        public async Task<__models.Pet> getPetById(long petId)
+        public async Task<Pet> getPetById(long petId)
         {
             if (petId == null)
                 throw new ArgumentNullException(nameof(petId));
@@ -205,7 +205,7 @@ namespace MyNamespace.Services
                 switch (_statusCode)
                 {
                     case 200:
-                        var _result200 = JsonConvert.DeserializeObject<__models.Pet>(_responseContent, _serializerSettings);
+                        var _result200 = JsonConvert.DeserializeObject<Pet>(_responseContent, _serializerSettings);
                         return _result200;
                     case 400:
                         throw new WebApiClientException("A server side error occurred.", _statusCode, _responseContent);
@@ -275,7 +275,7 @@ namespace MyNamespace.Services
             }
         }
 
-        public async Task<__models.ApiResponse> uploadFile(long petId, string additionalMetadata = default(string), object file = default(object))
+        public async Task<ApiResponse> uploadFile(long petId, string additionalMetadata = default(string), object file = default(object))
         {
             if (petId == null)
                 throw new ArgumentNullException(nameof(petId));
@@ -296,7 +296,7 @@ namespace MyNamespace.Services
                 switch (_statusCode)
                 {
                     case 200:
-                        var _result200 = JsonConvert.DeserializeObject<__models.ApiResponse>(_responseContent, _serializerSettings);
+                        var _result200 = JsonConvert.DeserializeObject<ApiResponse>(_responseContent, _serializerSettings);
                         return _result200;
                     default:
                         throw new WebApiClientException($"Unexpected status code {_statusCode} was returned from {_serviceUrl}", _statusCode, _responseContent);
@@ -375,7 +375,7 @@ namespace MyNamespace.Services
             }
         }
 
-        public async Task<__models.Order> placeOrder(__models.Order body)
+        public async Task<Order> placeOrder(Order body)
         {
             if (body == null)
                 throw new ArgumentNullException(nameof(body));
@@ -398,7 +398,7 @@ namespace MyNamespace.Services
                 switch (_statusCode)
                 {
                     case 200:
-                        var _result200 = JsonConvert.DeserializeObject<__models.Order>(_responseContent, _serializerSettings);
+                        var _result200 = JsonConvert.DeserializeObject<Order>(_responseContent, _serializerSettings);
                         return _result200;
                     case 400:
                         throw new WebApiClientException("A server side error occurred.", _statusCode, _responseContent);
@@ -408,7 +408,7 @@ namespace MyNamespace.Services
             }
         }
 
-        public async Task<__models.Order> getOrderById(long orderId)
+        public async Task<Order> getOrderById(long orderId)
         {
             if (orderId == null)
                 throw new ArgumentNullException(nameof(orderId));
@@ -429,7 +429,7 @@ namespace MyNamespace.Services
                 switch (_statusCode)
                 {
                     case 200:
-                        var _result200 = JsonConvert.DeserializeObject<__models.Order>(_responseContent, _serializerSettings);
+                        var _result200 = JsonConvert.DeserializeObject<Order>(_responseContent, _serializerSettings);
                         return _result200;
                     case 400:
                         throw new WebApiClientException("A server side error occurred.", _statusCode, _responseContent);
@@ -517,7 +517,7 @@ namespace MyNamespace.Services
             set => _baseUrl = value ?? throw new ArgumentNullException(nameof(value));
         }
 
-        public async Task createUser(__models.User body)
+        public async Task createUser(User body)
         {
             if (body == null)
                 throw new ArgumentNullException(nameof(body));
@@ -547,7 +547,7 @@ namespace MyNamespace.Services
             }
         }
 
-        public async Task createUsersWithArrayInput(IReadOnlyList<__models.User> body)
+        public async Task createUsersWithArrayInput(IReadOnlyList<User> body)
         {
             if (body == null)
                 throw new ArgumentNullException(nameof(body));
@@ -577,7 +577,7 @@ namespace MyNamespace.Services
             }
         }
 
-        public async Task createUsersWithListInput(IReadOnlyList<__models.User> body)
+        public async Task createUsersWithListInput(IReadOnlyList<User> body)
         {
             if (body == null)
                 throw new ArgumentNullException(nameof(body));
@@ -669,7 +669,7 @@ namespace MyNamespace.Services
             }
         }
 
-        public async Task<__models.User> getUserByName(string username)
+        public async Task<User> getUserByName(string username)
         {
             if (username == null)
                 throw new ArgumentNullException(nameof(username));
@@ -690,7 +690,7 @@ namespace MyNamespace.Services
                 switch (_statusCode)
                 {
                     case 200:
-                        var _result200 = JsonConvert.DeserializeObject<__models.User>(_responseContent, _serializerSettings);
+                        var _result200 = JsonConvert.DeserializeObject<User>(_responseContent, _serializerSettings);
                         return _result200;
                     case 400:
                         throw new WebApiClientException("A server side error occurred.", _statusCode, _responseContent);
@@ -702,7 +702,7 @@ namespace MyNamespace.Services
             }
         }
 
-        public async Task updateUser(string username, __models.User body)
+        public async Task updateUser(string username, User body)
         {
             if (username == null)
                 throw new ArgumentNullException(nameof(username));
