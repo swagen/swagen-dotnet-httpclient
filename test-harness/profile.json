@@ -9,6 +9,9 @@
         "propertyName": "pascalCase",
         "parameterName": "camelCase"
     },
+    "prefixLines": [
+        "// ReSharper disable All"
+    ],
     "url": "http://petstore.swagger.io/v2/swagger.json",
     "options": {
         "generate": [
