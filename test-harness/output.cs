@@ -308,6 +308,8 @@ namespace MyNamespace.Services
         private Uri BuildServiceUrl(string relativeUrl, IDictionary<string, object> queryParams = null)
         {
             relativeUrl = relativeUrl ?? "";
+            if (relativeUrl.StartsWith("/"))
+                relativeUrl = relativeUrl.Substring(1);
             if (queryParams?.Count > 0)
             {
                 string queryString = queryParams.Aggregate(new StringBuilder(), (aggregate, kvp) =>
@@ -475,6 +477,8 @@ namespace MyNamespace.Services
         private Uri BuildServiceUrl(string relativeUrl, IDictionary<string, object> queryParams = null)
         {
             relativeUrl = relativeUrl ?? "";
+            if (relativeUrl.StartsWith("/"))
+                relativeUrl = relativeUrl.Substring(1);
             if (queryParams?.Count > 0)
             {
                 string queryString = queryParams.Aggregate(new StringBuilder(), (aggregate, kvp) =>
@@ -771,6 +775,8 @@ namespace MyNamespace.Services
         private Uri BuildServiceUrl(string relativeUrl, IDictionary<string, object> queryParams = null)
         {
             relativeUrl = relativeUrl ?? "";
+            if (relativeUrl.StartsWith("/"))
+                relativeUrl = relativeUrl.Substring(1);
             if (queryParams?.Count > 0)
             {
                 string queryString = queryParams.Aggregate(new StringBuilder(), (aggregate, kvp) =>
