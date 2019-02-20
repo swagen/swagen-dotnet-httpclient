@@ -25,8 +25,43 @@ using MyNamespace.Services;
 
 namespace MyNamespace.Services
 {
+    public interface Ipet
+    {
+        Task addPet(Pet body);
+        Task updatePet(Pet body);
+        Task<IReadOnlyList<Pet>> findPetsByStatus(IReadOnlyList<status_Pet> status);
+        Task<IReadOnlyList<Pet>> findPetsByTags(IReadOnlyList<string> tags);
+        Task<Pet> getPetById(long petId);
+        Task updatePetWithForm(long petId, string name = default(string), string status = default(string));
+        Task deletePet(long petId, string api_key = default(string));
+        Task<ApiResponse> uploadFile(long petId, string additionalMetadata = default(string), object file = default(object));
+    }
 
-    public sealed partial class pet
+    public interface Istore
+    {
+        Task<object> getInventory();
+        Task<Order> placeOrder(Order body);
+        Task<Order> getOrderById(long orderId);
+        Task deleteOrder(long orderId);
+    }
+
+    public interface Iuser
+    {
+        Task createUser(User body);
+        Task createUsersWithArrayInput(IReadOnlyList<User> body);
+        Task createUsersWithListInput(IReadOnlyList<User> body);
+        Task<string> loginUser(string username, string password);
+        Task logoutUser();
+        Task<User> getUserByName(string username);
+        Task updateUser(string username, User body);
+        Task deleteUser(string username);
+    }
+}
+
+namespace MyNamespace.Services
+{
+
+    public sealed partial class pet : Ipet
     {
         private readonly HttpClient _client;
         private readonly JsonSerializerSettings _serializerSettings;
@@ -328,7 +363,7 @@ namespace MyNamespace.Services
         }
     }
 
-    public sealed partial class store
+    public sealed partial class store : Istore
     {
         private readonly HttpClient _client;
         private readonly JsonSerializerSettings _serializerSettings;
@@ -497,7 +532,7 @@ namespace MyNamespace.Services
         }
     }
 
-    public sealed partial class user
+    public sealed partial class user : Iuser
     {
         private readonly HttpClient _client;
         private readonly JsonSerializerSettings _serializerSettings;
@@ -833,5 +868,127 @@ namespace MyNamespace.Services
         }
 
         public TResult Result { get; }
+    }
+}
+
+namespace MyNamespace.Services
+{
+    [JsonObject(MemberSerialization.OptIn)]
+    public sealed partial class ApiResponse
+    {
+        [JsonProperty("code", Required = Required.Default, NullValueHandling = NullValueHandling.Ignore)]
+        public int code;
+
+        [JsonProperty("type", Required = Required.Default, NullValueHandling = NullValueHandling.Ignore)]
+        public string type;
+
+        [JsonProperty("message", Required = Required.Default, NullValueHandling = NullValueHandling.Ignore)]
+        public string message;
+
+    }
+    [JsonObject(MemberSerialization.OptIn)]
+    public sealed partial class Category
+    {
+        [JsonProperty("id", Required = Required.Default, NullValueHandling = NullValueHandling.Ignore)]
+        public long id;
+
+        [JsonProperty("name", Required = Required.Default, NullValueHandling = NullValueHandling.Ignore)]
+        public string name;
+
+    }
+    [JsonObject(MemberSerialization.OptIn)]
+    public sealed partial class Order
+    {
+        [JsonProperty("id", Required = Required.Default, NullValueHandling = NullValueHandling.Ignore)]
+        public long id;
+
+        [JsonProperty("petId", Required = Required.Default, NullValueHandling = NullValueHandling.Ignore)]
+        public long petId;
+
+        [JsonProperty("quantity", Required = Required.Default, NullValueHandling = NullValueHandling.Ignore)]
+        public int quantity;
+
+        [JsonProperty("shipDate", Required = Required.Default, NullValueHandling = NullValueHandling.Ignore)]
+        public DateTime shipDate;
+
+        [JsonProperty("status", Required = Required.Default, NullValueHandling = NullValueHandling.Ignore)]
+        public status_Order status;
+
+        [JsonProperty("complete", Required = Required.Default, NullValueHandling = NullValueHandling.Ignore)]
+        public bool complete;
+
+    }
+    [JsonObject(MemberSerialization.OptIn)]
+    public sealed partial class Pet
+    {
+        [JsonProperty("id", Required = Required.Default, NullValueHandling = NullValueHandling.Ignore)]
+        public long id;
+
+        [JsonProperty("category", Required = Required.Default, NullValueHandling = NullValueHandling.Ignore)]
+        public Category category;
+
+        [JsonProperty("name", Required = Required.Default, NullValueHandling = NullValueHandling.Ignore)]
+        public string name;
+
+        [JsonProperty("photoUrls", Required = Required.Default, NullValueHandling = NullValueHandling.Ignore)]
+        public IReadOnlyList<string> photoUrls;
+
+        [JsonProperty("tags", Required = Required.Default, NullValueHandling = NullValueHandling.Ignore)]
+        public IReadOnlyList<Tag> tags;
+
+        [JsonProperty("status", Required = Required.Default, NullValueHandling = NullValueHandling.Ignore)]
+        public status_Pet status;
+
+    }
+    [JsonObject(MemberSerialization.OptIn)]
+    public sealed partial class Tag
+    {
+        [JsonProperty("id", Required = Required.Default, NullValueHandling = NullValueHandling.Ignore)]
+        public long id;
+
+        [JsonProperty("name", Required = Required.Default, NullValueHandling = NullValueHandling.Ignore)]
+        public string name;
+
+    }
+    [JsonObject(MemberSerialization.OptIn)]
+    public sealed partial class User
+    {
+        [JsonProperty("id", Required = Required.Default, NullValueHandling = NullValueHandling.Ignore)]
+        public long id;
+
+        [JsonProperty("username", Required = Required.Default, NullValueHandling = NullValueHandling.Ignore)]
+        public string username;
+
+        [JsonProperty("firstName", Required = Required.Default, NullValueHandling = NullValueHandling.Ignore)]
+        public string firstName;
+
+        [JsonProperty("lastName", Required = Required.Default, NullValueHandling = NullValueHandling.Ignore)]
+        public string lastName;
+
+        [JsonProperty("email", Required = Required.Default, NullValueHandling = NullValueHandling.Ignore)]
+        public string email;
+
+        [JsonProperty("password", Required = Required.Default, NullValueHandling = NullValueHandling.Ignore)]
+        public string password;
+
+        [JsonProperty("phone", Required = Required.Default, NullValueHandling = NullValueHandling.Ignore)]
+        public string phone;
+
+        [JsonProperty("userStatus", Required = Required.Default, NullValueHandling = NullValueHandling.Ignore)]
+        public int userStatus;
+
+    }
+
+    public enum status_Order
+    {
+        placed,
+        approved,
+        delivered,
+    }
+    public enum status_Pet
+    {
+        available,
+        pending,
+        sold,
     }
 }

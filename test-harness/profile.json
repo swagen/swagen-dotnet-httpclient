@@ -14,11 +14,12 @@
     ],
     "url": "http://petstore.swagger.io/v2/swagger.json",
     "options": {
-        "generate": [
-            "impl",
-            "model",
-            "shared"
-        ],
+        "generate": {
+            "implementation": true,
+            "models": true,
+            "interfaces": true,
+            "shared": true
+        },
         "namespaces": {
             "services": "MyNamespace.Services",
             "models": "MyNamespace.Services"
