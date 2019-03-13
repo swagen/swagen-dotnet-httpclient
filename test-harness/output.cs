@@ -27,7 +27,7 @@ namespace MyNamespace.Services
 {
     public interface Ipet
     {
-        Task addPet(Pet body);
+        Task addPet(long version, Pet body);
         Task updatePet(Pet body);
         Task<IReadOnlyList<Pet>> findPetsByStatus(IReadOnlyList<status_Pet> status);
         Task<IReadOnlyList<Pet>> findPetsByTags(IReadOnlyList<string> tags);
@@ -86,8 +86,10 @@ namespace MyNamespace.Services
             set => _baseUrl = value ?? throw new ArgumentNullException(nameof(value));
         }
 
-        public async Task addPet(Pet body)
+        public async Task addPet(long version, Pet body)
         {
+            if (version == null)
+                throw new ArgumentNullException(nameof(version));
             if (body == null)
                 throw new ArgumentNullException(nameof(body));
 
@@ -101,6 +103,7 @@ namespace MyNamespace.Services
                 _content.Headers.ContentType.MediaType = "application/json";
                 _request.Content = _content;
                 _request.Headers.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+                _request.Headers.Add("version", version);
 
                 HttpResponseMessage _response = await _client.SendAsync(_request).ConfigureAwait(false);
 
@@ -294,6 +297,7 @@ namespace MyNamespace.Services
             using (var _request = new HttpRequestMessage(HttpMethod.Delete, _serviceUrl))
             {
                 _request.Headers.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+                _request.Headers.Add("api_key", api_key);
 
                 HttpResponseMessage _response = await _client.SendAsync(_request).ConfigureAwait(false);
 

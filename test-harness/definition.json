@@ -13,6 +13,16 @@
                 "verb": "post",
                 "parameters": [
                     {
+                        "name": "version",
+                        "type": "header",
+                        "description": "Version of the API",
+                        "required": true,
+                        "dataType": {
+                            "primitive": "integer",
+                            "subType": "int64"
+                        }
+                    },
+                    {
                         "name": "body",
                         "type": "body",
                         "description": "Pet object that needs to be added to the store",
