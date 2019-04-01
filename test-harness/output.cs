@@ -77,6 +77,17 @@ namespace MyNamespace.Services
             __InitializeJsonSerializer(_serializerSettings);
         }
 
+        public pet(HttpClient client)
+        {
+            _client = client;
+            BaseUrl = _client.BaseAddress;
+            __GlobalInitializer.InitializeClient(_client);
+            __InitializeClient(_client);
+            _serializerSettings = new JsonSerializerSettings();
+            __GlobalInitializer.InitializeJsonSerializer(_serializerSettings);
+            __InitializeJsonSerializer(_serializerSettings);
+        }
+
         partial void __InitializeClient(HttpClient client);
         partial void __InitializeJsonSerializer(JsonSerializerSettings settings);
 
@@ -383,6 +394,17 @@ namespace MyNamespace.Services
             __InitializeJsonSerializer(_serializerSettings);
         }
 
+        public store(HttpClient client)
+        {
+            _client = client;
+            BaseUrl = _client.BaseAddress;
+            __GlobalInitializer.InitializeClient(_client);
+            __InitializeClient(_client);
+            _serializerSettings = new JsonSerializerSettings();
+            __GlobalInitializer.InitializeJsonSerializer(_serializerSettings);
+            __InitializeJsonSerializer(_serializerSettings);
+        }
+
         partial void __InitializeClient(HttpClient client);
         partial void __InitializeJsonSerializer(JsonSerializerSettings settings);
 
@@ -545,6 +567,17 @@ namespace MyNamespace.Services
         public user()
         {
             _client = new HttpClient();
+            __GlobalInitializer.InitializeClient(_client);
+            __InitializeClient(_client);
+            _serializerSettings = new JsonSerializerSettings();
+            __GlobalInitializer.InitializeJsonSerializer(_serializerSettings);
+            __InitializeJsonSerializer(_serializerSettings);
+        }
+
+        public user(HttpClient client)
+        {
+            _client = client;
+            BaseUrl = _client.BaseAddress;
             __GlobalInitializer.InitializeClient(_client);
             __InitializeClient(_client);
             _serializerSettings = new JsonSerializerSettings();
