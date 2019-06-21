@@ -29,8 +29,8 @@ namespace MyNamespace.Services
     {
         Task addPet(long version, Pet body);
         Task updatePet(Pet body);
-        Task<IReadOnlyList<Pet>> findPetsByStatus(IReadOnlyList<status_Pet> status);
-        Task<IReadOnlyList<Pet>> findPetsByTags(IReadOnlyList<string> tags);
+        Task<IList<Pet>> findPetsByStatus(IList<status_Pet> status);
+        Task<IList<Pet>> findPetsByTags(IList<string> tags);
         Task<Pet> getPetById(long petId);
         Task updatePetWithForm(long petId, string name = default(string), string status = default(string));
         Task deletePet(long petId, string api_key = default(string));
@@ -48,8 +48,8 @@ namespace MyNamespace.Services
     public interface Iuser
     {
         Task createUser(User body);
-        Task createUsersWithArrayInput(IReadOnlyList<User> body);
-        Task createUsersWithListInput(IReadOnlyList<User> body);
+        Task createUsersWithArrayInput(IList<User> body);
+        Task createUsersWithListInput(IList<User> body);
         Task<string> loginUser(string username, string password);
         Task logoutUser();
         Task<User> getUserByName(string username);
@@ -164,7 +164,7 @@ namespace MyNamespace.Services
             }
         }
 
-        public async Task<IReadOnlyList<Pet>> findPetsByStatus(IReadOnlyList<status_Pet> status)
+        public async Task<IList<Pet>> findPetsByStatus(IList<status_Pet> status)
         {
             if (status == null)
                 throw new ArgumentNullException(nameof(status));
@@ -189,7 +189,7 @@ namespace MyNamespace.Services
                 switch (_statusCode)
                 {
                     case 200:
-                        var _result200 = JsonConvert.DeserializeObject<IReadOnlyList<Pet>>(_responseContent, _serializerSettings);
+                        var _result200 = JsonConvert.DeserializeObject<IList<Pet>>(_responseContent, _serializerSettings);
                         return _result200;
                     case 400:
                         throw new WebApiClientException("A server side error occurred.", _statusCode, _responseContent);
@@ -199,7 +199,7 @@ namespace MyNamespace.Services
             }
         }
 
-        public async Task<IReadOnlyList<Pet>> findPetsByTags(IReadOnlyList<string> tags)
+        public async Task<IList<Pet>> findPetsByTags(IList<string> tags)
         {
             if (tags == null)
                 throw new ArgumentNullException(nameof(tags));
@@ -224,7 +224,7 @@ namespace MyNamespace.Services
                 switch (_statusCode)
                 {
                     case 200:
-                        var _result200 = JsonConvert.DeserializeObject<IReadOnlyList<Pet>>(_responseContent, _serializerSettings);
+                        var _result200 = JsonConvert.DeserializeObject<IList<Pet>>(_responseContent, _serializerSettings);
                         return _result200;
                     case 400:
                         throw new WebApiClientException("A server side error occurred.", _statusCode, _responseContent);
@@ -624,7 +624,7 @@ namespace MyNamespace.Services
             }
         }
 
-        public async Task createUsersWithArrayInput(IReadOnlyList<User> body)
+        public async Task createUsersWithArrayInput(IList<User> body)
         {
             if (body == null)
                 throw new ArgumentNullException(nameof(body));
@@ -654,7 +654,7 @@ namespace MyNamespace.Services
             }
         }
 
-        public async Task createUsersWithListInput(IReadOnlyList<User> body)
+        public async Task createUsersWithListInput(IList<User> body)
         {
             if (body == null)
                 throw new ArgumentNullException(nameof(body));
@@ -911,108 +911,145 @@ namespace MyNamespace.Services
 namespace MyNamespace.Services
 {
     [JsonObject(MemberSerialization.OptIn)]
-    public sealed partial class ApiResponse
+    public partial class ApiResponse
     {
+
         [JsonProperty("code", Required = Required.Default, NullValueHandling = NullValueHandling.Ignore)]
-        public int code;
+        public int code { get; set; }
+
 
         [JsonProperty("type", Required = Required.Default, NullValueHandling = NullValueHandling.Ignore)]
-        public string type;
+        public string type { get; set; }
+
 
         [JsonProperty("message", Required = Required.Default, NullValueHandling = NullValueHandling.Ignore)]
-        public string message;
+        public string message { get; set; }
 
     }
     [JsonObject(MemberSerialization.OptIn)]
-    public sealed partial class Category
+    public partial class Category
     {
+
         [JsonProperty("id", Required = Required.Default, NullValueHandling = NullValueHandling.Ignore)]
-        public long id;
+        public long id { get; set; }
+
 
         [JsonProperty("name", Required = Required.Default, NullValueHandling = NullValueHandling.Ignore)]
-        public string name;
+        public string name { get; set; }
 
     }
     [JsonObject(MemberSerialization.OptIn)]
-    public sealed partial class Order
+    public partial class Order
     {
+
         [JsonProperty("id", Required = Required.Default, NullValueHandling = NullValueHandling.Ignore)]
-        public long id;
+        public long id { get; set; }
+
 
         [JsonProperty("petId", Required = Required.Default, NullValueHandling = NullValueHandling.Ignore)]
-        public long petId;
+        public long petId { get; set; }
+
 
         [JsonProperty("quantity", Required = Required.Default, NullValueHandling = NullValueHandling.Ignore)]
-        public int quantity;
+        public int quantity { get; set; }
+
 
         [JsonProperty("shipDate", Required = Required.Default, NullValueHandling = NullValueHandling.Ignore)]
-        public DateTime shipDate;
+        public DateTime shipDate { get; set; }
+
 
         [JsonProperty("status", Required = Required.Default, NullValueHandling = NullValueHandling.Ignore)]
-        public status_Order status;
+        public status_Order status { get; set; }
+
 
         [JsonProperty("complete", Required = Required.Default, NullValueHandling = NullValueHandling.Ignore)]
-        public bool complete;
+        public bool complete { get; set; }
 
     }
     [JsonObject(MemberSerialization.OptIn)]
-    public sealed partial class Pet
+    public partial class Pet
     {
+
         [JsonProperty("id", Required = Required.Default, NullValueHandling = NullValueHandling.Ignore)]
-        public long id;
+        public long id { get; set; }
+
 
         [JsonProperty("category", Required = Required.Default, NullValueHandling = NullValueHandling.Ignore)]
-        public Category category;
+        public Category category { get; set; }
+
 
         [JsonProperty("name", Required = Required.Default, NullValueHandling = NullValueHandling.Ignore)]
-        public string name;
+        public string name { get; set; }
+
+        private IList<string> _photoUrls;
 
         [JsonProperty("photoUrls", Required = Required.Default, NullValueHandling = NullValueHandling.Ignore)]
-        public IReadOnlyList<string> photoUrls;
+        public IList<string> photoUrls
+        {
+            get => _photoUrls ?? (_photoUrls = new List<string>());
+            set => _photoUrls = value;
+        }
+
+        private IList<Tag> _tags;
 
         [JsonProperty("tags", Required = Required.Default, NullValueHandling = NullValueHandling.Ignore)]
-        public IReadOnlyList<Tag> tags;
+        public IList<Tag> tags
+        {
+            get => _tags ?? (_tags = new List<Tag>());
+            set => _tags = value;
+        }
+
 
         [JsonProperty("status", Required = Required.Default, NullValueHandling = NullValueHandling.Ignore)]
-        public status_Pet status;
+        public status_Pet status { get; set; }
 
     }
     [JsonObject(MemberSerialization.OptIn)]
-    public sealed partial class Tag
+    public partial class Tag
     {
+
         [JsonProperty("id", Required = Required.Default, NullValueHandling = NullValueHandling.Ignore)]
-        public long id;
+        public long id { get; set; }
+
 
         [JsonProperty("name", Required = Required.Default, NullValueHandling = NullValueHandling.Ignore)]
-        public string name;
+        public string name { get; set; }
 
     }
     [JsonObject(MemberSerialization.OptIn)]
-    public sealed partial class User
+    public partial class User
     {
+
         [JsonProperty("id", Required = Required.Default, NullValueHandling = NullValueHandling.Ignore)]
-        public long id;
+        public long id { get; set; }
+
 
         [JsonProperty("username", Required = Required.Default, NullValueHandling = NullValueHandling.Ignore)]
-        public string username;
+        public string username { get; set; }
+
 
         [JsonProperty("firstName", Required = Required.Default, NullValueHandling = NullValueHandling.Ignore)]
-        public string firstName;
+        public string firstName { get; set; }
+
 
         [JsonProperty("lastName", Required = Required.Default, NullValueHandling = NullValueHandling.Ignore)]
-        public string lastName;
+        public string lastName { get; set; }
+
 
         [JsonProperty("email", Required = Required.Default, NullValueHandling = NullValueHandling.Ignore)]
-        public string email;
+        public string email { get; set; }
+
 
         [JsonProperty("password", Required = Required.Default, NullValueHandling = NullValueHandling.Ignore)]
-        public string password;
+        public string password { get; set; }
+
 
         [JsonProperty("phone", Required = Required.Default, NullValueHandling = NullValueHandling.Ignore)]
-        public string phone;
+        public string phone { get; set; }
+
 
         [JsonProperty("userStatus", Required = Required.Default, NullValueHandling = NullValueHandling.Ignore)]
-        public int userStatus;
+        public int userStatus { get; set; }
 
     }
 
