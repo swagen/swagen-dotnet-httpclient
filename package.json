@@ -1,6 +1,6 @@
 {
     "name": "swagen-dotnet-httpclient",
-    "version": "1.0.0-beta.27",
+    "version": "1.0.0-beta.28",
     "description": "Swagen generators for .NET HttpClient",
     "main": "index.js",
     "typings": "index.d.ts",
@@ -30,11 +30,11 @@
     "homepage": "https://github.com/swagen/swagen-dotnet-httpclient#readme",
     "dependencies": {
         "codewriter": "^1.3.0",
-        "lodash": "^4.17.11",
+        "lodash": "^4.17.15",
         "node-html-encoder": "0.0.2",
-        "swagen-csharp-language": "^1.0.0-beta.7"
+        "swagen-csharp-language": "^1.0.0-beta.8"
     },
     "devDependencies": {
-        "eslint": "^5.16.0"
+        "eslint": "^6.1.0"
     }
 }
